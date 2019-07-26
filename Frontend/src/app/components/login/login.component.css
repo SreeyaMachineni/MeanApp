@@ -1,0 +1,45 @@
+.Left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 30%;
+  background-color:black;
+  font-size:20px;
+
+}
+.hdr{
+  height:30px;
+  background-color: black;
+}
+.Right {
+    position: absolute;
+    /* left: 80%; */
+    top: 0;
+    bottom: 0;
+    right: 0; 
+    width:70%;
+  background-color:white;
+}
+.mat-form-field-ripple {
+    background-color: #027D7C !important;
+}
+mat-form-field {
+    width: 30% !important;
+  }
+ @media only screen and (max-width: 700px) {
+  .Left {
+    display: none !important;
+  }
+  .Right{
+    width:100% !important;
+  }
+  mat-form-field {
+    width: 50% !important;
+  }
+}
+@media only screen and (min-width: 700px) {
+  .for-mob{
+    display: none !important;
+  }
+}

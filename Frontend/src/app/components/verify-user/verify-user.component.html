@@ -1,0 +1,22 @@
+<!-- <input type="text" [(ngModel)]="otp" placeholder="otp">
+<button type="button" class="btn btn-primary" (click) = "verifyOtp()">verify otp</button> -->
+<div class="container">
+        
+    <div class="Left d-flex flex-column justify-content-center align-items-center">
+            <div class="text-black pb-2 font-weight-bold text-white" style="font-size: 35px;">Something</div>
+            <div class=" text-white">some tag goes here</div>
+            
+    </div>
+    <form [formGroup]="otpForm" class="Right d-flex flex-column  justify-content-center align-items-center" autocomplete="off"  (ngSubmit)="verifyOtp()">
+            <div class="text-black pb-2 font-weight-bold for-mob" style="font-size: 35px;">Something</div>
+            <div class="text-black pb-5 font-weight-bold for-mob" style="font-size: 15px;">Some tag goes heer</div>
+        <div class="text-black pb-5 font-weight-bold" style="font-size: 25px;">Please verify your mobile number to proceed</div>
+            <mat-form-field><input matInput placeholder="OTP" formControlName="otp" required></mat-form-field>
+        
+                  <button type="submit" class="btn btn-dark p-0 pt-1 pb-1 pl-4 pr-4" [disabled]="!otpForm.valid">Register</button>
+   
+                
+            
+</form>
+   
+</div>

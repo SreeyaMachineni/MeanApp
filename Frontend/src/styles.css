@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: black !important;
+  }
+  .mat-focused .mat-form-field-label {
+    color: black !important;
+}
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: black !important;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+  border-color: black !important;
+}
+.mat-tab-group.mat-primary .mat-ink-bar{
+  background-color: black !important;
+}
