@@ -1,5 +1,4 @@
 export class Package {
-    name:String
     insProvider:String
     insCategory:String
     maxSumAssured:Number

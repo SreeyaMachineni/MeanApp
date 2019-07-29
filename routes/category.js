@@ -21,14 +21,21 @@ router.get('/getCategories',(req,res)=>{
    })
  })
 
- router.get('/deleteCategory/:categoryId',(req,res)=>{
-     Category.deleteCategory(req.params.categoryId,(err,success)=>{
-        (err)=>{res.json({success:false,msg:'failed to delete'})},
-        (success)=>{res.json({success:true,msg:'delete successful'})}
-     })
- })
 
- router.post('/editCategory/:categoryId',(req,res)=>{
+
+
+
+ router.get('/deleteCategory/:categoryId',(req,res)=>{
+    Category.deleteCategory(req.params.categoryId,(err,success)=>{
+      if(err) throw err;
+      else{
+        res.json({success: true, msg:'Deleted category'});
+      }
+    })
+  })
+
+
+  router.post('/editCategory/:categoryId',(req,res)=>{
      Category.editCategory(req.params.categoryId,req.body.category,(err,category)=>{
          (err)=>{res.json({success:false,msg:'failed to update'})},
          (category)=>{res.json({success:true,msg:'updated category'})}

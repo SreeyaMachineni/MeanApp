@@ -13,6 +13,7 @@ module.exports.deleteCategory = function(categoryId,callback){
     const query={_id:categoryId};
     Category.deleteOne(query,callback);
 }
+
 module.exports.editCategory = function(categoryId,category,callback){
     console.log(categoryId,category);
 

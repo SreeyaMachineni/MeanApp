@@ -159,7 +159,6 @@ addEmp(emp:User){
     });
   }
   addHospital(hosp:Hospital){
-
     return this.http.post(this.uri+'/users/hospital/addHosp',{hosp},{
       headers:new HttpHeaders(
         {

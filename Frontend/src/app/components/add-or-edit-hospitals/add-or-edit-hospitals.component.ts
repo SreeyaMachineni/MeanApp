@@ -15,13 +15,8 @@ export class AddOrEditHospitalsComponent implements OnInit {
   constructor(private fb:FormBuilder,private authService:AuthService,private router:Router) { }
 
   ngOnInit() {
-    
     this.hosp = new Hospital();
-
     this.action = this.authService.getAction();
-
-    
-    console.log(this.action);
     if(this.action == 'edit'){
       this.hosp = this.authService.getHosp();
       this.hospForm=this.fb.group({
@@ -30,8 +25,6 @@ export class AddOrEditHospitalsComponent implements OnInit {
         location:[this.hosp.location,[Validators.required]],
         address:[this.hosp.address,[Validators.required]],
         pointOfContact:this.fb.array([this.initPoC(this.action)])
-        
-  
       });
       this.loadpocs();
     }
@@ -44,10 +37,7 @@ export class AddOrEditHospitalsComponent implements OnInit {
         pointOfContact:this.fb.array([this.initPoC(this.action)])
   
       });
-     
     }
-
-    
   }
 
   initPoC(action){
@@ -77,8 +67,6 @@ export class AddOrEditHospitalsComponent implements OnInit {
       );
   }
   }
-
-
   addPoC(){
     const control = <FormArray>this.hospForm.controls['pointOfContact'];
     control.push(this.initPoC('add'));
@@ -88,8 +76,6 @@ export class AddOrEditHospitalsComponent implements OnInit {
     control.removeAt(i);
   }
   save(hospForm,hospid?){
-    console.log(hospForm.value);
-    console.log(hospid);
     this.hosp.name=this.hospForm.value.name;
     this.hosp.specialization= this.hospForm.value.specialization;
     this.hosp.location=this.hospForm.value.location;

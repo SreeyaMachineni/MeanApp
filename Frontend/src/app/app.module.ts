@@ -28,6 +28,7 @@ import { CategoryListComponent } from './category/category-list/category-list.co
 import {InsurerModule} from './insurer/insurer.module';
 import { InsurerListComponent } from './insurer/insurer-list/insurer-list.component';
 import { AddOrEditInsurerComponent } from './insurer/add-or-edit-insurer/add-or-edit-insurer.component';
+import { AddOrEditPackageComponent } from './insurer/add-or-edit-package/add-or-edit-package.component';
 // import { UserComponent } from './user/user.component';
 
 
@@ -42,7 +43,10 @@ const appRoutes:Routes = [
     {path:'hospitals',component:HospitalsComponent},
     {path:'addOrEditHospital',component:AddOrEditHospitalsComponent},
     {path:'insCategories',component:CategoryListComponent},
-    {path:'insurers',component:InsurerListComponent}
+    {path:'insurers',component:InsurerListComponent},
+    {path:'addOrEditInsurer',component:AddOrEditInsurerComponent,pathMatch: 'full'},
+    {path:'addOrEditPackage',component:AddOrEditPackageComponent},
+
   ]},
   {path:'verify',component:VerifyUserComponent},
   
