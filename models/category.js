@@ -15,8 +15,6 @@ module.exports.deleteCategory = function(categoryId,callback){
 }
 
 module.exports.editCategory = function(categoryId,category,callback){
-    console.log(categoryId,category);
-
     const query = {_id:categoryId}
     Category.findById(categoryId,(err,category)=>{
         if(!category){
@@ -31,4 +29,8 @@ module.exports.editCategory = function(categoryId,category,callback){
   
 }
     });
+}
+
+module.exports.getCategoryList = function(callback){
+    Category.find({ name: {$ne:null} }, { name: 1 ,_id:0},callback)
 }

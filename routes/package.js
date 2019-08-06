@@ -4,6 +4,7 @@ const Package = require('../models/package');
 
 
 router.post('/addPackage',(req,res)=>{
+    
     let package = new Package({
         name:req.body.package.name,
         insProvider:req.body.package.insProvider,
@@ -15,7 +16,8 @@ router.post('/addPackage',(req,res)=>{
         maxMaturity:req.body.package.maxMaturity,
         networkHospitals:req.body.package.networkHospitals,
         diseaseCoverageWaitingPeriod:req.body.package.diseaseCoverageWaitingPeriod,
-        waitingPeriod:req.body.package.waitingPeriod
+        waitingPeriod:req.body.package.waitingPeriod,
+        requiredDocs:req.body.package.requiredDocs
     });
     Package.addPackage(package,(err,package)=>{
     if(err){
@@ -26,6 +28,20 @@ router.post('/addPackage',(req,res)=>{
     }
   })
 })
+
+
+router.get('/getPackagesByInsurer/:insurer',(req,res)=>{
+    console.log(req.params.insurer);
+    Package.getPackagesByInsurer(req.params.insurer,(err,package)=>{
+        if(err) throw err;
+        else{
+            console.log(package);
+            res.json(package)
+        }
+    }
+    )
+})
+
 
 
 router.get('/getPackages',(req,res)=>{  
@@ -50,7 +66,7 @@ router.get('/deletePackage/:packageId',(req,res)=>{
 
 
 router.post('/editPackage/:packageId',(req,res)=>{
-    Pacakge.findById(req.params.packageId,(err,package)=>{
+    Package.findById(req.params.packageId,(err,package)=>{
         if(!package){
         res.json({success: false, msg:'Unable to load doc'});
         }
@@ -66,15 +82,27 @@ router.post('/editPackage/:packageId',(req,res)=>{
             package.networkHospitals             = req.body.package.networkHospitals,
             package.diseaseCoverageWaitingPeriod = req.body.package.diseaseCoverageWaitingPeriod,
             package.waitingPeriod                = req.body.package.waitingPeriod
-        insurer.save().then((insurer)=>{
+            package.requiredDocs                 = req.body.package.requiredDocs
+            package.save().then((package)=>{
             res.json({success: true, msg:'Updated'});
         },
         err=>{
             res.json({success: false, msg:'Update failed'});
+            throw err;
+            
         }
         );  
         }
     })
 })
 
+
+router.get('/getPackageDetails/:packge',(req,res)=>{
+    Package.getPackageDetails(req.params.packge,(err,package)=>{
+        if(err) throw err;
+        else{
+        res.json(package);
+        }
+    })
+})
 module.exports = router;

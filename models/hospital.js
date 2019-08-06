@@ -28,3 +28,7 @@ module.exports.deleteHospital = function(hospid,callback){
 module.exports.getHospitalId = function(id, callback){
     Hospital.findById(id, callback);
   }
+
+module.exports.getHospitalList = function(callback){
+    Hospital.find({ name: {$ne:null} }, { name: 1 ,_id:0},callback)
+}

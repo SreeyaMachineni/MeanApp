@@ -40,6 +40,8 @@ const users = require('./routes/users');
 const categories = require('./routes/category');
 const insurers = require('./routes/insurer');
 const package = require('./routes/package');
+const hospital = require('./routes/hospitals');
+const userPackage = require('./routes/userPackage');
 
 // Port Number
 const port = 3000;
@@ -63,6 +65,8 @@ app.use('/users', users);
 app.use('/category', categories);
 app.use('/insurer',insurers);
 app.use('/package',package);
+app.use('/hospital',hospital);
+app.use('/userPackage',userPackage);
 
 // Index Route
 app.get('/', (req, res) => {

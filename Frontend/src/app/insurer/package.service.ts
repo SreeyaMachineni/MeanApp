@@ -16,7 +16,7 @@ constructor(private http: HttpClient) { }
 
 addPackage(packge){
   console.log(packge);
-  return this.http.post(this.uri+'/package/addpackage',{packge},{
+  return this.http.post(this.uri+'/package/addPackage',{package:packge},{
     headers:new HttpHeaders(
      { 'Content-Type':'application/json'}
     )
@@ -29,7 +29,7 @@ deletePackage(packageId){
   return this.http.get(this.uri+'/package/deletepackage/'+packageId);
 }
 editPackage(packageId,packge){
-  return this.http.post(this.uri+'/package/editpackage/'+packageId,{packge},{
+  return this.http.post(this.uri+'/package/editpackage/'+packageId,{package:packge},{
     headers:new HttpHeaders({'Content-Type':'application/json'})
   });
 }
@@ -46,5 +46,13 @@ setPackage(packge){
 getPackage(){
   return this.package;
 }
-
+getInsurers(){
+  return this.http.get(this.uri+'/insurer/getInsuresList');
+}
+getCategories(){
+  return this.http.get(this.uri+'/category/getCategoryList');
+}
+getHospitalList(){
+  return this.http.get(this.uri+'/hospital/getHospitalList');
+}
 }

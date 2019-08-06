@@ -47,7 +47,7 @@ export class PackagesComponent implements OnInit {
     );
   }
 
-  deleteInsurer(packageId) {
+  deletePackage(packageId) {
     
     this.packageService.deletePackage(packageId).subscribe(
       (success)=>{
@@ -62,7 +62,7 @@ export class PackagesComponent implements OnInit {
       }
     )
   }
-  editInsurer(packge,packageId){
+  editPackage(packge,packageId){
     
     this.packageService.setAction('edit');
     this.packageService.setPackage(packge);

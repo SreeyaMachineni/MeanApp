@@ -159,7 +159,7 @@ addEmp(emp:User){
     });
   }
   addHospital(hosp:Hospital){
-    return this.http.post(this.uri+'/users/hospital/addHosp',{hosp},{
+    return this.http.post(this.uri+'/hospital/addHosp',{hosp},{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'
@@ -169,10 +169,10 @@ addEmp(emp:User){
   }
 
   getHospitals(){
-    return this.http.get(this.uri+'/users/hospital/getHosp');
+    return this.http.get(this.uri+'/hospital/getHosp');
   }
   deleteHosp(hospid){
-    return this.http.get(this.uri+'/users/hospital/deleteHosp/'+hospid);
+    return this.http.get(this.uri+'/hospital/deleteHosp/'+hospid);
   }
   setHosp(hosp:Hospital){
     this.hosp = hosp;
@@ -181,7 +181,7 @@ addEmp(emp:User){
     return this.hosp;
   }
   editHosp(hosp,hospid){
-    return this.http.post(this.uri+'/users/hospital/editHosp/'+hospid,{hosp:hosp},{
+    return this.http.post(this.uri+'/hospital/editHosp/'+hospid,{hosp:hosp},{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'

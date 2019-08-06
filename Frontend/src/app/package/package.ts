@@ -9,4 +9,5 @@ export class Package {
     networkHospitals:String[]
     diseaseCoverageWaitingPeriod:Number
     waitingPeriod:Number
+    requiredDocs:String[]
 }

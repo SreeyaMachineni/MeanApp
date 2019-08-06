@@ -32,3 +32,6 @@ module.exports.getInsurerId = function(id, callback){
 module.exports.getInsurers = function(callback){
     Insurer.find({},callback);
 }
+module.exports.getInsurersList = function(callback){
+    Insurer.find({ name: {$ne:null} }, { name: 1 ,_id:0},callback)
+}

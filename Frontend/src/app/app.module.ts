@@ -26,9 +26,15 @@ import { AddOrEditHospitalsComponent } from './components/add-or-edit-hospitals/
 import {CategoryModule} from './category/category.module';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import {InsurerModule} from './insurer/insurer.module';
+import {UserClaimsModule} from './user-claims/user-claims.module';
+import {UserPackagesModule} from './user-packages/user-packages.module';
 import { InsurerListComponent } from './insurer/insurer-list/insurer-list.component';
 import { AddOrEditInsurerComponent } from './insurer/add-or-edit-insurer/add-or-edit-insurer.component';
 import { AddOrEditPackageComponent } from './insurer/add-or-edit-package/add-or-edit-package.component';
+import { UserPackagesListComponent } from './user-packages/user-packages-list/user-packages-list.component';
+import { UserClaimsListComponent } from './user-claims/user-claims-list/user-claims-list.component';
+import { AddOrEditUserPackagesComponent } from './user-packages/add-or-edit-user-packages/add-or-edit-user-packages.component';
+import { ViewUserPackageComponent } from './user-packages/view-user-package/view-user-package.component';
 // import { UserComponent } from './user/user.component';
 
 
@@ -46,7 +52,10 @@ const appRoutes:Routes = [
     {path:'insurers',component:InsurerListComponent},
     {path:'addOrEditInsurer',component:AddOrEditInsurerComponent,pathMatch: 'full'},
     {path:'addOrEditPackage',component:AddOrEditPackageComponent},
-
+    {path:'mypackages',component:UserPackagesListComponent},
+    {path:'myclaims',component:UserClaimsListComponent},
+    {path:'addOrEditUserPackage',component:AddOrEditUserPackagesComponent},
+    {path:'viewUserPackage',component:ViewUserPackageComponent}
   ]},
   {path:'verify',component:VerifyUserComponent},
   
@@ -66,6 +75,7 @@ const appRoutes:Routes = [
     AddOrEditEmployeeComponent,
     HospitalsComponent,
     AddOrEditHospitalsComponent,
+
     
     // UserComponent
   ],
@@ -87,7 +97,9 @@ const appRoutes:Routes = [
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     CategoryModule,
-    InsurerModule
+    InsurerModule,
+    UserClaimsModule,
+    UserPackagesModule
     
   ],
   providers: [AuthGuard],

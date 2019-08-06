@@ -8,7 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import { MatTableModule, MatPaginatorModule, MatSortModule,MatNativeDateModule } from '@angular/material';
 import { PackagesComponent } from './packages/packages.component';
 import { AddOrEditPackageComponent } from './add-or-edit-package/add-or-edit-package.component';
-
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [InsurerListComponent, AddOrEditInsurerComponent, PackagesComponent, AddOrEditPackageComponent],
   imports: [
@@ -20,7 +20,8 @@ import { AddOrEditPackageComponent } from './add-or-edit-package/add-or-edit-pac
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ]
 })
 export class InsurerModule { }

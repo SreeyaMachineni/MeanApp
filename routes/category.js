@@ -21,6 +21,15 @@ router.get('/getCategories',(req,res)=>{
    })
  })
 
+ router.get('/getCategoryList',(req,res)=>
+ Category.getCategoryList((err,categories)=>{
+     if(err) throw err
+     else {
+         console.log(categories);
+         res.json(categories)
+     }
+ })
+)
 
 
 

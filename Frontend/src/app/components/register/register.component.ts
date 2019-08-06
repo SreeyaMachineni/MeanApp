@@ -39,6 +39,7 @@ export class RegisterComponent implements OnInit {
     this.signedUpUser.gender = this.userProfileForm.value.gender;
     this.signedUpUser.address = this.userProfileForm.value.address;
     this.signedUpUser.dob = this.userProfileForm.value.dob
+    this.signedUpUser.userrole = 'user';
     console.log(this.signedUpUser);
     this.authService.sendOtp(this.signedUpUser).subscribe(
       (data)=>{

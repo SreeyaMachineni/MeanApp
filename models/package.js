@@ -12,15 +12,15 @@ const PackageSchema = mongoose.Schema({
     networkHospitals:{type:[String],required:true},
     diseaseCoverageWaitingPeriod:{type:Number,required:true},
     waitingPeriod:{type:Number,required:true},
+    requiredDocs:{type:[String],required:true}
 });
 const Package = module.exports = mongoose.model('Package',PackageSchema);
 module.exports.addPackage = function(package,callback){
     console.log(package);
-    package.save(callback);
+     package.save(callback);
 }
 
 module.exports.getPackages = function(callback){
-    console.log('getinsurer');
     Package.find({},callback)
 }
 
@@ -30,4 +30,15 @@ module.exports.deletePackage = function(packageId,callback){
 }
 module.exports.getPackageById = function(id, callback){
     Package.findById(id, callback);
-  }
+}
+
+module.exports.getPackagesByInsurer = function(insurer,callback){
+    console.log(insurer);
+    const query={insProvider:insurer};
+    Package.find(query,callback);
+}
+
+module.exports.getPackageDetails = function(package,callback){
+    const query={name:package};
+    Package.findOne(query,callback);
+}

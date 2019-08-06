@@ -23,7 +23,6 @@ router.get('/getInsurers',(req,res)=>{
     Insurer.getInsurers((err,insurers)=>{
         if(err) throw err;
         else{
-            console.log(insurers);
         res.json(insurers);
         }
     })
@@ -39,7 +38,6 @@ Insurer.deleteInsurer(req.params.insurerId,(err,success)=>{
 })
   
 router.post('/editInsurer/:insurerId',(req,res)=>{
-console.log(req.params.insurerId);
 Insurer.findById(req.params.insurerId,(err,insurer)=>{
     if(!insurer){
     res.json({success: false, msg:'Unable to load doc'});
@@ -59,6 +57,16 @@ Insurer.findById(req.params.insurerId,(err,insurer)=>{
     }
 })
 })
+
+router.get('/getInsuresList',(req,res)=>
+    Insurer.getInsurersList((err,insurers)=>{
+        if(err) throw err
+        else {
+            res.json(insurers)
+        }
+    })
+)
+
 
 
 module.exports = router;
