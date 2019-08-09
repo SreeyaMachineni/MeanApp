@@ -189,5 +189,12 @@ addEmp(emp:User){
       )
     });
   }
+  getNumOfUsersToAssign(){
+    return this.http.get(this.uri+'/users/getNumOfUsersToAssign');
+  }
+
+  getUsers(){
+    return this.http.get(this.uri+'/users/getUsers');
+  }
 
 }

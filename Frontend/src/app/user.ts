@@ -12,4 +12,6 @@ export class User {
     qualification:String
     maritalStatus:String
     userrole:String
+    isAssigned:Boolean
+    assignedTo:String
 }

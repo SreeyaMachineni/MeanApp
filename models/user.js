@@ -4,53 +4,21 @@ const config = require('../config/database');
 
 // User Schema
 const UserSchema = mongoose.Schema({
-  firstName: {
-    type: String,
-    required:true
-  },
-  lastName: {
-    type: String,
-    required:true
-  },
-  dob: {
-    type: Date,
-    required: true
-  },
-  gender:{
-    type:String,
-    require:true
-  },
-  email: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  phone:{
-    type:String,
-    require:true
-  },
-  address:{
-    type:String,
-    require:true
-  },
-  userrole:{
-    type:String
-  },
-  pan:{
-    type:String
-  },
-  passport:{
-    type:String
-  },
-  qualification:{
-    type:String
-  },
-  maritalStatus:{
-    type:String
-  }
+  firstName: {type: String,required:true},
+  lastName: {type: String,required:true},
+  dob: {type: Date,required: true},
+  gender:{type:String,require:true},
+  email: {type: String,required: true},
+  password: {type: String,required: true},
+  phone:{type:String,require:true},
+  address:{type:String,require:true},
+  userrole:{type:String},
+  pan:{type:String},
+  passport:{type:String},
+  qualification:{type:String},
+  maritalStatus:{type:String},
+  isAssigned:{type:Boolean,required:true},
+  assignedTo:{type:String,required:false}
 
 });
 
@@ -92,4 +60,14 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     if(err) throw err;
     callback(null, isMatch);
   });
+}
+
+module.exports.getNumOfUsersToAssign = function(callback){
+  const query={isAssigned:false};
+  User.find(query).count(callback);
+}
+
+module.exports.getUsers = function(callback){
+  const query={userrole:'user'}
+  User.find(query,callback);
 }

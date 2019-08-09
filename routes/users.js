@@ -70,34 +70,6 @@ var storage;
 var upload;
 
 
-// router.post('/test', (req, res,next) => {
-//   console.log('testt');
-//   file = req.body.image;
-  
-// //upload.single('file');
-
-// });
-// storage = new GridFsStorage({ 
-//   url: config.database,
-//   file: (req, file) => {
-//     return new Promise((resolve, reject) => {
-//        const fileInfo = {
-//           filename: 'file_' + Date.now(),
-//           bucketName: 'uploads',
-//           metadata:{"someid":'a'}
-          
-
-//         };
-//         resolve(fileInfo);
-//     });
-//   }
-// });
-// upload = multer({ storage });
-
-// router.get('/uploadtest',upload.single('file'),(req,res)=>{
-//   console.log('uploaded');
-// })
-
 
 router.post('/sendotp', (req, res) => { 
   const number = req.body.phone;
@@ -133,7 +105,9 @@ router.post('/register', (req, res) => {
           email:req.body.user.email,
           address:req.body.user.address,
           password:req.body.user.password,
-          userrole:req.body.user.userrole
+          userrole:req.body.user.userrole,
+          isAssigned:req.body.user.isAssigned,
+          assignedTo:req.body.user.assignedTo
       });
 
       User.addUser(newUser, (err, user) => {
@@ -251,11 +225,23 @@ router.post('/editEmp/:empId',(req,res)=>{
 })
 
 
+router.get('/getNumOfUsersToAssign',(req,res)=>{
+  User.getNumOfUsersToAssign((err,count)=>{
+      if(err) throw err
+      else{
+          res.json(count)
+      }
+  })
+})
 
-
-
-
-
+router.get('/getUsers',(req,res)=>{
+  User.getUsers((err,users)=>{
+    if(err) throw err
+    else{
+      res.json(users)
+    }
+  })
+})
 
 
 router.get('/menus/:role',(req,res)=>{
@@ -269,22 +255,6 @@ res.json(menu);
   })
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;

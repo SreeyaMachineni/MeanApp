@@ -33,12 +33,18 @@ module.exports.editUserPackage = function(packageId,package,callback){
             package.activeFrom = package.activeFrom;
             package.activeTo = package.activeTo;
          
-         package.save(callback);
-
-  
+         package.save(callback); 
 }
     });
 }
+
+
+module.exports.getNumOfUsersToAssign = function(callback){
+    const query={isAssigned:false};
+    UserPackage.find(query).count(callback);
+    
+}
+
 
 // module.exports.getUserPackages = function(callback){
 //     UserPackage.find({ username: {$ne:null} }, { username: 1 ,_id:0},callback)

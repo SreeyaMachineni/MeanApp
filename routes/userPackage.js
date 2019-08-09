@@ -76,6 +76,13 @@ UserPackage.getUserPackageList((err,userPackages)=>{
     })
 )
 
-
+router.get('/getNumOfUsersToAssign',(req,res)=>{
+    UserPackage.getNumOfUsersToAssign((err,count)=>{
+        if(err) throw err
+        else{
+            res.json(count)
+        }
+    })
+})
 
 module.exports = router;

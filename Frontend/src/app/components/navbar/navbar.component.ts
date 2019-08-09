@@ -12,20 +12,22 @@ export class NavbarComponent implements OnInit {
 
   user:User;
   menu:any;
+  NoOfUsersToAssign:any;
   //menuItems=[];
   constructor(private authService:AuthService,private router: Router) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
-    console.log(this.user);
     var userRole = this.user.userrole;
-    console.log(userRole+'getting user role in nav');
     this.authService.getMenus(userRole).subscribe(
-      (data)=>{
-        this.menu=data;
-      },
-      (err)=>{
-        console.log(err);
+      (data)=>{ this.menu=data; },
+      (err)=>{ console.log(err); }
+    );
+    this.authService.getNumOfUsersToAssign().subscribe(
+      (count)=>{
+        this.NoOfUsersToAssign = count;
+      },(err)=>{
+        console.log('all users assigned');
       }
     )
     

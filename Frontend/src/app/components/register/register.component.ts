@@ -40,6 +40,10 @@ export class RegisterComponent implements OnInit {
     this.signedUpUser.address = this.userProfileForm.value.address;
     this.signedUpUser.dob = this.userProfileForm.value.dob
     this.signedUpUser.userrole = 'user';
+    // change it when editing the user values
+    this.signedUpUser.isAssigned=false;
+    this.signedUpUser.assignedTo = null;  
+    // change it when editing the user values
     console.log(this.signedUpUser);
     this.authService.sendOtp(this.signedUpUser).subscribe(
       (data)=>{

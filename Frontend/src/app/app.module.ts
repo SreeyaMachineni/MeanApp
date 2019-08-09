@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
 import {ToastrModule} from 'ngx-toastr';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +36,8 @@ import { UserPackagesListComponent } from './user-packages/user-packages-list/us
 import { UserClaimsListComponent } from './user-claims/user-claims-list/user-claims-list.component';
 import { AddOrEditUserPackagesComponent } from './user-packages/add-or-edit-user-packages/add-or-edit-user-packages.component';
 import { ViewUserPackageComponent } from './user-packages/view-user-package/view-user-package.component';
+import {AssignUsersComponent} from './assign-users/assign-users/assign-users.component';
+import {MatBadgeModule} from '@angular/material/badge';
 // import { UserComponent } from './user/user.component';
 
 
@@ -55,7 +58,8 @@ const appRoutes:Routes = [
     {path:'mypackages',component:UserPackagesListComponent},
     {path:'myclaims',component:UserClaimsListComponent},
     {path:'addOrEditUserPackage',component:AddOrEditUserPackagesComponent},
-    {path:'viewUserPackage',component:ViewUserPackageComponent}
+    {path:'viewUserPackage',component:ViewUserPackageComponent},
+    {path:'assignUsers',component:AssignUsersComponent}
   ]},
   {path:'verify',component:VerifyUserComponent},
   
@@ -75,11 +79,11 @@ const appRoutes:Routes = [
     AddOrEditEmployeeComponent,
     HospitalsComponent,
     AddOrEditHospitalsComponent,
-
-    
-    // UserComponent
+    AssignUsersComponent
+ // UserComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),
@@ -99,7 +103,8 @@ const appRoutes:Routes = [
     CategoryModule,
     InsurerModule,
     UserClaimsModule,
-    UserPackagesModule
+    UserPackagesModule,
+    MatBadgeModule
     
   ],
   providers: [AuthGuard],
