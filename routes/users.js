@@ -11,6 +11,7 @@ const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 const Menu = require('../models/menu');
+
 var requestId;
 // Init Nexmo
 const nexmo = new Nexmo({
@@ -20,21 +21,18 @@ const nexmo = new Nexmo({
 
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
-  console.log('authenticate');
+  
   const firstName = req.body.firstName;
   const password = req.body.password;
-  console.log(firstName+' '+password);
+ 
   User.getUserByUsername(firstName, (err, user) => {
     if(err) throw err;
     if(!user){
       return res.json({success: false, msg: 'User not found'});
     }
-    console.log('before compare');
     User.comparePassword(password, user.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
-        console.log('matched');
-        
         
         const token = jwt.sign({data: user}, config.secret, {
           expiresIn: 604800 // 1 week
@@ -50,7 +48,8 @@ router.post('/authenticate', (req, res, next) => {
             email:user.email,
             phone:user.phone,
             address:user.address,
-            userrole:user.userrole
+            userrole:user.userrole,
+            userEmpId:user.userEmpId
           },
           expiresin:604800
         });
@@ -61,21 +60,19 @@ router.post('/authenticate', (req, res, next) => {
   });
 });
 
-// Profile
-router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {                                  
+router.get('/profile',passport.authenticate('jwt', {session:false}),(req,res)=>{
   res.json({user: req.user});
-});
+  })
+
+
 let file;
 var storage;
 var upload;
 
-
-
 router.post('/sendotp', (req, res) => { 
+  console.log('send otp');
   const number = req.body.phone;
-console.log(number);
   nexmo.verify.request({
-   // number:'919874605071',
    number:number,
     brand: 'Nexmo',
     code_length: '4'
@@ -86,15 +83,12 @@ console.log(number);
   res.json({message:'ok'});
 });
 
-
-
 // Register
 router.post('/register', (req, res) => {
       nexmo.verify.check({
         request_id: requestId,
         code: req.body.otp
       }, (err, result) => {
-        console.log(err ? err : result)
         if(result['status'] == 0){
         let newUser = new User({
           firstName:req.body.user.firstName,
@@ -112,7 +106,6 @@ router.post('/register', (req, res) => {
 
       User.addUser(newUser, (err, user) => {
         if(err){
-          console.log(err);
           res.json({success: false, msg:'Failed to register user'});
         } else {
           const token = jwt.sign({data: user}, config.secret, {
@@ -141,10 +134,8 @@ router.post('/register', (req, res) => {
   });
 });
 
-
 router.post('/addEmp',(req,res)=>{
-  console.log(req.body);
-  console.log(req.body.user);
+  
   let employee = new User({
     firstName:req.body.emp.firstName,
     lastName:req.body.emp.lastName,
@@ -159,11 +150,13 @@ router.post('/addEmp',(req,res)=>{
     pan:req.body.emp.pan,
     passport:req.body.emp.passport,
     qualification:req.body.emp.qualification,
-    maritalStatus:req.body.emp.maritalStatus
+    maritalStatus:req.body.emp.maritalStatus,
+    isAssigned:true
 });
+
+
 User.addUser(employee,(err,emp)=>{
   if(err){
-    console.log(err);
           res.json({success: false, msg:'Failed to add employee'});
   }
   else{
@@ -191,7 +184,6 @@ router.get('/deleteEmp/:empid',(req,res)=>{
 })
 
 router.post('/editEmp/:empId',(req,res)=>{
-  console.log(req.params.empId);
   User.findById(req.params.empId,(err,user)=>{
     if(!user){
       res.json({success: false, msg:'Unable to load doc'});
@@ -218,12 +210,9 @@ router.post('/editEmp/:empId',(req,res)=>{
         res.json({success: false, msg:'Update failed'});
       }
     );
-      
-
     }
   })
 })
-
 
 router.get('/getNumOfUsersToAssign',(req,res)=>{
   User.getNumOfUsersToAssign((err,count)=>{
@@ -243,18 +232,51 @@ router.get('/getUsers',(req,res)=>{
   })
 })
 
+router.get('/getUnassignedUsers',(req,res)=>{
+  User.getUnassignedUsers((err,users)=>{
+    if(err) throw err
+    else{
+      res.json(users)
+    }
+  })
+})
 
 router.get('/menus/:role',(req,res)=>{
-  
   Menu.getMenuByRole(req.params.role,(err,menu)=>{
     if(err) throw err;
     else {
-res.json(menu);
-      
+      res.json(menu);
     }
   })
-
 })
 
+router.post('/assign',(req,res)=>{
+  userList = req.body.userList;
+  var empId = req.body.emp;
+  userList.forEach(function(userName){
+    User.findOne({_id:empId}).then(emp=>{
+      if(emp){
+        User.updateOne({firstName:userName},{$set:{assignedTo:emp.firstName,isAssigned:true,userEmpId:empId}},(err,ass)=>{
+          (err)=>{res.json({success: false, msg:'fail'});},
+          (ass)=>{res.json({success: true, msg:'success'});}
+        })
+      }else{
+        console.log('err');
+      }
+    })
+  })
+})
+
+
+router.get('/getEmpUsers/:empId',(req,res)=>{
+
+  User.getEmpUsers(req.params.empId,(err,users)=>{
+    if(err) throw err
+    else{
+      res.json(users)
+    }
+  })
+  
+})
 
 module.exports = router;

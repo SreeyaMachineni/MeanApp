@@ -13,16 +13,43 @@ export class NavbarComponent implements OnInit {
   user:User;
   menu:any;
   NoOfUsersToAssign:any;
+  NoOfPkgsToVisit:any;
+  notifications:any;
   //menuItems=[];
   constructor(private authService:AuthService,private router: Router) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
     var userRole = this.user.userrole;
-    this.authService.getMenus(userRole).subscribe(
-      (data)=>{ this.menu=data; },
-      (err)=>{ console.log(err); }
-    );
+    var assignedTo = this.user.assignedTo;
+    this.getMenus(userRole);
+    this.getNumOfUsersToAssign();
+    console.log(this.user);
+    this.getNotification(this.user['id']);
+  //  this.getNumOfPkgsToVisit(assignedTo);
+    
+    
+  }
+  getNumOfPkgsToVisit(assignedTo){
+    this.authService.getNumOfPkgsToVisit(assignedTo).subscribe(
+      (count)=>{
+        this.NoOfPkgsToVisit = count;
+      },(err)=>{
+        console.log('all packages visited');
+      }
+    )
+  }
+  getNotification(userId){
+    console.log('get notification'+userId);
+    this.authService.getNotifications(userId).subscribe(
+      (notifications)=>{
+        console.log(notifications);
+        this.notifications = notifications;
+      }
+    )
+  }
+
+  getNumOfUsersToAssign(){
     this.authService.getNumOfUsersToAssign().subscribe(
       (count)=>{
         this.NoOfUsersToAssign = count;
@@ -30,7 +57,15 @@ export class NavbarComponent implements OnInit {
         console.log('all users assigned');
       }
     )
-    
+  }
+
+  getMenus(userRole){
+    this.authService.getMenus(userRole).subscribe(
+      (data)=>{ this.menu=data; 
+      
+      },
+      (err)=>{ console.log(err); }
+    );
   }
   onLogout(){
     this.authService.logout();

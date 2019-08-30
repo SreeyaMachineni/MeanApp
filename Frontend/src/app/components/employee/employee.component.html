@@ -30,7 +30,7 @@
          
           <ng-container matColumnDef="dob">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Dob </th>
-            <td mat-cell *matCellDef="let emp" [style.color]="emp.dob"> {{emp.dob}} </td>
+            <td mat-cell *matCellDef="let emp" [style.color]="emp.dob"> {{emp.dob | date}}  </td>
           </ng-container>
           
           <ng-container matColumnDef="gender">

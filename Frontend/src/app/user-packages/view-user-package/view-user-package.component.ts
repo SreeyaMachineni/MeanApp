@@ -15,7 +15,7 @@ export class ViewUserPackageComponent implements OnInit {
 
   ngOnInit() {
     this.userPackage = this.userPackageService.getUserPackage();
-    this.fetchPackageDetails(this.userPackage.package);
+    this.fetchPackageDetails(this.userPackage.packageId);
   }
   fetchPackageDetails(packge){
     this.userPackageService.getPackageDetails(packge).subscribe(

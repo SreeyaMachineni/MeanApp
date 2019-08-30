@@ -3,6 +3,8 @@ import { Validators, FormGroup, FormArray, FormBuilder,FormControl } from '@angu
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {Package} from '../package';
 import {PackageService} from '../package.service';
+import { Location } from '@angular/common';
+import {InsurerService} from '../insurer.service';
 @Component({
   selector: 'app-add-or-edit-package',
   templateUrl: './add-or-edit-package.component.html',
@@ -15,33 +17,33 @@ export class AddOrEditPackageComponent implements OnInit {
   hospitals:any;
   packge:any;
   action:String;
-  constructor(private packageService:PackageService,private router: Router) { }
+  categoryName:String;
+  constructor(private packageService:PackageService,private router: Router,private location: Location,private insurerService:InsurerService) { }
 
   ngOnInit() {
     this.action = this.packageService.getAction();
     this.packge = new Package();
-    this.packageService.getInsurers().subscribe(
-      (insurers)=>{
-        this.insurers = insurers
-        console.log(insurers);
-      }
-    );
+    // this.packageService.getInsurers().subscribe(
+    //   (insurers)=>{
+    //     this.insurers = insurers
+    //   }
+    // );
+    this.insurers = this.insurerService.getInsurer();
+    console.log(this.insurers);
     this.packageService.getCategories().subscribe(
       (categories)=>{
         this.categories = categories;
-        console.log(categories);
       }
     );
     this.packageService.getHospitalList().subscribe(
       (hospitals)=>{
         this.hospitals = hospitals;
-        console.log(hospitals);
       }
     )
     if(this.action == 'add'){
       this.packageForm = new FormGroup({
         name:new FormControl(''),
-        insProvider:new FormControl(''),
+        //insProvider:new FormControl(''),
         insCategory:new FormControl(''),
         maxSumAssured:new FormControl(''),
         minSumAssured:new FormControl(''),
@@ -51,14 +53,17 @@ export class AddOrEditPackageComponent implements OnInit {
         networkHospitals:new FormControl(''),
         diseaseCoverageWaitingPeriod:new FormControl(''),
         waitingPeriod:new FormControl(''),
-        requiredDocs:new FormControl('')
+        requiredDocs:new FormControl(''),
+        diseasesCovered:new FormControl(''),
+        diseasesUnCovered:new FormControl('')
+
       });
     }
     else{
       this.packge = this.packageService.getPackage();
+      console.log(this.packge);
       this.packageForm = new FormGroup({
         name:new FormControl(this.packge.name),
-        insProvider:new FormControl(this.packge.insProvider),
         insCategory:new FormControl(this.packge.insCategory),
         maxSumAssured:new FormControl(this.packge.maxSumAssured),
         minSumAssured:new FormControl(this.packge.minSumAssured),
@@ -68,7 +73,9 @@ export class AddOrEditPackageComponent implements OnInit {
         networkHospitals:new FormControl(this.packge.networkHospitals),
         diseaseCoverageWaitingPeriod:new FormControl(this.packge.diseaseCoverageWaitingPeriod),
         waitingPeriod:new FormControl(this.packge.waitingPeriod),
-        requiredDocs:new FormControl(this.packge.requiredDocs)
+        requiredDocs:new FormControl(this.packge.requiredDocs),
+        diseasesCovered:new FormControl(this.packge.diseasesCovered),
+        diseasesUnCovered:new FormControl(this.packge.diseasesUnCovered)
       });
     }
 
@@ -77,10 +84,34 @@ export class AddOrEditPackageComponent implements OnInit {
 
   saveit(packageId){
     var requiredDocs = [];    
-    requiredDocs = this.packageForm.value.requiredDocs.split(',');
+    var diseasesCovered = [];    
+    var diseasesUncovered = [];  
+    if(this.packageForm.value.requiredDocs.includes(',')){
+      requiredDocs = this.packageForm.value.requiredDocs.split(',');
+    }else{
+      requiredDocs.push(this.packageForm.value.requiredDocs);
+    }
+
+    if(this.packageForm.value.diseasesCovered.includes(',')){
+      diseasesCovered = this.packageForm.value.diseasesCovered.split(',');  
+    }else{
+      diseasesCovered.push(this.packageForm.value.diseasesCovered);
+    }
+    
+    if(this.packageForm.value.diseasesUnCovered.includes(',')){
+      diseasesUncovered = this.packageForm.value.diseasesUnCovered.split(',');
+    }else{
+      diseasesUncovered.push(this.packageForm.value.diseasesUnCovered);
+    }
+    
+      
+    
     this.packge.name = this.packageForm.value.name;
-    this.packge.insProvider = this.packageForm.value.insProvider;
-    this.packge.insCategory = this.packageForm.value.insCategory;
+    //this.packge.insProvider = this.packageForm.value.insProvider;
+    this.packge.insProvider = this.insurers.name;
+    this.packge.insProviderId = this.insurers._id;
+    this.packge.insCategory = this.categoryName;
+    this.packge.insCategoryId = this.packageForm.value.insCategory
     this.packge.maxSumAssured = this.packageForm.value.maxSumAssured;
     this.packge.minSumAssured = this.packageForm.value.minSumAssured;
     this.packge.premiumAmnt = this.packageForm.value.premiumAmnt;
@@ -90,7 +121,13 @@ export class AddOrEditPackageComponent implements OnInit {
     this.packge.diseaseCoverageWaitingPeriod = this.packageForm.value.diseaseCoverageWaitingPeriod;
     this.packge.waitingPeriod = this.packageForm.value.waitingPeriod;
     this.packge.requiredDocs = requiredDocs;
+    this.packge.diseasesCovered = diseasesCovered;
+    this.packge.diseasesUnCovered = diseasesUncovered;
+    // this.packge.requiredDocs = this.packageForm.value.requiredDocs;
+    // this.packge.diseasesCovered = this.packageForm.value.diseasesCovered;
+    // this.packge.diseasesUnCovered = this.packageForm.value.diseasesUnCovered;
     if(this.action == 'add'){
+      console.log(this.packge);
       this.packageService.addPackage(this.packge).subscribe(
         (data)=>{
           if(data['success']){ this.router.navigate(['/home/insurers']); }    
@@ -99,14 +136,19 @@ export class AddOrEditPackageComponent implements OnInit {
       )
     }
     else{
-      this.packageService.editPackage(packageId,this.packge).subscribe(
+      this.packageService.editPackage(packageId,this.packge,true).subscribe(
         (data)=>{
           if(data['success']){ this.router.navigate(['/home/insurers']); }    
         },
         err=>{console.log(err)}
       )
     }
-
+  }
+  cancel(){
+    this.location.back();
   }
 
+  selectedCategory(categoryName){
+    this.categoryName = categoryName;
+  }
 }

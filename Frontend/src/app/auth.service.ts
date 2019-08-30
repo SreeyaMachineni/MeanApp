@@ -10,7 +10,7 @@ import { Hospital } from './hospital';
   providedIn: 'root'
 })
 export class AuthService {
-  uri = 'http://localhost:3000';
+  uri = 'http://192.168.4.101:3000';
   authToken:any;
   user:any;
   hosp:Hospital;
@@ -120,6 +120,7 @@ uploadImg():Observable<any>{
 return this.http.get(this.uri+'/users/uploadtest');
 }
 getMenus(userRole){
+  console.log('getting menus '+userRole);
   return this.http.get(this.uri+'/users/menus/'+userRole);
 }
 addEmp(emp:User){
@@ -195,6 +196,22 @@ addEmp(emp:User){
 
   getUsers(){
     return this.http.get(this.uri+'/users/getUsers');
+  }
+
+  getUnassignedUsers(){
+    return this.http.get(this.uri+'/users/getUnassignedUsers');
+  }
+
+  getNumOfPkgsToVisit(assignedTo){
+    return this.http.get(this.uri+'/userPackage/getNumOfPackagesToVisit/'+assignedTo);
+  }
+ 
+  getDocs(id){
+    console.log(id);
+    return this.http.get(this.uri+'/docs/getDocs/'+id);
+  } 
+  getNotifications(userId){
+    return this.http.get(this.uri+'/notification/getNotifications/'+userId);
   }
 
 }

@@ -3,6 +3,7 @@ import { Validators, FormGroup, FormArray, FormBuilder, FormControl } from '@ang
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {UserPackage} from '../../user-packages/user-packages';
 import {UserPackagesService} from '../../user-packages/user-packages.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-add-or-edit-user-packages',
   templateUrl: './add-or-edit-user-packages.component.html',
@@ -15,7 +16,10 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   insurers:any;
   packages:any;
   categories:any;
-  constructor(private router:Router,private userPackageService:UserPackagesService) { }
+  categoryName:String;
+  insuranceName:String;
+  packageName:String;
+  constructor(private router:Router,private userPackageService:UserPackagesService,private location: Location) { }
 
   ngOnInit() {
     this.action = this.userPackageService.getAction();
@@ -27,6 +31,7 @@ export class AddOrEditUserPackagesComponent implements OnInit {
     this.userPackageService.getCategories().subscribe(
       (categories)=>{
         this.categories = categories;
+        console.log(this.categories);
       }
     );
     this.userPackage = new UserPackage();
@@ -40,29 +45,28 @@ export class AddOrEditUserPackagesComponent implements OnInit {
       });
     }else{
       this.userPackage = this.userPackageService.getUserPackage();
-      this.getPackages(this.userPackage.insurer);
+      console.log(this.userPackage);
+      this.selectedInsurance(this.userPackage.insurerId);
       this.userPackageForm = new FormGroup({  
-        insurer:new FormControl(this.userPackage.insurer),
-        package:new FormControl(this.userPackage.package),
-        category:new FormControl(this.userPackage.category),
+        insurer:new FormControl('this.userPackage.activeTo'),
+        package:new FormControl(this.userPackage.packageName),
+        category:new FormControl(this.userPackage.categoryName),
         activeFrom:new FormControl(this.userPackage.activeFrom),
         activeTo:new FormControl(this.userPackage.activeTo)
       });
     }
     
   }
-  getPackages(insurer){
-    this.userPackageService.getPackagesByInsurer(insurer).subscribe(
-      (packages)=>{
-        this.packages = packages;
-      }
-    )
-  }
+  
   save(packageId?){
+    this.userPackage.userId = JSON.parse(localStorage.getItem('user')).id;
     this.userPackage.username = JSON.parse(localStorage.getItem('user')).firstName;
-    this.userPackage.category = this.userPackageForm.value.category;
-    this.userPackage.insurer = this.userPackageForm.value.insurer;
-    this.userPackage.package = this.userPackageForm.value.package;
+    this.userPackage.categoryId = this.userPackageForm.value.category;
+    this.userPackage.insurerId = this.userPackageForm.value.insurer;
+    this.userPackage.packageId = this.userPackageForm.value.package;
+    this.userPackage.categoryName = this.categoryName;
+    this.userPackage.insurerName = this.insuranceName;
+    this.userPackage.packageName = this.packageName;
     this.userPackage.activeFrom = this.userPackageForm.value.activeFrom;
     this.userPackage.activeTo = this.userPackageForm.value.activeTo;
    
@@ -73,15 +77,13 @@ export class AddOrEditUserPackagesComponent implements OnInit {
       this.userPackageService.addUserPackage(this.userPackage).subscribe(
         (userPackage)=>{
           this.router.navigate(['/home/mypackages'])
-        // this.router.navigate(['/home/viewUserPackage']);
-        // this.userPackageService.setUserPackage(this.userPackage);
+    
         },(err)=>{
           console.log('err in adding');
         }
       )
     }else{
-      console.log('------------------')
-      console.log(this.userPackage);
+     
       this.userPackageService.editUserPackage(packageId,this.userPackage).subscribe(
         (userPackage)=>{
           this.router.navigate(['/home/mypackages'])
@@ -102,5 +104,27 @@ export class AddOrEditUserPackagesComponent implements OnInit {
       }
     )
   }
-
+  
+  selectedInsurance(insId,insName?){
+    this.insuranceName=insName;
+    this.userPackageService.getPackagesByInsurer(insId).subscribe(
+      (packages)=>{
+        this.packages = packages;
+      }
+    )
+  }
+  selectedPackage(packageName){
+    this.packageName=packageName;
+  }
+  selectedCategory(categoryName){
+    this.categoryName = categoryName;
+  }
+ 
+  compareThem(o1, o2): boolean{
+    console.log('compare with');
+    return o1.name === o2.name;
+  }
+  cancel(){
+    this.location.back();
+  }
 }

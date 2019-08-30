@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
 const config = require('../config/database');
 const UserPackageSchema = mongoose.Schema({
+    userId:{type:String,required:true},
     username:{type:String,required:true},
-    insurer:{type:String,required:true},
-    package:{type:String,required:true},
-    category:{type:String,required:true},
+    insurerId:{type:String,required:true},
+    packageId:{type:String,required:true},
+    categoryId:{type:String,required:true},
+    insurerName:{type:String,required:true},
+    packageName:{type:String,required:true},
+    categoryName:{type:String,required:true},
     activeFrom:{type:Date,required:true},
     activeTo:{type:Date,required:true},
-    isAssigned:{type:Boolean,required:true},
-    assignedTo:{type:String,required:false}
+    notify:{type:Boolean}
 });
 const UserPackage = module.exports = mongoose.model('UserPackage',UserPackageSchema);
 module.exports.addUserPackage=function(userPackage,callback){
@@ -27,17 +30,19 @@ module.exports.editUserPackage = function(packageId,package,callback){
         }
         else{
             package.username = package.username;
-            package.category = package.category;
-            package.insurer = package.insurer;
-            package.package = package.package;
+            package.categoryId = package.categoryId;
+            package.insurerId = package.insurerId;
+            package.packageId = package.packageId;
+            package.categoryName = package.categoryName;
+            package.insurerName = package.insurerName;
+            package.packageName = package.packageName;
             package.activeFrom = package.activeFrom;
             package.activeTo = package.activeTo;
-         
+            package.notify=package.notify;
          package.save(callback); 
 }
     });
 }
-
 
 module.exports.getNumOfUsersToAssign = function(callback){
     const query={isAssigned:false};
@@ -45,11 +50,11 @@ module.exports.getNumOfUsersToAssign = function(callback){
     
 }
 
-
 // module.exports.getUserPackages = function(callback){
 //     UserPackage.find({ username: {$ne:null} }, { username: 1 ,_id:0},callback)
 // }
 
-module.exports.getUserPackages = function(callback){
-    UserPackage.find({},callback);
+module.exports.getUserPackages = function(userId,callback){
+    const query ={userId:userId}
+    UserPackage.find(query,callback);
 }

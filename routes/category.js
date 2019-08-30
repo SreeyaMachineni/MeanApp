@@ -3,7 +3,7 @@ const router = express.Router();
 const Category = require('../models/category');
 
 router.post('/addCategory',(req,res)=>{
-    console.log(req.body);  
+    
     let category = new Category({
         name:req.body.category.name,
         details:req.body.category.details
@@ -25,7 +25,7 @@ router.get('/getCategories',(req,res)=>{
  Category.getCategoryList((err,categories)=>{
      if(err) throw err
      else {
-         console.log(categories);
+        
          res.json(categories)
      }
  })

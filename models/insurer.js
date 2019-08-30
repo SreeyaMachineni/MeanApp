@@ -13,12 +13,12 @@ const InsurerSchema = mongoose.Schema({
 
 const Insurer = module.exports = mongoose.model('Insurer',InsurerSchema);
 module.exports.addInsurer = function(insurer,callback){
-    console.log(insurer);
+   
     insurer.save(callback);
 }
 
 module.exports.getInsurer = function(callback){
-    console.log('getinsurer');
+  
     Insurer.find({},callback)
 }
 
@@ -33,5 +33,5 @@ module.exports.getInsurers = function(callback){
     Insurer.find({},callback);
 }
 module.exports.getInsurersList = function(callback){
-    Insurer.find({ name: {$ne:null} }, { name: 1 ,_id:0},callback)
+    Insurer.find({ name: {$ne:null} }, { name: 1 ,_id:1},callback)
 }

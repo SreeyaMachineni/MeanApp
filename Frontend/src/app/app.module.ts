@@ -6,17 +6,19 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
-import { RegisterComponent } from './components/register/register.component';
-import { ProfileComponent } from './components/profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import { MatTableModule, MatPaginatorModule, MatSortModule,MatNativeDateModule } from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { RegisterComponent } from './components/register/register.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import { FileSelectDirective } from 'ng2-file-upload';
 import {AuthGuard} from './guards/auth.guard';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
 import { EmployeeComponent } from './components/employee/employee.component';
@@ -33,12 +35,16 @@ import { InsurerListComponent } from './insurer/insurer-list/insurer-list.compon
 import { AddOrEditInsurerComponent } from './insurer/add-or-edit-insurer/add-or-edit-insurer.component';
 import { AddOrEditPackageComponent } from './insurer/add-or-edit-package/add-or-edit-package.component';
 import { UserPackagesListComponent } from './user-packages/user-packages-list/user-packages-list.component';
-import { UserClaimsListComponent } from './user-claims/user-claims-list/user-claims-list.component';
+
 import { AddOrEditUserPackagesComponent } from './user-packages/add-or-edit-user-packages/add-or-edit-user-packages.component';
 import { ViewUserPackageComponent } from './user-packages/view-user-package/view-user-package.component';
 import {AssignUsersComponent} from './assign-users/assign-users/assign-users.component';
-import {MatBadgeModule} from '@angular/material/badge';
-// import { UserComponent } from './user/user.component';
+import {EmployeeUsersComponent} from './employee-users/employee-users/employee-users.component';
+import {UserDetailsComponent} from './employee-users/user-details/user-details.component';
+import {PackagesComponent} from './insurer/packages/packages.component';
+import {MatTabsModule} from '@angular/material/tabs';
+ import { UserClaimsListComponent } from './user-claims/user-claims-list/user-claims-list.component';
+ import {AddOrEditUserClaimsComponent} from './user-claims/add-or-edit-user-claims/add-or-edit-user-claims.component';
 
 
 const appRoutes:Routes = [
@@ -53,13 +59,17 @@ const appRoutes:Routes = [
     {path:'addOrEditHospital',component:AddOrEditHospitalsComponent},
     {path:'insCategories',component:CategoryListComponent},
     {path:'insurers',component:InsurerListComponent},
+    {path:'packages',component:PackagesComponent},
     {path:'addOrEditInsurer',component:AddOrEditInsurerComponent,pathMatch: 'full'},
     {path:'addOrEditPackage',component:AddOrEditPackageComponent},
     {path:'mypackages',component:UserPackagesListComponent},
     {path:'myclaims',component:UserClaimsListComponent},
     {path:'addOrEditUserPackage',component:AddOrEditUserPackagesComponent},
     {path:'viewUserPackage',component:ViewUserPackageComponent},
-    {path:'assignUsers',component:AssignUsersComponent}
+    {path:'assignUsers',component:AssignUsersComponent},
+    {path:'myUsers',component:EmployeeUsersComponent},
+    {path:'userDetails',component:UserDetailsComponent},
+    {path:'addUserClaim',component:AddOrEditUserClaimsComponent}
   ]},
   {path:'verify',component:VerifyUserComponent},
   
@@ -79,7 +89,11 @@ const appRoutes:Routes = [
     AddOrEditEmployeeComponent,
     HospitalsComponent,
     AddOrEditHospitalsComponent,
-    AssignUsersComponent
+    AssignUsersComponent,
+    FileSelectDirective,
+    EmployeeUsersComponent,
+    UserDetailsComponent,
+  //  AddOrEditUserClaimsComponent
  // UserComponent
   ],
   imports: [
@@ -104,7 +118,10 @@ const appRoutes:Routes = [
     InsurerModule,
     UserClaimsModule,
     UserPackagesModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatTabsModule,
+    
+    
     
   ],
   providers: [AuthGuard],

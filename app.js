@@ -17,32 +17,20 @@ mongoose.connect(config.database, {  promiseLibrary: require('bluebird') })
     () =>
       {
         console.log(`Connected to database ${config.database}`);
-        // gfs = Grid(config.database, mongoose.mongo);
-        // gfs.collection('uploads'); 
       }
     )
     .catch((err) => console.log(`Database error: ${err}`));
-// const conn = mongoose.createConnection(config.database);
-
-// // Init gfs
-
-
-// conn.once('open', () => {
-//   // Init stream
-//   gfs = Grid(conn.db, mongoose.mongo);
-//   gfs.collection('uploads');
-  
-// });
 
 const app = express();
-
 const users = require('./routes/users');
 const categories = require('./routes/category');
 const insurers = require('./routes/insurer');
 const package = require('./routes/package');
 const hospital = require('./routes/hospitals');
 const userPackage = require('./routes/userPackage');
-
+const docs = require('./routes/docs');
+const notification = require('./routes/notification');
+const userClaims = require('./routes/userClaims');
 // Port Number
 const port = 3000;
 
@@ -67,6 +55,9 @@ app.use('/insurer',insurers);
 app.use('/package',package);
 app.use('/hospital',hospital);
 app.use('/userPackage',userPackage);
+app.use('/docs',docs);
+app.use('/notification',notification);
+app.use('/userClaims',userClaims);
 
 // Index Route
 app.get('/', (req, res) => {

@@ -8,7 +8,7 @@ import {UserPackage} from '../user-packages/user-packages';
   providedIn: 'root'
 })
 export class UserPackagesService {
-  uri = 'http://localhost:3000';
+  uri = 'http://192.168.4.101:3000';
   action:String;
   userPackage:UserPackage;
   constructor(private http: HttpClient) { }
@@ -22,6 +22,7 @@ export class UserPackagesService {
     return this.http.get(this.uri+'/insurer/getInsuresList');
   }
   getPackagesByInsurer(insurer){
+    console.log(insurer);
     return this.http.get(this.uri+'/package/getPackagesByInsurer/'+insurer);
   }
   getCategories(){
@@ -38,13 +39,15 @@ export class UserPackagesService {
   deleteUserPackage(packageId){
     return this.http.get(this.uri+'/userPackage/deleteUserPackage/'+packageId);
   }
+
   editUserPackage(packageId,userPackage){
     return this.http.post(this.uri+'/userPackage/editUserPackage/'+packageId,{package:userPackage},{
       headers:new HttpHeaders({'Content-Type':'application/json'})
     });
   }
-  fetchUserPackages(){
-    return this.http.get(this.uri+'/userPackage/getUserPackages');
+
+  fetchUserPackages(userId){
+    return this.http.get(this.uri+'/userPackage/getUserPackages/'+userId);
   }
   setUserPackage(packge){
     this.userPackage = packge;

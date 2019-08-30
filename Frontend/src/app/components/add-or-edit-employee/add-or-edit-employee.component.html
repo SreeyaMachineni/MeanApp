@@ -1,6 +1,6 @@
 <div class="text-center p-2 pt-5 font-weight-bold">{{action}} Employee</div>
  
-<form [formGroup]="employeeForm" class="row m-0 pt-5" autocomplete="off"  >
+<form [formGroup]="employeeForm" class="row m-0 pt-5" autocomplete="off">
         <div class="offset-md-3 col-md-3 col-sm-7 d-flex flex-column">
     
         <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required></mat-form-field>
@@ -42,5 +42,6 @@
 </form>
 
 <div class="offset-md-8">
-        <button type="submit" class="btn btn-dark" [disabled]="!employeeForm.valid" (click)="saveit(emp._id)">Save</button>
+                <button type="submit" class="btn btn-dark" (click)="cancel()">Cancel</button>
+                        <button type="submit" class="btn btn-dark" [disabled]="!employeeForm.valid" (click)="saveit(emp._id)">Save</button>
 </div>

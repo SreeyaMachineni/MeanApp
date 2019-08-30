@@ -4,14 +4,17 @@ const UserPackage = require('../models/UserPackage');
 
 router.post('/addUserPackage',(req,res)=>{
     let userPackage = new UserPackage({
+        userId:req.body.package.userId,
         username:req.body.package.username,
-        category:req.body.package.category,
-        insurer:req.body.package.insurer,
-        package:req.body.package.package,
+        categoryId:req.body.package.categoryId,
+        insurerId:req.body.package.insurerId,
+        packageId:req.body.package.packageId,
+        categoryName:req.body.package.categoryName,
+        insurerName:req.body.package.insurerName,
+        packageName:req.body.package.packageName,
         activeFrom:req.body.package.activeFrom,
         activeTo:req.body.package.activeTo,
-        isAssigned:req.body.package.isAssigned,
-        assignedTo:req.body.package.assignedTo        
+        notify:null       
     });
     UserPackage.addUserPackage(userPackage,(err,userPackage)=>{
     if(err){
@@ -23,8 +26,9 @@ router.post('/addUserPackage',(req,res)=>{
   })
   })
 
-router.get('/getUserPackages',(req,res)=>{  
-    UserPackage.getUserPackages((err,userPackages)=>{
+router.get('/getUserPackages/:userId',(req,res)=>{  
+
+    UserPackage.getUserPackages(req.params.userId,(err,userPackages)=>{
         if(err) throw err;
         else{
         res.json(userPackages);
@@ -47,15 +51,17 @@ router.post('/editUserPackage/:packageId',(req,res)=>{
     res.json({success: false, msg:'Unable to load doc'});
     }
     else{
+        userPackage.userId = req.body.package.userId,
         userPackage.username = req.body.package.username,
-        userPackage.category = req.body.package.category,
-        userPackage.insurer = req.body.package.insurer,
-        userPackage.package = req.body.package.package,
+        userPackage.categoryId=req.body.package.categoryId,
+        userPackage.insurerId=req.body.package.insurerId,
+        userPackage.packageId=req.body.package.packageId,
+        userPackage.categoryName=req.body.package.categoryName,
+        userPackage.insurerName=req.body.package.insurerName,
+        userPackage.packageName=req.body.package.packageName,
         userPackage.activeFrom = req.body.package.activeFrom,
         userPackage.activeTo = req.body.package.activeTo,
-        userPackage.isAssigned=req.body.package.isAssigned,
-        userPackage.assignedTo=req.body.package.assignedTo
-    
+        userPackage.notify = true
         userPackage.save().then((userPackage)=>{
         res.json({success: true, msg:'Updated'});
     },

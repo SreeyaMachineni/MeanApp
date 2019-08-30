@@ -1,52 +1,42 @@
-<div class="text-center p-2 pt-5 font-weight-bold">Add Package</div>
+<div class="text-center p-2 pt-5 font-weight-bold">{{action}}  Package</div>
 <form [formGroup]="packageForm" class="row m-0 pt-5" autocomplete="off"  >
     <div class="offset-md-3 col-md-3 col-sm-7 d-flex flex-column">
+      <mat-form-field><input matInput placeholder="Package Name" formControlName="name" required></mat-form-field>
+        <mat-form-field>
+          <mat-label>Insurance Category</mat-label>
+          <mat-select required formControlName="insCategory">
+            <mat-option *ngFor="let category of categories" [value]="category._id" (click)="selectedCategory(category.name)">
+              {{category.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      <mat-form-field><input matInput placeholder="Max Sum Assured" formControlName="maxSumAssured" required></mat-form-field>
+      <mat-form-field><input matInput placeholder="Max Sum Assured" formControlName="minSumAssured" required></mat-form-field>
+      <mat-form-field><input matInput placeholder="Premium Ammount" formControlName="premiumAmnt" required></mat-form-field>
+      <mat-form-field><input matInput placeholder="Diseases Covered" formControlName="diseasesCovered" required></mat-form-field>
+      <mat-form-field><input matInput placeholder="Max Members Covererd" formControlName="maxNoOfMembersCovered" required></mat-form-field>
+    </div>
 
-    <mat-form-field><input matInput placeholder="Package Name" formControlName="name" required></mat-form-field>
-    <mat-form-field>
-        <mat-label>Insurance Provider</mat-label>
-        <mat-select required formControlName="insProvider">
-          <mat-option *ngFor="let insurer of insurers" [value]="insurer.name">
-            {{insurer.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
+  <div class="col-md-3 col-sm-7  d-flex flex-column">     
+     
+      <mat-form-field><input matInput placeholder="Max Maturity" formControlName="maxMaturity" required></mat-form-field>
+      <!-- <mat-form-field><input matInput placeholder="Network Hospitals" formControlName="networkHospitals" required></mat-form-field> -->
       <mat-form-field>
-        <mat-label>Insurance Category</mat-label>
-        <mat-select required formControlName="insCategory">
-          <mat-option *ngFor="let category of categories" [value]="category.name">
-            {{category.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    <mat-form-field><input matInput placeholder="Max Sum Assured" formControlName="maxSumAssured" required></mat-form-field>
-    <mat-form-field><input matInput placeholder="Max Sum Assured" formControlName="minSumAssured" required></mat-form-field>
-    <mat-form-field><input matInput placeholder="Premium Ammount" formControlName="premiumAmnt" required></mat-form-field>
-</div>
-
-<div class="col-md-3 col-sm-7  d-flex flex-column">
-
-           
-    <mat-form-field><input matInput placeholder="Max Members Covererd" formControlName="maxNoOfMembersCovered" required></mat-form-field>
-    <mat-form-field><input matInput placeholder="Max Maturity" formControlName="maxMaturity" required></mat-form-field>
-    <!-- <mat-form-field><input matInput placeholder="Network Hospitals" formControlName="networkHospitals" required></mat-form-field> -->
-    <mat-form-field>
-        <mat-label>Network Hospitals</mat-label>
-        <mat-select formControlName="networkHospitals" multiple required>
-          <mat-option *ngFor="let hospital of hospitals" [value]="hospital.name">{{hospital.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-
-    <mat-form-field><input matInput placeholder="Coverage Waiting Period" formControlName="diseaseCoverageWaitingPeriod" required></mat-form-field>
-    <mat-form-field><input matInput placeholder="Waiting Period" formControlName="waitingPeriod" required></mat-form-field>
-    <mat-form-field><input matInput placeholder="Required Documents" formControlName="requiredDocs" required></mat-form-field>
-        </div>
+          <mat-label>Network Hospitals</mat-label>
+          <mat-select formControlName="networkHospitals" multiple required>
+            <mat-option *ngFor="let hospital of hospitals" [value]="hospital.name">{{hospital.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      <mat-form-field><input matInput placeholder="Coverage Waiting Period" formControlName="diseaseCoverageWaitingPeriod" required></mat-form-field>
+      <mat-form-field><input matInput placeholder="Waiting Period" formControlName="waitingPeriod" required></mat-form-field>
+      <mat-form-field><input matInput placeholder="Required Documents" formControlName="requiredDocs" required></mat-form-field>
+      <mat-form-field><input matInput placeholder="Diseases Not Covered" formControlName="diseasesUnCovered" required></mat-form-field>
+  </div>
        
     <!--  -->
 </form>
 
 <div class="offset-md-8">
+    <button type="submit" class="btn btn-dark mr-1" (click)="cancel()">Cancel</button>
     <button type="submit" class="btn btn-dark" [disabled]="!packageForm.valid" (click)="saveit(packge._id)">Save</button>
 </div>

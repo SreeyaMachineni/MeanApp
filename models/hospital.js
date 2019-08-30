@@ -12,12 +12,12 @@ const HospitalSchema = mongoose.Schema({
 })
 const Hospital = module.exports = mongoose.model('Hospital',HospitalSchema);
 module.exports.addHospital = function(hospital,callback){
-    console.log(hospital);
+   
     hospital.save(callback);
 }
 
 module.exports.getHospital = function(callback){
-    console.log('getHospital');
+   
    Hospital.find({},callback)
 }
 

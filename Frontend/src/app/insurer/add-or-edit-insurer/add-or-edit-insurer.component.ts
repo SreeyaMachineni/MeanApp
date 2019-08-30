@@ -3,6 +3,7 @@ import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {Insurer} from '../insurer';
 import {InsurerService} from '../insurer.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-add-or-edit-insurer',
   templateUrl: './add-or-edit-insurer.component.html',
@@ -12,7 +13,7 @@ export class AddOrEditInsurerComponent implements OnInit {
   insurerForm:FormGroup;
   insurer:any;
   action:String;
-  constructor(private fb:FormBuilder,private router:Router,private insurerService:InsurerService) { }
+  constructor(private fb:FormBuilder,private router:Router,private insurerService:InsurerService,private location: Location) { }
 
   ngOnInit() {
     this.insurer = new Insurer();
@@ -96,6 +97,9 @@ export class AddOrEditInsurerComponent implements OnInit {
 
     }
     
+  }
+  cancel(){
+    this.location.back();
   }
 
 

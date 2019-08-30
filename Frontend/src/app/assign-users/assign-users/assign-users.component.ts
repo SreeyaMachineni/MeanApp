@@ -4,7 +4,8 @@ import {User} from './../../user';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { Validators, FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
+import {AssignUsersService} from '../../assign-users/assign-users.service';
 @Component({
   selector: 'app-assign-users',
   templateUrl: './assign-users.component.html',
@@ -12,16 +13,38 @@ import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 })
 export class AssignUsersComponent implements OnInit {
   users:any;
+  UnAssignedUsers:any;
+  emps:any;
   insurer:any;
   displayedColumns: string[] = ['name', 'assignedTo'];
+  assignUsersForm:FormGroup;
   dataSource: MatTableDataSource<User>;
   expandedElement: User | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  constructor(private authService:AuthService) { }
+  constructor(private authService:AuthService,private assignUserService:AssignUsersService) { }
 
   ngOnInit() {
     this.getUsers();
+    this.getEmployees();
+    this.getUnassignedUsers();
+    this.assignUsersForm = new FormGroup(
+      {
+        firstName: new FormControl(''),
+        assignedTo:new FormControl('')
+      }
+    );
+  }
+
+  getUnassignedUsers(){
+    this.authService.getUnassignedUsers().subscribe(
+      (users)=>{
+        this.UnAssignedUsers = users;
+        console.log(this.UnAssignedUsers);
+        
+      },
+      (err)=>{console.log('err fetching');}
+    )
   }
   getUsers(){
     this.authService.getUsers().subscribe(
@@ -34,11 +57,36 @@ export class AssignUsersComponent implements OnInit {
       (err)=>{console.log('err fetching');}
     )
   }
+  
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  getEmployees(){
+    this.authService.getEmployees('employee').subscribe(
+      (emps)=>{
+        this.emps = emps;
+      }
+    )
+  }
+  userList:string[];
+  emp:string;
+
+
+  saveit(){
+    this.emp = this.assignUsersForm.value.assignedTo;
+    this.userList=this.assignUsersForm.value.firstName;
+    this.assignUserService.assignUser(this.userList,this.emp).subscribe(
+      (success)=>{
+        console.log('assigned');
+        this.getUsers();
+      },(err)=>{
+        console.log(' nt assigned');
+      }
+    )
   }
 }

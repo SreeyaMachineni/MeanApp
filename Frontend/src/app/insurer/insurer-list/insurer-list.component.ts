@@ -25,11 +25,10 @@ export class InsurerListComponent implements OnInit {
   }
   addInsurer(){
     this.insurerService.setAction('add');
-    this.router.navigate(['/home/addOrEditInsurer'])  
+    this.router.navigate(['/home/addOrEditInsurer']);  
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -44,7 +43,6 @@ export class InsurerListComponent implements OnInit {
        this.dataSource.sort = this.sort;
        },
       (err)=>console.log('err in fetching hospitals')
-    
     );
   }
   deleteInsurer(insurerId) {
@@ -63,10 +61,13 @@ export class InsurerListComponent implements OnInit {
     )
   }
   editInsurer(hosp,hospid){
-    
     this.insurerService.setAction('edit');
     this.insurerService.setInsurer(hosp);
     this.router.navigate(['/home/addOrEditInsurer']);
+  }
+  getRecord(insurer){
+       this.insurerService.setInsurer(insurer);
+    this.router.navigate(['/home/packages']);
   }
 
 }

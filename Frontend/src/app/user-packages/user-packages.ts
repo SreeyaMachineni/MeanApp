@@ -1,8 +1,12 @@
 export class UserPackage {
+    userId:String
     username:String
-    insurer:String
-    package:String
-    category:String
+    insurerName:String
+    insurerId:String
+    packageName:String
+    packageId:String
+    categoryName:String
+    categoryId:String
     activeFrom:Date
     activeTo:Date
     isAssigned:Boolean

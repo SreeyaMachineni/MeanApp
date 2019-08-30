@@ -6,7 +6,7 @@
     
           <div class="collapse navbar-collapse" id="navbarsExample04">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item active" *ngFor="let menuItem of menu">
+              <!-- <li class="nav-item active" *ngFor="let menuItem of menu">
                 <ng-container 
                   *ngIf="menuItem.menuId == 9;then assignUsersMenu;else otherMenus">
                 </ng-container>
@@ -16,7 +16,32 @@
                 <ng-template #otherMenus>
                   <span class="nav-link" routerLink="{{menuItem.path}}" >{{menuItem.menuName }}</span >
                 </ng-template>
-              </li>
+              </li> -->
+              <li class="nav-item active" *ngFor="let menuItem of menu" [ngSwitch]="menuItem.menuId">
+                <ng-template [ngSwitchCase]="9">
+                  <span class="nav-link" routerLink="{{menuItem.path}}" matBadge="{{NoOfUsersToAssign}}" matBadgeOverlap="true" matBadgeColor="accent">{{menuItem.menuName}}</span>
+                </ng-template>
+
+                <ng-template [ngSwitchCase]="11">
+                  <!-- <span class="nav-link" routerLink="{{menuItem.path}}" matBadge="{{NoOfPackagesToVisit}}" matBadgeOverlap="true" matBadgeColor="accent">{{menuItem.menuName}}</span> -->
+                  <span class="nav-item dropdown ">
+                      <a class="nav-link  text-white"  id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{menuItem.menuName }}</a>
+                      <div class="dropdown-menu mt-2" aria-labelledby="dropdown03">
+                        <!-- <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a> -->
+                        <a class="dropdown-item" href="#" *ngFor = "let notification of notifications">
+                          {{notification.comments}}
+                        </a>
+                        <!-- <hr> -->
+                      </div>
+                    </span>
+
+                </ng-template>
+                <ng-template ngSwitchDefault>
+                    <span class="nav-link" routerLink="{{menuItem.path}}" >{{menuItem.menuName }}</span >
+                </ng-template>
+                              </li>
             </ul>
             <form class="form-inline my-2 my-md-0">
               <input class="form-control" type="button" value="Logout" (click)="onLogout()">

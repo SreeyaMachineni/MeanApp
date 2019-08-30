@@ -3,6 +3,7 @@ import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Hospital } from '../../hospital';
 import { AuthService } from '../../auth.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-add-or-edit-hospitals',
   templateUrl: './add-or-edit-hospitals.component.html',
@@ -12,7 +13,7 @@ export class AddOrEditHospitalsComponent implements OnInit {
   hospForm:FormGroup;
   hosp:Hospital;
   action:String;
-  constructor(private fb:FormBuilder,private authService:AuthService,private router:Router) { }
+  constructor(private fb:FormBuilder,private authService:AuthService,private router:Router,private location: Location) { }
 
   ngOnInit() {
     this.hosp = new Hospital();
@@ -96,6 +97,9 @@ export class AddOrEditHospitalsComponent implements OnInit {
 
     }
     
+  }
+  cancel(){
+    this.location.back();
   }
 
 }

@@ -18,18 +18,24 @@ const UserSchema = mongoose.Schema({
   qualification:{type:String},
   maritalStatus:{type:String},
   isAssigned:{type:Boolean,required:true},
-  assignedTo:{type:String,required:false}
+  assignedTo:{type:String,required:false},
+  userEmpId:{type:String,required:false}
 
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
-module.exports.getUserById = function(id, callback){
-  User.findById(id, callback);
+module.exports.getUserById = function(empId, callback){
+ 
+  var empId = empId;
+  User.findOne({_id: empId}, function (err, user) { 
+    (err)=>{throw err}
+    (user)=>{console.log(user)}
+   });
 }
 
 module.exports.getUsersByRole=function(userrole,callback){
-  console.log(userrole);
+ 
   const query = {userrole:userrole};
   User.find(query,callback);
 }
@@ -71,3 +77,19 @@ module.exports.getUsers = function(callback){
   const query={userrole:'user'}
   User.find(query,callback);
 }
+module.exports.getUnassignedUsers = function(callback){
+  const query={userrole:'user',isAssigned:false}
+  User.find(query,callback);
+}
+module.exports.assignUser = function(user,empId,empName,callback){
+   
+  const query={firstName:user};
+  User.update(query,{$set:{assignedTo:empName,isAssigned:true,userEmpId:empId}},callback)
+}
+
+module.exports.getEmpUsers = function(empId,callback){
+  const query={userEmpId:empId}
+  User.find(query,callback);
+}
+
+

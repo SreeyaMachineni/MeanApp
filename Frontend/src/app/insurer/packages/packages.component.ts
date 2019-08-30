@@ -5,6 +5,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {Insurer} from '../insurer';
+import {InsurerService} from '../insurer.service';
 @Component({
   selector: 'app-packages',
   templateUrl: './packages.component.html',
@@ -12,16 +14,19 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class PackagesComponent implements OnInit {
   packge:any;
+  insurer:Insurer;
   displayedColumns: string[] = ['name','insProvider', 'insCategory', 'premiumAmnt','maxSumAssured','actions'];
   dataSource: MatTableDataSource<Package>;
   expandedElement: Package | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  constructor(private router:Router,private packageService:PackageService) { }
+  constructor(private router:Router,private packageService:PackageService,private insurerService:InsurerService) { }
 
   ngOnInit() {
     this.packge = new Package();
-    this.fetchPackages();
+    this.insurer = this.insurerService.getInsurer();
+    console.log(this.insurer);
+    this.fetchPackages(this.insurer['_id']);
   }
   addPackage(){
     this.packageService.setAction('add');
@@ -34,8 +39,8 @@ export class PackagesComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  fetchPackages(){
-    this.packageService.fetchPackages().subscribe(
+  fetchPackages(insurerId){
+    this.packageService.fetchPackages(insurerId).subscribe(
       (packge)=>{
         this.packge = packge;
         this.dataSource = new MatTableDataSource(this.packge);
@@ -53,7 +58,7 @@ export class PackagesComponent implements OnInit {
       (success)=>{
         if(success['success']){
           console.log('deleted');
-          this.fetchPackages();
+         // this.fetchPackages();
           this.router.navigate(['/home/insurers']);
         }
       },

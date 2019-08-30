@@ -1,5 +1,55 @@
-<div *ngIf="user">
-    <ul>
-        {{user.firstName}}
-    </ul>
+<app-navbar></app-navbar>
+
+<div *ngIf="user" class="container p-5 pl-0" style="width:60%">
+
+<div class="row m-0">
+        <div class="col font-weight-bold text-left">Personal Details</div>
+        <div class="col font-weight-bold text-right">
+             <i class="fa fa-pencil"></i>
+        </div>
+</div>
+
+
+<hr>
+    <div>{{user.firstName}} {{user.lastName}}</div>
+    <div>{{user.phone}}</div>
+    <div>{{user.address}}</div>
+    <div>{{user.email}}</div>
+    <div>{{user.dob}}</div>
+    <div>{{user.gender}}</div>
+    <div class="text-primary pt-3 pb-3"   (click)="setChangePwd()">Change Password</div>
+    <div *ngIf="changePwd">
+    <mat-form-field><input matInput placeholder="Current Password" required></mat-form-field><br>
+    <mat-form-field><input matInput placeholder="Changed Password" required></mat-form-field>
+    <div>
+    <button type="submit" class="btn btn-dark mr-2 pt-1 pb-1" (click)="cancel()">Cancel</button>
+    <button type="submit" class="btn btn-dark pt-1 pb-1" (click)="saveit(emp._id)">Save</button>
+  </div>
+  </div>
+</div>
+
+<div class = "container" style="border-style:dashed;border-color: #eff5f5;width:60%">
+
+
+    
+<div class="row m-0 p-3">
+    <div class="col-md-4" *ngFor="let doc of docs">
+      <div class="thumbnail">
+        <a href="{{doc.path}}">
+          <img src="{{doc.path}}" alt="Lights">
+          <div class="caption">
+            <p>{{doc.name}}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+</div>
+<div class="col m-0 text-center pb-5">
+    <input type="file" name="photo" ng2FileSelect [uploader]="uploader"/>
+    <button type="button" class="btn btn-success btn-s" 
+      (click)="uploader.uploadAll()" 
+      [disabled]="!uploader.getNotUploadedItems().length" >
+          Upload an Image
+    </button>
+</div>
 </div>

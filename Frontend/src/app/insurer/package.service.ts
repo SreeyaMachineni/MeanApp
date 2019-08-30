@@ -9,7 +9,7 @@ import {Package} from './package';
 })
 export class PackageService {
   package:Package;
-  uri = 'http://localhost:3000';
+  uri = 'http://192.168.4.101:3000';
 action:String;
 packageId:any;
 constructor(private http: HttpClient) { }
@@ -22,13 +22,15 @@ addPackage(packge){
     )
   });
 }
-fetchPackages(){
- return this.http.get(this.uri+'/package/getpackages');
+fetchPackages(insurerId){
+ return this.http.get(this.uri+'/package/getpackages/'+insurerId);
 }
 deletePackage(packageId){
   return this.http.get(this.uri+'/package/deletepackage/'+packageId);
 }
-editPackage(packageId,packge){
+editPackage(packageId,packge,notify){
+  console.log('servvv');
+  console.log(packge);
   return this.http.post(this.uri+'/package/editpackage/'+packageId,{package:packge},{
     headers:new HttpHeaders({'Content-Type':'application/json'})
   });

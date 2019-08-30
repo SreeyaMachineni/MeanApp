@@ -9,7 +9,7 @@ import { map, catchError } from "rxjs/operators";
 })
 export class CategoryService {
 category:Category;
-uri = 'http://localhost:3000';
+uri = 'http://192.168.4.101:3000';
 action:String;
 categoryId:any;
 constructor(private http: HttpClient) { }

@@ -4,14 +4,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
+
 @Injectable({
   providedIn: 'root'
 })
 export class InsurerService {
   insurer:Insurer;
-  uri = 'http://localhost:3000';
+  uri = 'http://192.168.4.101:3000';
 action:String;
 insurerId:any;
+
   constructor(private http: HttpClient) { }
   
   addInsurer(insurer){
@@ -44,6 +46,7 @@ insurerId:any;
     this.insurer = insurer;
   }
   getInsurer(){
+    
     return this.insurer;
   }
 

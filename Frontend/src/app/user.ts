@@ -14,4 +14,5 @@ export class User {
     userrole:String
     isAssigned:Boolean
     assignedTo:String
+    userEmpId:String
 }

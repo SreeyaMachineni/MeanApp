@@ -1,1 +1,34 @@
-<p>add-or-edit-user-claims works!</p>
+<div class="container p-4">
+    <div class="text-center pb-3">Add claim by choosing your package</div>
+    <form [formGroup]="userClaimsForm" class="offset-4 col-md-4 col-sm-7 d-flex flex-column pt-5 " autocomplete="off">
+        <mat-form-field>
+                <mat-label>Package</mat-label>
+                <mat-select required formControlName="package">
+                        <mat-option *ngFor="let package of packages" [value]="package._id" (click)="selectedPackage(package.packageId,package.packageName)">
+                        {{package.packageName}}
+                        </mat-option>
+                </mat-select>
+        </mat-form-field>
+        <mat-form-field><input matInput placeholder="Hospital" formControlName="hospital" required></mat-form-field>
+        <mat-form-field><input matInput placeholder="Location" formControlName="location" required></mat-form-field>
+
+        <!-- <mat-form-field><input matInput placeholder="Disease" formControlName="disease" required></mat-form-field> -->
+        <mat-form-field>
+                <mat-label>Disease</mat-label>
+                <mat-select required formControlName="disease">
+                        <mat-option *ngFor="let disease of covered" [value]="disease">
+                        {{disease}}
+                        </mat-option>
+                </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="dateOfSurgery" placeholder="Date of Surgery" formControlName="dateOfSurgery">
+                <mat-datepicker-toggle matSuffix [for]="dateOfSurgery"></mat-datepicker-toggle>
+                <mat-datepicker #dateOfSurgery></mat-datepicker>
+        </mat-form-field>
+    </form>
+    <div class="offset-md-7 pl-5 pt-3">
+                <button type="submit" class="btn btn-dark mr-1" (click)="cancel()">Cancel</button>
+                <button type="submit" class="btn btn-dark" [disabled]="!userClaimsForm.valid" (click)="save()">Save</button>
+            </div>
+</div>

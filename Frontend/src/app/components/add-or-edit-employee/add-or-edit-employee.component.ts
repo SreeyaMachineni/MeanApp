@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormControl } from '@angular/forms';
 import { User } from '../../user';
 import { AuthService } from '../../auth.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-add-or-edit-employee',
   templateUrl: './add-or-edit-employee.component.html',
@@ -15,19 +16,13 @@ export class AddOrEditEmployeeComponent implements OnInit {
   action:String;
   employeeForm:FormGroup;
   empIdToEdit:any;
-  constructor(private authService:AuthService,private router: Router) { }
+  constructor(private authService:AuthService,private router: Router,private location: Location) { }
 
   ngOnInit() {
     this.emp = new User();
     this.action = this.authService.getAction();
-    console.log(this.action);
     if(this.action == 'edit'){
       this.emp = this.authService.getUser();
-      console.log(this.emp);  
-      
-
-
-
       this.employeeForm = new FormGroup(
         {
           firstName: new FormControl(this.emp.firstName),
@@ -67,7 +62,6 @@ export class AddOrEditEmployeeComponent implements OnInit {
   
 
   saveit(empId){
-    console.log('will save');
      this.emp.firstName = this.employeeForm.value.firstName;
    this.emp.lastName = this.employeeForm.value.lastName;
    this.emp.email = this.employeeForm.value.email;
@@ -108,5 +102,7 @@ export class AddOrEditEmployeeComponent implements OnInit {
 
  }
  
-
+ cancel(){
+  this.location.back();
+}
 }

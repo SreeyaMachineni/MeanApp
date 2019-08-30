@@ -28,12 +28,11 @@ export class UserPackagesListComponent implements OnInit {
 
   }
   fetchUserPackages(){
-    this.userPackageService.fetchUserPackages().subscribe(
+    var userId =JSON.parse(localStorage.getItem('user')).id;
+    this.userPackageService.fetchUserPackages(userId).subscribe(
       (userPackage)=>{
         this.userPackage = userPackage;
-        console.log(this.userPackage);
         this.dataSource = new MatTableDataSource(this.userPackage);
-        console.log(this.dataSource);
         this.dataSource.paginator = this.paginator;
        this.dataSource.sort = this.sort;
        },
@@ -62,14 +61,11 @@ export class UserPackagesListComponent implements OnInit {
     )
   }
   editPackage(packge,packageId){
-    
     this.userPackageService.setAction('edit');
     this.userPackageService.setUserPackage(packge);
     this.router.navigate(['/home/addOrEditUserPackage']);
   }
   getRecord(packge){
-    console.log('row clicked');
-    console.log(packge);
     this.userPackageService.setUserPackage(packge);
     this.router.navigate(['/home/viewUserPackage'])
   }

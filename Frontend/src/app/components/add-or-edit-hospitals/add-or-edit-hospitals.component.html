@@ -1,4 +1,4 @@
-<div class="text-center p-2 pt-5 font-weight-bold">Add Hospital</div>
+<div class="text-center p-2 pt-5 font-weight-bold">{{action}} Hospital</div>
  
 <form [formGroup]="hospForm" class="offset-4 col-md-4 col-sm-7 d-flex flex-column pt-5 " autocomplete="off">
         <mat-form-field><input matInput placeholder="Hospital Name" formControlName="name" required></mat-form-field>
@@ -29,5 +29,6 @@
 
 </form>
 <div class="offset-md-7 pl-5 pt-3">
+                <button type="submit" class="btn btn-dark" (click)="cancel()">Cancel</button>
         <button type="submit" class="btn btn-dark" [disabled]="!hospForm.valid" (click)="save(hospForm,hosp._id)">Save</button>
 </div>

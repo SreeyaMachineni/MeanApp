@@ -6,7 +6,6 @@ const CategorySchema = mongoose.Schema({
 });
 const Category = module.exports = mongoose.model('Category',CategorySchema);
 module.exports.addCategory=function(category,callback){
-    console.log(category);
     category.save(callback);
 }
 module.exports.deleteCategory = function(categoryId,callback){
@@ -32,5 +31,5 @@ module.exports.editCategory = function(categoryId,category,callback){
 }
 
 module.exports.getCategoryList = function(callback){
-    Category.find({ name: {$ne:null} }, { name: 1 ,_id:0},callback)
+    Category.find({ name: {$ne:null} }, { name: 1 ,_id:1},callback)
 }
