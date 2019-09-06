@@ -25,7 +25,6 @@ export class PackagesComponent implements OnInit {
   ngOnInit() {
     this.packge = new Package();
     this.insurer = this.insurerService.getInsurer();
-    console.log(this.insurer);
     this.fetchPackages(this.insurer['_id']);
   }
   addPackage(){
@@ -34,7 +33,6 @@ export class PackagesComponent implements OnInit {
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -57,7 +55,6 @@ export class PackagesComponent implements OnInit {
     this.packageService.deletePackage(packageId).subscribe(
       (success)=>{
         if(success['success']){
-          console.log('deleted');
          // this.fetchPackages();
           this.router.navigate(['/home/insurers']);
         }

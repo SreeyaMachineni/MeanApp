@@ -22,15 +22,12 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit() {
      this.emp = new User();
-     this.fetchemp();
-    
-    
+     this.fetchemp();  
   }
   fetchemp(){
     this.authService.getEmployees('employee').subscribe(
       (emp)=>{
         this.emp = emp;
-        console.log(this.emp);
         this.dataSource = new MatTableDataSource(this.emp);
         this.dataSource.paginator = this.paginator;
        this.dataSource.sort = this.sort;
@@ -41,17 +38,14 @@ export class EmployeeComponent implements OnInit {
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
   deleteEmp(empid) {
-    console.log('delete'+empid);
     this.authService.deleteEmp(empid).subscribe(
       (success)=>{
         if(success['success']){
-          console.log('deleted');
           this.fetchemp();
           this.router.navigate(['/home/employees']);
         }

@@ -11,5 +11,17 @@ router.get('/getNotifications/:userId',(req,res)=>{
     })
 })
 
+router.get('/updateNotification/:notificationId',(req,res)=>{
+    var notificationId=req.params.notificationId;
+    const query={_id:notificationId};
+    Notification.updateOne(query,{ $set: {verified:true}},(err,updated)=>{
+        (err)=>{
+            throw err;
+        },(updated)=>{
+            res.json({ success: true, msg: 'success' });
+        }
+    })
+})
+
 
 module.exports = router;

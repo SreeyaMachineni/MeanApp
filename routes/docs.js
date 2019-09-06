@@ -42,7 +42,6 @@ router.get('/getDocs/:id', function(req, res) {
 });
 
 router.post('/approveDoc',function(req,res){
-    console.log(req.body);
     Doc.approveDoc(req.body.docId,req.body.approve,req.body.docName,(err,approve)=>{
         if(err) throw err
         else{
@@ -52,7 +51,7 @@ router.post('/approveDoc',function(req,res){
 })
 
 router.post('/rejectDoc',function(req,res){
-    console.log(req.body);
+    
     Doc.rejectDoc(req.body.docId,req.body.approve,req.body.reason,req.body.docName,(err,approve)=>{
         if(err) throw err
         else{

@@ -40,7 +40,6 @@ export class CategoryListComponent implements OnInit {
     }
   }
   saveit(categoryForm,categoryId){
-    console.log(categoryId);
     this.action = this.categoryService.action;
     this.categories.name=this.categoryForm.value.name;
     this.categories.details = this.categoryForm.value.details;
@@ -51,7 +50,6 @@ export class CategoryListComponent implements OnInit {
       )
     }
     else{
-      
     this.categoryService.editCategory(this.categoryService.categoryId,this.categories).subscribe(
       (success)=>{
         this.fetchCategories();

@@ -23,14 +23,11 @@ export class VerifyUserComponent implements OnInit {
   );
   verifyOtp(){
   this.user=this.authService.getUser();
-  console.log('in verify'+this.user);
    this.authService.createUser(this.otpForm.value.otp).subscribe(
       (data)=>{
-        console.log('added');
         if(data['success']){
           this.authService.storeUserData(data['token'],data['user'],data['expiresin']);
           this.router.navigate(['/home']);
-
         }
         else{
           console.log('err in creating user');

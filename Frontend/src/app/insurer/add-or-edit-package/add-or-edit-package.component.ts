@@ -29,7 +29,6 @@ export class AddOrEditPackageComponent implements OnInit {
     //   }
     // );
     this.insurers = this.insurerService.getInsurer();
-    console.log(this.insurers);
     this.packageService.getCategories().subscribe(
       (categories)=>{
         this.categories = categories;
@@ -61,7 +60,6 @@ export class AddOrEditPackageComponent implements OnInit {
     }
     else{
       this.packge = this.packageService.getPackage();
-      console.log(this.packge);
       this.packageForm = new FormGroup({
         name:new FormControl(this.packge.name),
         insCategory:new FormControl(this.packge.insCategory),

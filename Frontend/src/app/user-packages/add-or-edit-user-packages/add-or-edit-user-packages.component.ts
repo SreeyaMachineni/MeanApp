@@ -48,7 +48,7 @@ export class AddOrEditUserPackagesComponent implements OnInit {
       console.log(this.userPackage);
       this.selectedInsurance(this.userPackage.insurerId);
       this.userPackageForm = new FormGroup({  
-        insurer:new FormControl('this.userPackage.activeTo'),
+        insurer:new FormControl(this.userPackage.activeTo),
         package:new FormControl(this.userPackage.packageName),
         category:new FormControl(this.userPackage.categoryName),
         activeFrom:new FormControl(this.userPackage.activeFrom),

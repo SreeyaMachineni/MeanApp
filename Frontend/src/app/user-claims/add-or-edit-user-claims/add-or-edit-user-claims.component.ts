@@ -40,7 +40,6 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     this.userClaimsService.getUserPackages(userId).subscribe(
       (packages)=>{
         this.packages = packages;
-        console.log(this.packages);
       },(err)=>{
         console.log('err in fetching packages');
       }

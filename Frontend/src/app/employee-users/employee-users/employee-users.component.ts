@@ -13,7 +13,7 @@ import {MatTableDataSource} from '@angular/material/table';
 export class EmployeeUsersComponent implements OnInit {
 user:any;
 //insurer:any;
-  displayedColumns: string[] = ['firstName', 'phone', 'email', 'actions'];
+  displayedColumns: string[] = ['firstName', 'phone', 'email'];
   dataSource: MatTableDataSource<User>;
   expandedElement: User | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -27,6 +27,7 @@ constructor(private empUserService:EmployeeUsersService,private router: Router) 
     this.empUserService.getEmpUsers(JSON.parse(localStorage.getItem('user')).id).subscribe(
       (users)=>{
         this.user = users;
+        console.log(this.user);
         this.dataSource = new MatTableDataSource(this.user);
         this.dataSource.paginator = this.paginator;
        this.dataSource.sort = this.sort;

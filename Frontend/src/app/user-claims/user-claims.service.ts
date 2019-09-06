@@ -20,7 +20,6 @@ export class UserClaimsService {
     return this.action;
   }
   addUserClaim(userClaim){
-    console.log(userClaim);
     return this.http.post(this.uri+'/userClaims/addUserClaim',{claim:userClaim,notify:JSON.parse(localStorage.getItem('user')).userEmpId,username:JSON.parse(localStorage.getItem('user')).firstName},{
       headers:new HttpHeaders(
        { 'Content-Type':'application/json'}

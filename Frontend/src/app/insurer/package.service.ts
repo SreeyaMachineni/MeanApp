@@ -15,7 +15,6 @@ packageId:any;
 constructor(private http: HttpClient) { }
 
 addPackage(packge){
-  console.log(packge);
   return this.http.post(this.uri+'/package/addPackage',{package:packge},{
     headers:new HttpHeaders(
      { 'Content-Type':'application/json'}
@@ -29,8 +28,6 @@ deletePackage(packageId){
   return this.http.get(this.uri+'/package/deletepackage/'+packageId);
 }
 editPackage(packageId,packge,notify){
-  console.log('servvv');
-  console.log(packge);
   return this.http.post(this.uri+'/package/editpackage/'+packageId,{package:packge},{
     headers:new HttpHeaders({'Content-Type':'application/json'})
   });

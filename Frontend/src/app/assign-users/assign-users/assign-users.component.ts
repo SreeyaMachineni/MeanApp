@@ -39,9 +39,7 @@ export class AssignUsersComponent implements OnInit {
   getUnassignedUsers(){
     this.authService.getUnassignedUsers().subscribe(
       (users)=>{
-        this.UnAssignedUsers = users;
-        console.log(this.UnAssignedUsers);
-        
+        this.UnAssignedUsers = users;      
       },
       (err)=>{console.log('err fetching');}
     )
@@ -61,7 +59,6 @@ export class AssignUsersComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -82,7 +79,6 @@ export class AssignUsersComponent implements OnInit {
     this.userList=this.assignUsersForm.value.firstName;
     this.assignUserService.assignUser(this.userList,this.emp).subscribe(
       (success)=>{
-        console.log('assigned');
         this.getUsers();
       },(err)=>{
         console.log(' nt assigned');

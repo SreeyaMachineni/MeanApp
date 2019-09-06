@@ -22,15 +22,13 @@ export class UserPackagesService {
     return this.http.get(this.uri+'/insurer/getInsuresList');
   }
   getPackagesByInsurer(insurer){
-    console.log(insurer);
     return this.http.get(this.uri+'/package/getPackagesByInsurer/'+insurer);
   }
   getCategories(){
     return this.http.get(this.uri+'/category/getCategoryList');
   }
   addUserPackage(userPackage){
-    console.log(userPackage);
-    return this.http.post(this.uri+'/userPackage/addUserPackage',{package:userPackage},{
+    return this.http.post(this.uri+'/userPackage/addUserPackage',{package:userPackage,notify:JSON.parse(localStorage.getItem('user')).userEmpId,},{
       headers:new HttpHeaders(
        { 'Content-Type':'application/json'}
       )
@@ -41,7 +39,7 @@ export class UserPackagesService {
   }
 
   editUserPackage(packageId,userPackage){
-    return this.http.post(this.uri+'/userPackage/editUserPackage/'+packageId,{package:userPackage},{
+    return this.http.post(this.uri+'/userPackage/editUserPackage/'+packageId,{package:userPackage,notify:JSON.parse(localStorage.getItem('user')).userEmpId,},{
       headers:new HttpHeaders({'Content-Type':'application/json'})
     });
   }

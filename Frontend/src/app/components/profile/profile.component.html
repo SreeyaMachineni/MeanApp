@@ -5,7 +5,7 @@
 <div class="row m-0">
         <div class="col font-weight-bold text-left">Personal Details</div>
         <div class="col font-weight-bold text-right">
-             <i class="fa fa-pencil"></i>
+             <i class="fa fa-pencil" (click)="editUser(user)"></i>
         </div>
 </div>
 
@@ -19,11 +19,13 @@
     <div>{{user.gender}}</div>
     <div class="text-primary pt-3 pb-3"   (click)="setChangePwd()">Change Password</div>
     <div *ngIf="changePwd">
-    <mat-form-field><input matInput placeholder="Current Password" required></mat-form-field><br>
-    <mat-form-field><input matInput placeholder="Changed Password" required></mat-form-field>
+        <form [formGroup]="passwordForm" autocomplete="off">
+    <mat-form-field><input matInput placeholder="Current Password" formControlName="currentPwd" required></mat-form-field><br>
+    <mat-form-field><input matInput placeholder="Changed Password" formControlName="changedPwd" required></mat-form-field>
+    </form>
     <div>
-    <button type="submit" class="btn btn-dark mr-2 pt-1 pb-1" (click)="cancel()">Cancel</button>
-    <button type="submit" class="btn btn-dark pt-1 pb-1" (click)="saveit(emp._id)">Save</button>
+    <button type="submit" class="btn btn-dark mr-2 pt-0 pb-0" (click)="cancel()">Cancel</button>
+    <button type="submit" class="btn btn-dark pt-0 pb-0" [disabled]="!passwordForm.valid" (click)="saveit()">Save</button>
   </div>
   </div>
 </div>
@@ -49,7 +51,7 @@
     <button type="button" class="btn btn-success btn-s" 
       (click)="uploader.uploadAll()" 
       [disabled]="!uploader.getNotUploadedItems().length" >
-          Upload an Image
+          Upload Your File
     </button>
 </div>
 </div>

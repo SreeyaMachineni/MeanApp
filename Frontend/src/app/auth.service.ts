@@ -18,8 +18,6 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   createUser(otp:String):Observable<User>{  
-    console.log('calling authors from service');
-    console.log(this.user);
     return this.http.post<User>(this.uri+'/users/register',{user:this.user,otp:otp},{
       headers:new HttpHeaders(
         {
@@ -29,8 +27,19 @@ export class AuthService {
     });
   }
 
+  editUser(user:User,otp:String):Observable<User>{  
+    return this.http.post<User>(this.uri+'/users/editUser',{user:this.user,otp:otp},{
+      headers:new HttpHeaders(
+        {
+          'Content-Type':'application/json'
+        }
+      )
+    });
+  }
+
+
+
   authenticateUser(user:User):Observable<User>{
-    console.log('in auth ser');
     return this.http.post<User>(this.uri+'/users/authenticate',user,{
       headers:new HttpHeaders(
         {
@@ -52,11 +61,7 @@ export class AuthService {
   loggedIn(){
    // return tokenNotExpired();
    var expDate = Date.parse(localStorage.getItem('expiresin'));
-   console.log(expDate);
-   console.log(Date.now());
    var isg = expDate > Date.now();
-   console.log('in logged in');
-   console.log(isg);
    if(expDate > Date.now()){
      return true;
    }
@@ -66,25 +71,17 @@ export class AuthService {
   loadToken(){
     const token = localStorage.getItem('id_token');
     this.authToken = token;
-    console.log(this.authToken);
   }
 
   // storeUserData(token,user){
     storeUserData(token,user,expiresin){
     localStorage.setItem('id_token',token);
     localStorage.setItem('user',JSON.stringify(user));
-    console.log('-------------');
-    console.log(JSON.parse(localStorage.getItem('user')));
-    console.log('-------------');
-
-
     this.authToken = token;
     this.user=user;
     
     var curTime = Date.now();
     curTime += expiresin;
-    console.log(curTime);
-    console.log(new Date(curTime));
     localStorage.setItem('expiresin',JSON.stringify(new Date(curTime)));
   }
 
@@ -96,7 +93,6 @@ export class AuthService {
 
 sendOtp(user:User){
 //  console.log(otp);
-  console.log('otp');
   this.user=user;
   return this.http.post(this.uri+'/users/sendotp',{phone:this.user.phone},{
     headers:new HttpHeaders(
@@ -111,8 +107,6 @@ getUser(){
 }
 
 fileUpload(fd):Observable<any>{
-  console.log(fd);
-  console.log('in auht service');
 return this.http.post(this.uri+'/users/test',{image:fd},{headers:new HttpHeaders({'Content-Type':'application/json'})});
 }
 
@@ -120,12 +114,9 @@ uploadImg():Observable<any>{
 return this.http.get(this.uri+'/users/uploadtest');
 }
 getMenus(userRole){
-  console.log('getting menus '+userRole);
   return this.http.get(this.uri+'/users/menus/'+userRole);
 }
 addEmp(emp:User){
-    console.log(emp);
-    console.log('otp');
     this.user=emp;
     return this.http.post(this.uri+'/users/addEmp',{emp:this.user},{
       headers:new HttpHeaders(
@@ -207,11 +198,26 @@ addEmp(emp:User){
   }
  
   getDocs(id){
-    console.log(id);
     return this.http.get(this.uri+'/docs/getDocs/'+id);
   } 
   getNotifications(userId){
     return this.http.get(this.uri+'/notification/getNotifications/'+userId);
+  }
+
+  getUserById(userId){
+    return this.http.get(this.uri+'/users/getUserById/'+userId);
+  }
+
+
+
+  changePwd(currentPwd,changedPwd){
+    var userId = JSON.parse(localStorage.getItem('user')).id;
+    return this.http.post(this.uri+'/users/changePwd',{currentPwd:currentPwd,changedPwd:changedPwd,userId:userId},{
+      headers:new HttpHeaders({'Content-Type':'application/json'})
+    });
+  }
+  updateNotification(notificationId){
+    return this.http.get(this.uri+'/notification/updateNotification/'+notificationId);
   }
 
 }

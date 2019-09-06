@@ -31,7 +31,6 @@ export class UserClaimsListComponent implements OnInit {
     this.userClaimsService.getUserClaims(JSON.parse(localStorage.getItem('user')).id).subscribe(
       (claims)=>{
         this.userClaims = claims;
-        console.log(this.userClaims);
         this.dataSource = new MatTableDataSource(this.userClaims);
         this.dataSource.paginator = this.paginator;
        this.dataSource.sort = this.sort;

@@ -25,14 +25,7 @@ const UserSchema = mongoose.Schema({
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
-module.exports.getUserById = function(empId, callback){
- 
-  var empId = empId;
-  User.findOne({_id: empId}, function (err, user) { 
-    (err)=>{throw err}
-    (user)=>{console.log(user)}
-   });
-}
+
 
 module.exports.getUsersByRole=function(userrole,callback){
  
@@ -50,7 +43,6 @@ module.exports.addUser = function(newUser, callback){
     bcrypt.hash(newUser.password, salt, (err, hash) => {
       if(err) throw err;
       newUser.password = hash;
-      console.log(newUser.password);
       newUser.save(callback);
     });
   });
@@ -92,4 +84,17 @@ module.exports.getEmpUsers = function(empId,callback){
   User.find(query,callback);
 }
 
-
+module.exports.getUserById = function(userId,callback){
+  var userId = userId;
+  const query={_id:userId}
+  User.findOne(query,callback);
+}
+module.exports.changePwd = function(userId,changedPwd,callback){
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(changedPwd, salt, (err, hash) => {
+      if(err) throw err;
+      var userId=userId;
+      const query={_id:userId};
+    });
+  });
+}

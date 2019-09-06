@@ -1,39 +1,21 @@
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark">
           <a class="navbar-brand" href="#">Something</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-    
           <div class="collapse navbar-collapse" id="navbarsExample04">
             <ul class="navbar-nav mr-auto">
-              <!-- <li class="nav-item active" *ngFor="let menuItem of menu">
-                <ng-container 
-                  *ngIf="menuItem.menuId == 9;then assignUsersMenu;else otherMenus">
-                </ng-container>
-                <ng-template #assignUsersMenu>
-                  <span class="nav-link" routerLink="{{menuItem.path}}" matBadge="{{NoOfUsersToAssign}}" matBadgeOverlap="true" matBadgeColor="accent">{{menuItem.menuName}}</span>
-                </ng-template>
-                <ng-template #otherMenus>
-                  <span class="nav-link" routerLink="{{menuItem.path}}" >{{menuItem.menuName }}</span >
-                </ng-template>
-              </li> -->
               <li class="nav-item active" *ngFor="let menuItem of menu" [ngSwitch]="menuItem.menuId">
                 <ng-template [ngSwitchCase]="9">
                   <span class="nav-link" routerLink="{{menuItem.path}}" matBadge="{{NoOfUsersToAssign}}" matBadgeOverlap="true" matBadgeColor="accent">{{menuItem.menuName}}</span>
                 </ng-template>
-
                 <ng-template [ngSwitchCase]="11">
-                  <!-- <span class="nav-link" routerLink="{{menuItem.path}}" matBadge="{{NoOfPackagesToVisit}}" matBadgeOverlap="true" matBadgeColor="accent">{{menuItem.menuName}}</span> -->
                   <span class="nav-item dropdown ">
                       <a class="nav-link  text-white"  id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{menuItem.menuName }}</a>
                       <div class="dropdown-menu mt-2" aria-labelledby="dropdown03">
-                        <!-- <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a> -->
-                        <a class="dropdown-item" href="#" *ngFor = "let notification of notifications">
+                        <a class="dropdown-item"  *ngFor = "let notification of notifications" (click)="notificationDetails(notification)">
                           {{notification.comments}}
                         </a>
-                        <!-- <hr> -->
                       </div>
                     </span>
 
@@ -47,4 +29,47 @@
               <input class="form-control" type="button" value="Logout" (click)="onLogout()">
             </form>
           </div>
-        </nav>
+        </nav> -->
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Something</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExample04">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown" *ngFor="let menuItem of menu" [ngSwitch]="menuItem.menuId">
+            <ng-template [ngSwitchCase]="3">
+                <a class="nav-link active dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{menuItem.menuName}}</a>
+                <div class="dropdown-menu mt-2" aria-labelledby="dropdown04">
+                  <a class="dropdown-item" *ngFor="let menu of menuItem.subMenu" routerLink="{{menu.path}}">
+                      {{menu.menuName}}
+                  </a>
+                </div>
+              </ng-template>
+
+            <ng-template [ngSwitchCase]="10">
+              <span class="nav-link active" routerLink="{{menuItem.path}}" matBadge="{{NoOfUsersToAssign}}" matBadgeOverlap="true" matBadgeColor="accent">{{menuItem.menuName}}</span>
+            </ng-template>
+            <ng-template [ngSwitchCase]="12">
+              <span class="nav-item dropdown ">
+                  <a class="nav-link  text-white"  id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" matBadge="{{noOfNotifications}}" matBadgeOverlap="true" matBadgeColor="accent">{{menuItem.menuName }}</a>
+                  <div class="dropdown-menu mt-5" aria-labelledby="dropdown03">
+                    <a class="dropdown-item"  *ngFor = "let notification of notifications" (click)="notificationDetails(notification)">
+                      {{notification.comments}}
+                    </a>
+                  </div>
+                </span>
+
+            </ng-template>
+            <ng-template ngSwitchDefault>
+                <span class="nav-link active" routerLink="{{menuItem.path}}" >{{menuItem.menuName }}</span >
+            </ng-template>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-md-0">
+          <input class="form-control" type="button" value="Logout" (click)="onLogout()">
+        </form>
+    </div>
+  </nav>

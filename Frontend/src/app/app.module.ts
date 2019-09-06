@@ -45,7 +45,8 @@ import {PackagesComponent} from './insurer/packages/packages.component';
 import {MatTabsModule} from '@angular/material/tabs';
  import { UserClaimsListComponent } from './user-claims/user-claims-list/user-claims-list.component';
  import {AddOrEditUserClaimsComponent} from './user-claims/add-or-edit-user-claims/add-or-edit-user-claims.component';
-
+ import {UserModule} from './user/user.module';
+import {UserEditComponent} from './user/user-edit/user-edit.component';
 
 const appRoutes:Routes = [
   {path:'',component:LoginComponent},
@@ -69,7 +70,8 @@ const appRoutes:Routes = [
     {path:'assignUsers',component:AssignUsersComponent},
     {path:'myUsers',component:EmployeeUsersComponent},
     {path:'userDetails',component:UserDetailsComponent},
-    {path:'addUserClaim',component:AddOrEditUserClaimsComponent}
+    {path:'addUserClaim',component:AddOrEditUserClaimsComponent},
+    {path:'editUser',component:UserEditComponent}
   ]},
   {path:'verify',component:VerifyUserComponent},
   
@@ -120,7 +122,7 @@ const appRoutes:Routes = [
     UserPackagesModule,
     MatBadgeModule,
     MatTabsModule,
-    
+    UserModule
     
     
   ],

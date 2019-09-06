@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../user';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import {  FileUploader, FileSelectDirective, FileItem } from 'ng2-file-upload/ng2-file-upload';
 import { HttpClient } from '@angular/common/http';
@@ -17,20 +18,24 @@ export class ProfileComponent implements OnInit {
   public uploader: FileUploader;
   docs:any;
   changePwd = false;
+  passwordForm:FormGroup;
   constructor(private authService:AuthService,private router: Router) { }
 
   ngOnInit() {
-    console.log('in init');
     this.user = JSON.parse(localStorage.getItem('user'));
     this.id = JSON.parse(localStorage.getItem('user')).id;
     this.getDocs(this.id);
   URL=URL+this.id;
   this.uploader=new FileUploader({url:URL,itemAlias:'photo'});
   this.buildData();
+  this.passwordForm=new FormGroup({
+    currentPwd:new FormControl(''),
+    changedPwd:new FormControl('')
+  });
   }
   getDocs(id){
     this.authService.getDocs(this.id).subscribe(
-      (docs)=>{this.docs=docs;console.log(this.docs)},
+      (docs)=>{this.docs=docs;},
       (err)=>{console.log(err)}
     )
   }
@@ -49,5 +54,24 @@ export class ProfileComponent implements OnInit {
   setChangePwd(){
     this.changePwd = true;
   }
-
+  cancel(){
+    this.changePwd = false;
+  }
+  saveit(){
+    console.log(this.passwordForm.value.currentPwd);
+    this.authService.changePwd(this.passwordForm.value.currentPwd,this.passwordForm.value.changedPwd).subscribe(
+      (changed)=>{
+        console.log('changed');
+      },
+      (err)=>{
+        console.log('couldnot change');
+      }
+    )
+  }
+  editUser(user){
+    console.log('clicked');
+    this.authService.setUser(user);
+    
+    this.router.navigate(['/home/editUser']);
+  }
 }

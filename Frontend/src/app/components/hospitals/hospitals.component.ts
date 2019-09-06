@@ -33,9 +33,6 @@ export class HospitalsComponent implements OnInit {
     this.authService.getHospitals().subscribe(
       (hosp)=>{
         this.hosp = hosp;
-        console.log('fetch hosp');
-        console.log(this.hosp);
-        console.log('fetch hosp');
         this.dataSource = new MatTableDataSource(this.hosp);
         this.dataSource.paginator = this.paginator;
        this.dataSource.sort = this.sort;
@@ -56,8 +53,6 @@ export class HospitalsComponent implements OnInit {
     this.authService.deleteHosp(hospid).subscribe(
       (success)=>{
         if(success['success']){
-          
-          console.log('deleted');
           this.fetchHosp();
           this.router.navigate(['/home/hospitals']);
         }

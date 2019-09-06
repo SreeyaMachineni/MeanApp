@@ -21,7 +21,6 @@ export class ViewUserPackageComponent implements OnInit {
     this.userPackageService.getPackageDetails(packge).subscribe(
       (packages)=>{
         this.package = packages;
-        console.log(this.package);
       },(err)=>{
         console.log('err in fetching package');
       }

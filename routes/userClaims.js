@@ -5,7 +5,6 @@ const UserClaim = require('../models/userClaims');
 const Notify = require('../models/notification');
 
 router.post('/addUserClaim',(req,res)=>{
-    console.log(req.body);
     let userClaim = new UserClaim({
         userId:mongoose.Types.ObjectId(req.body.claim.userId),
         packageId:req.body.claim.packageId,
@@ -20,7 +19,6 @@ router.post('/addUserClaim',(req,res)=>{
         res.json({success: false, msg:'Failed to add claim'});
     }
     else{
-      //res.json({success:true,msg:'Successfully added claim'});
       Notify.addClaimNotification(req.body.claim.userId,req.body.notify,req.body.username,(err,notify)=>{
         if(err) throw err
         else{

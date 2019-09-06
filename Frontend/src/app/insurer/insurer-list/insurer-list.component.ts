@@ -46,11 +46,9 @@ export class InsurerListComponent implements OnInit {
     );
   }
   deleteInsurer(insurerId) {
-    console.log('delete'+insurerId);
     this.insurerService.deleteInsurers(insurerId).subscribe(
       (success)=>{
         if(success['success']){
-          console.log('deleted');
           this.fetchInsurers();
           this.router.navigate(['/home/insurers']);
         }

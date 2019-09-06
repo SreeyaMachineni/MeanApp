@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import {FormControl, FormGroup,  Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../user';
 import { AuthService } from '../../auth.service';
+import {ErrorStateMatcher} from '@angular/material/core';
+
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -19,7 +22,10 @@ export class RegisterComponent implements OnInit {
     {
       firstName: new FormControl(''),
       lastName: new FormControl(''),
-      email: new FormControl(''),
+      email: new FormControl('',[
+        Validators.required,
+        Validators.email,
+      ]),
       password: new FormControl(''),
       phone: new FormControl(''),
       gender:new FormControl(''),
@@ -30,7 +36,6 @@ export class RegisterComponent implements OnInit {
 
 
   saveit(){
-     console.log('will save');
       this.signedUpUser.firstName = this.userProfileForm.value.firstName;
     this.signedUpUser.lastName = this.userProfileForm.value.lastName;
     this.signedUpUser.email = this.userProfileForm.value.email;
@@ -44,11 +49,8 @@ export class RegisterComponent implements OnInit {
     this.signedUpUser.isAssigned=false;
     this.signedUpUser.assignedTo = null;  
     // change it when editing the user values
-    console.log(this.signedUpUser);
     this.authService.sendOtp(this.signedUpUser).subscribe(
       (data)=>{
-        console.log(data['success']);
-        console.log('verifying');
         this.router.navigate(['/verify']);
       },
       err=>console.log('err in verification')

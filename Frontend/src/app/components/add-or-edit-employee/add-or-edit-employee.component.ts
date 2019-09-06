@@ -79,7 +79,6 @@ export class AddOrEditEmployeeComponent implements OnInit {
 
   this.authService.addEmp(this.emp).subscribe(
     (data)=>{
-      console.log(data['success']);
       if(data['success']){
         this.router.navigate(['/home/employees'])
       }
@@ -97,8 +96,6 @@ export class AddOrEditEmployeeComponent implements OnInit {
         err=>console.log('err in editing employee')
       );
     }
-    
-   console.log(this.employeeForm);
 
  }
  

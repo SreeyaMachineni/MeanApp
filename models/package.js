@@ -50,7 +50,6 @@ module.exports.getPackageDetails = function(package,callback){
 
 module.exports.getCoveredDiseases = function(packageId,callback){
     var packageId = packageId;
-    console.log(packageId)
     const query = {_id:packageId};
     Package.find({ _id: packageId }, { diseasesCovered: 1 ,_id:0},callback)
 }
