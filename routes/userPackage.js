@@ -64,15 +64,6 @@ router.post('/editUserPackage/:packageId',(req,res)=>{
         userPackage.activeTo = req.body.package.activeTo,
         userPackage.notify = true
         userPackage.save().then((userPackage)=>{
-        //     Notify.addPackageNotification(req.body.package.userId,req.body.notify,req.body.package.username,req.body.package.packageName,(err,notify)=>{
-        //         if(err) throw err
-        //         else{
-        //             res.send({success:true})
-        //         }
-        //     })
-
-        // res.json({success: true, msg:'Updated'});
-
         Notify.addPackageNotification(req.body.package.userId,req.body.notify,req.body.package.username,req.body.package.packageName,(err,notify)=>{
             if(err) throw err
             else{

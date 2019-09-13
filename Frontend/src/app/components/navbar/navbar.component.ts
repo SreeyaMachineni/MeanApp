@@ -41,6 +41,7 @@ export class NavbarComponent implements OnInit {
     this.authService.getNotifications(userId).subscribe(
       (notifications)=>{
         this.notifications = notifications;
+        console.log(this.notifications);
         this.noOfNotifications = this.notifications.length;
       }
     )
@@ -94,17 +95,20 @@ export class NavbarComponent implements OnInit {
       
     }
     else if(notification.category == 'docs'){
-      this.authService.getUserById(notification.userId).subscribe(
-        (user)=>{
+      // this.authService.getUserById(notification.userId).subscribe(
+      //   (user)=>{
+        this.router.navigate(['/profile']);
+          
           this.authService.updateNotification(notification._id).subscribe(
           (updated)=>{
-            this.router.navigate(['/profile']);
-          },
-          (err)=>{console.log('failed to fetch');},
+            console.log(updated);
+          },  
+          (err)=>{console.log('failed to fetch');
+        }
           
           )
-        }
-      )
+       // }
+      //)
     }
   }
 }

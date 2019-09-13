@@ -8,7 +8,9 @@ const UserClaimSchema = mongoose.Schema({
    hospital:{type:String,required:true},
    disease:{type:String,required:true},
    location:{type:String,required:true},
-   dateOfSurgery:{type:Date,required:true}
+   dateOfSurgery:{type:Date,required:true},
+   status:{type:String},
+   comments:{type:String}
 });
 const UserClaim = module.exports = mongoose.model('UserClaim',UserClaimSchema);
 
@@ -19,4 +21,10 @@ module.exports.adduserClaim=function(claim,callback){
 module.exports.getUserClaims = function(userId,callback){
     const query={userId:userId};
     UserClaim.find(query,callback);
+}
+
+module.exports.deleteClaim = function(claimId,callback){
+    var claimId = claimId;
+    const query = {_id:claimId};
+    UserClaim.deleteOne(query,callback);
 }

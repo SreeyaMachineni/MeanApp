@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {User} from '../../user';
 import { AuthService } from '../../auth.service';
+import {UserClaimsService} from '../../user-claims/user-claims.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,9 +11,23 @@ import { AuthService } from '../../auth.service';
 })
 export class HomeComponent implements OnInit {
 selectedFile:File = null;
-  constructor(private authService:AuthService,private router: Router) { }
+userClaims:any;
+user:User;
+  constructor(private authService:AuthService,private router: Router,private userClaimService:UserClaimsService) { }
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this.fetchUserClaims();
+  }
+  fetchUserClaims(){
+    this.userClaimService.getUserClaims(JSON.parse(localStorage.getItem('user')).id).subscribe(
+      (claims)=>{
+        this.userClaims = claims;
+        console.log(this.userClaims);        
+      },(err)=>{
+        console.log('err in fetching claims');
+      }
+    )
   }
 //   onLogout(){
 // this.authService.logout();

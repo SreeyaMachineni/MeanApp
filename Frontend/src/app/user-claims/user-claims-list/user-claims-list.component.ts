@@ -45,4 +45,21 @@ export class UserClaimsListComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  deleteClaim(claimId){
+    this.userClaimsService.deleteUserClaim(claimId).subscribe(
+      (deleted)=>{
+        console.log('deleted');
+        this.fetchUserClaims();
+      },
+      (err)=>{
+        console.log('err in deleting')
+      }
+    )
+  }
+  editClaim(userClaims){
+    this.userClaimsService.setAction('edit');
+    this.userClaimsService.setClaim(userClaims);
+    
+    this.router.navigate(['/home/addUserClaim']);
+  }
 }

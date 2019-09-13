@@ -1,0 +1,51 @@
+<div class="container" *ngIf="user.userrole == 'user'">
+<div class="offset-md-1 h4 pl-4 pt-4">Welcome  {{user.firstName}},</div>
+<div class="offset-md-1 pb-4 pl-4">Here are your active claims.</div>
+<div class="row m-0" *ngFor="let claim of userClaims">
+  <div class="offset-md-1 col-sm-10">
+    <div class="card m-2">
+      <div class="card-body">        
+        <div class="row">
+          <div class="col-6 text-left h5">{{claim.packageName}}</div>
+          <div class="col-6 text-right h5" appStatusCode [status]="claim.status" data-toggle="modal" data-target="#statusDetails" (click)="setClaim(claim)">{{claim.status}}</div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-left">
+              <div>Date of Surgery : {{claim.dateOfSurgery | date}}</div>
+              <div>Purpose : {{claim.disease}}</div>
+              <div>Hospital : {{claim.hospital}}</div>
+            </div>
+          
+          </div>
+      </div>
+      
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="user.userrole == 'employee'">
+    <div class="offset-md-1 h4 pl-4 pt-4">Welcome  {{user.firstName}},</div>
+    
+</div>
+  <div *ngIf="claim" class="modal fade" id="statusDetails" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header"><h4 class="modal-title">Status Details</h4></div>
+          <div class="modal-body text-center">
+              <div class="d-flex flex-column offset-md-1 col-8">
+                  <div class="row">
+                      <div class="col-4 text-right font-weight-bold">Status</div>
+                      <div class="col-8 text-left">{{claim.status}}</div>
+              </div>
+              <div class="row">
+                     <div class="col-4 text-right font-weight-bold">Comments</div>
+                     <div class="col-8 text-left">{{claim.comments}}</div>
+             </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>

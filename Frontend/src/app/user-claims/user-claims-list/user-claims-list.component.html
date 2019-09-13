@@ -24,8 +24,8 @@
                 <ng-container matColumnDef="actions">
                         <th mat-header-cell *matHeaderCellDef> Actions </th>
                         <td mat-cell *matCellDef="let userClaims" (click)="$event.stopPropagation()">
-                                <i class="fa fa-pencil pr-3"></i>
-                        <i class="fa fa-trash-o"></i>
+                                <i class="fa fa-pencil pr-3" (click)="editClaim(userClaims,userClaims._id)"></i>
+                        <i class="fa fa-trash-o" (click)="deleteClaim(userClaims._id)"></i>
                                 </td>
                         </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

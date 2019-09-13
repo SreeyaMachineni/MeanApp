@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
           if(data['success']){
            //  this.authService.storeUserData(data['token'],data['user']);
             this.authService.storeUserData(data['token'],data['user'],data['expiresin']);
-            this.router.navigate(['/home']);
+            this.router.navigate(['/home/dashboard']);
           }
           else {
             // this.toastrService.warning('invalid credentials','Warning');

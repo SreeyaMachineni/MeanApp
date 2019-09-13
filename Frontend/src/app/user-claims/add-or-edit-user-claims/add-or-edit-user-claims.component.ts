@@ -27,13 +27,27 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     var userId =JSON.parse(localStorage.getItem('user')).id;
     this.action = this.userClaimsService.getAction();
     this.fetchUserPackages(userId);
-    this.userClaimsForm = new FormGroup({  
-      package:new FormControl(''),
-      hospital:new FormControl(''),
-      disease:new FormControl(''),
-      location:new FormControl(''),
-      dateOfSurgery:new FormControl(''),
-    });
+    if(this.action == 'Add'){
+      this.userClaimsForm = new FormGroup({  
+        package:new FormControl(''),
+        hospital:new FormControl(''),
+        disease:new FormControl(''),
+        location:new FormControl(''),
+        dateOfSurgery:new FormControl(''),
+      });
+    }
+    else{
+      this.userClaim = this.userClaimsService.getClaim();
+      
+      this.userClaimsForm = new FormGroup({  
+        package:new FormControl(this.userClaim.packageName),
+        hospital:new FormControl(this.userClaim.hospital),
+        disease:new FormControl(this.userClaim.disease),
+        location:new FormControl(this.userClaim.location),
+        dateOfSurgery:new FormControl(this.userClaim.dateOfSurgery),
+      });
+    }
+    
   }
 
   fetchUserPackages(userId){
@@ -64,8 +78,6 @@ export class AddOrEditUserClaimsComponent implements OnInit {
 
   save(packageId?){
     this.userClaim.userId = JSON.parse(localStorage.getItem('user')).id;
-    
-    
     this.userClaim.packageId = this.userClaimsForm.value.package;
     this.userClaim.hospital = this.userClaimsForm.value.hospital;
     this.userClaim.disease = this.userClaimsForm.value.disease;
@@ -85,16 +97,16 @@ export class AddOrEditUserClaimsComponent implements OnInit {
         }
       )
     }
-    // else{
-     
-    //   this.userClaimsService.editUserPackage(packageId,this.userPackage).subscribe(
-    //     (userPackage)=>{
-    //       this.router.navigate(['/home/mypackages'])
-    //     },(err)=>{
-    //       console.log('err in adding');
-    //     }
-    //   )
-    // }
+    else{
+     console.log(this.userClaim);
+      this.userClaimsService.editUserClaim(this.userClaim).subscribe(
+        (userPackage)=>{
+          this.router.navigate(['/home/mypackages'])
+        },(err)=>{
+          console.log('err in adding');
+        }
+      )
+    }
    
   }
 }

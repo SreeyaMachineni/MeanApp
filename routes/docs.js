@@ -51,13 +51,13 @@ router.post('/approveDoc',function(req,res){
 })
 
 router.post('/rejectDoc',function(req,res){
-    
     Doc.rejectDoc(req.body.docId,req.body.approve,req.body.reason,req.body.docName,(err,approve)=>{
         if(err) throw err
         else{
             Notify.addNotification(req.body.userId,req.body.reason,req.body.docName,(err,notify)=>{
                 if(err) throw err
                 else{
+                    
                     res.send({success:true})
                 }
             })

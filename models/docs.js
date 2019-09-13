@@ -6,7 +6,7 @@ const DocSchema = mongoose.Schema({
     userId:{type:String},
     name:{type:String},
     fileType:{type:String},
-    isVerified:{type:Boolean},
+    isAccepted:{type:Boolean},
     comments:{type:String}
 });
 const Doc = module.exports = mongoose.model('Doc',DocSchema);
@@ -16,10 +16,10 @@ module.exports.getDocs = function(id,callback){
 module.exports.approveDoc = function(docId,approve,docName,callback){
     var docId = docId;
     const query={_id:docId};
-    Doc.update(query,{$set:{isVerified:approve,name:docName}},callback)
+    Doc.update(query,{$set:{isAccepted:approve,name:docName}},callback)
 }
 module.exports.rejectDoc = function(docId,reject,reason,docName,callback){
     var docId = docId;
     const query = {_id:docId};
-    Doc.update(query,{$set:{isVerified:reject,comments:reason,name:docName}},callback)
+    Doc.update(query,{$set:{isAccepted:reject,comments:reason,name:docName}},callback)
 }

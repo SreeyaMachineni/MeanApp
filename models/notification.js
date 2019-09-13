@@ -48,3 +48,14 @@ module.exports.addPackageNotification = function(userId,notifyTo,username,packag
     notification.save(callback)
 }
 
+module.exports.editClaimNotification = function(userId,notifyTo,username,callback){
+    let notification = new Notification({
+        userId:notifyTo,
+        notifyAbout:userId,
+        category:'claim',
+        comments:username+' updated claim ',
+        verified:false
+    });
+    notification.save(callback)
+}
+

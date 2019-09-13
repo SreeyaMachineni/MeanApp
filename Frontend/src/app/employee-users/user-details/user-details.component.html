@@ -73,7 +73,7 @@
                         </ng-container>
                         
                         <tr mat-header-row *matHeaderRowDef="claimColumns"></tr>
-                        <tr mat-row *matRowDef="let userClaims; columns: claimColumns;" >
+                        <tr mat-row *matRowDef="let userClaims; columns: claimColumns;" (click)="getRecord(userClaims)" data-toggle="modal" data-target="#claimDetails">
                         </tr>
                 </table>
                 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
@@ -119,8 +119,8 @@
                               </div>
                              
                             </a>
-                            <span class="pr-3 text-success" data-toggle="modal" data-target="#approveModal" (click) = "setDocId(doc._id)">Approve</span>
-                            <span class="pl-3 text-danger" data-toggle="modal" data-target="#rejectModal" (click) = "setDocId(doc._id)">Reject</span>
+                            <span class="pr-3 text-success" *ngIf="(doc.isAccepted== null)"  data-toggle="modal" data-target="#approveModal" (click) = "setDocId(doc._id)">Approve</span>
+                            <span class="pl-3 text-danger" *ngIf="(doc.isAccepted== null)" data-toggle="modal" data-target="#rejectModal" (click) = "setDocId(doc._id)">Reject</span>
                           </div>
                         </div>
                     </div>
@@ -169,3 +169,59 @@
                 </div>
             </div>
         </div>
+        <div *ngIf="claimDetails" class="modal fade" id="claimDetails" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header"><h4 class="modal-title">Claim Details</h4></div>
+                    <div class="modal-body text-center">
+                          <form  [formGroup]="statusForm"  class="row m-0" autocomplete="off">
+                                  <div class="d-flex flex-column offset-md-1 col-8">
+                                         <div class="row">
+                                                 <div class="col-6 text-right font-weight-bold">Package</div>
+                                                 <div class="col-4 text-left">{{claimDetails.packageName}}</div>
+                                         </div>
+                                         <div class="row">
+                                                <div class="col-6 text-right font-weight-bold">Hospital</div>
+                                                <div class="col-4 text-left">{{claimDetails.hospital}}</div>
+                                        </div>
+                                        <div class="row">
+                                                 <div class="col-6 text-right font-weight-bold">Location</div>
+                                                 <div class="col-4 text-left">{{claimDetails.location}}</div>
+                                         </div>
+                                         <div class="row">
+                                                <div class="col-6 text-right font-weight-bold">Surgery Date</div>
+                                                <div class="col-5 text-left">{{claimDetails.dateOfSurgery | date}}</div>
+                                        </div>
+                                        <div class="row">
+                                                <div class="col-6 text-right font-weight-bold">Purpose</div>
+                                                <div class="col-4 text-left">{{claimDetails.disease}}</div>
+                                        </div>
+                                        <div class="row">
+                                                
+                                                        <mat-form-field>
+                                                                        <mat-label>Status</mat-label>
+                                                                        <mat-select required formControlName="claimStatus">
+                                                                          <mat-option value="Pending">Pending</mat-option>
+                                                                          <mat-option value="Accepted">Accepted</mat-option>
+                                                                          <mat-option value="Rejected">Rejected</mat-option>
+                                                                          <mat-option value="Docs Required">Docs Required</mat-option>
+                                                                        </mat-select>
+                                                                      </mat-form-field> 
+                                        </div>
+                                        <div class="row">
+                                                
+                                                
+                                                        <mat-form-field><input matInput placeholder="Comments" formControlName="comments" required></mat-form-field>
+                                                
+                                                </div>
+                                  </div>
+                           </form>
+                    </div>
+                    <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-dark" [disabled]="!statusForm.valid" (click)="updateStatus()" data-dismiss="modal">Update Status</button>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>

@@ -47,5 +47,9 @@ export class EmployeeUsersService {
   getUserClaims(userId){
     return this.http.get(this.uri+'/userClaims/getUserClaims/'+userId);
   }
-  
+  setStatus(status,claimId){
+    return this.http.post(this.uri+'/userClaims/setStatus',{status:status,claimId:claimId},{
+      headers:new HttpHeaders({'Content-Type':'application/json'})
+    });
+  }
 }

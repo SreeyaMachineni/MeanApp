@@ -6,6 +6,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Hospital, PointOfContact } from '../../hospital';
 import { AuthService } from '../../auth.service';
+import {HospitalPocService} from '../../hospitals/hospital-poc.service';
 @Component({
   selector: 'app-hospitals',
   templateUrl: './hospitals.component.html',
@@ -13,12 +14,12 @@ import { AuthService } from '../../auth.service';
 })
 export class HospitalsComponent implements OnInit {
   hosp:any;
-  displayedColumns: string[] = ['name', 'specialization', 'location','pointOfContact','actions'];
+  displayedColumns: string[] = ['name', 'specialization', 'location','actions'];
   dataSource: MatTableDataSource<Hospital>;
   expandedElement: Hospital | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  constructor(private authService:AuthService,private router: Router) { }
+  constructor(private authService:AuthService,private router: Router,private hospitalPocService:HospitalPocService) { }
 
   ngOnInit() {
     this.hosp = new Hospital();
@@ -67,6 +68,15 @@ export class HospitalsComponent implements OnInit {
     this.authService.setAction('edit');
     this.authService.setHosp(hosp);
     this.router.navigate(['/home/addOrEditHospital']);
+  }
+  addHospPoC(){
+   // this.hospitalPocService.setAction('Add');
+    this.router.navigate(['/home/addOrEditHospitalPoc']);
+  }
+  getRecord(hosp){
+    this.hospitalPocService.setHospital(hosp);
+    this.router.navigate(['/home/hospitalDetails']);
+    
   }
 
 }

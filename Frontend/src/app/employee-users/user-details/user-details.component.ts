@@ -14,9 +14,11 @@ import { UserClaims } from '../../user-claims/user-claims';
 })
 export class UserDetailsComponent implements OnInit {
   user:any;
+  claimDetails:any;
   userPackage:any;
   userClaims:any;
   docs:any;
+  statusForm:FormGroup;
   userdocsApprove:FormGroup;
   userdocsReject:FormGroup;
   displayedColumns: string[] = ['categoryName', 'insurerName', 'packageName', 'activeFrom','activeTo'];
@@ -32,11 +34,16 @@ export class UserDetailsComponent implements OnInit {
     this.user = this.empUserService.getUser();
     
     this.getUserPackages(this.user._id);
+
     this.getUserDocs(this.user._id);
     this.getUserClaims(this.user._id);
     this.userdocsApprove = new FormGroup({
       docName:new FormControl(),
     });
+    this.statusForm = new FormGroup({
+      claimStatus : new FormControl(''),
+      comments : new FormControl('')
+    })
     this.userdocsReject = new FormGroup({
       docName:new FormControl(),
       reason:new FormControl(),
@@ -103,6 +110,18 @@ export class UserDetailsComponent implements OnInit {
   }
   setDocId(docId){
     this.empUserService.setDocId(docId);
+  }
+  getRecord(userClaims){
+    console.log(userClaims);
+    this.claimDetails = userClaims;
+    
+  }
+  updateStatus(){
+    console.log(this.statusForm.value);
+    this.empUserService.setStatus(this.statusForm.value,this.claimDetails._id).subscribe((statusUpd)=>{
+      //console.log('')
+      this.getUserClaims(this.user._id);
+    })
   }
   
 

@@ -13,19 +13,32 @@ import {UserPackage} from '../../user-packages/user-packages'
 })
 export class UserPackagesListComponent implements OnInit {
   userPackage:any;
-  
-  displayedColumns: string[] = ['category', 'insurer', 'package', 'activeFrom','activeTo','actions'];
+  success = false;
+  show = false;
+  // successAlert;
+  // @ViewChild('success',{static:false}) alertSuccess: ElementRef;
+  // @ViewChild('failure',{static:false}) alertFailure: ElementRef;
+  private alertSuccess: ElementRef;
+
+ @ViewChild('alertSuccess',{static:false}) set content(content: ElementRef) {
+    this.alertSuccess = content;
+ }
+
+  displayedColumns: string[] = ['insurer', 'package', 'activeFrom','activeTo','actions'];
   dataSource: MatTableDataSource<UserPackage>;
   expandedElement: UserPackage | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  
   constructor(private router:Router,private userPackageService:UserPackagesService) { }
 
   ngOnInit() {
-    
     this.userPackage = new UserPackage();
     this.fetchUserPackages();
-
+  }
+  ngAfterViewInit() {
+   //console.log(this.alertSuccess);
+    //console.log(div);
   }
   fetchUserPackages(){
     var userId =JSON.parse(localStorage.getItem('user')).id;
@@ -46,7 +59,6 @@ export class UserPackagesListComponent implements OnInit {
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -54,7 +66,14 @@ export class UserPackagesListComponent implements OnInit {
   deletePackage(packageId){
     this.userPackageService.deleteUserPackage(packageId).subscribe(
       (success)=>{
-        this.fetchUserPackages();
+        
+        if(success['success']){
+         // console.log(this.successAlert);
+          this.show = this.success = true;
+          console.log(this.alertSuccess);
+          this.fetchUserPackages();
+          
+        }
       },(err)=>{
         console.log('could not delete')
       }

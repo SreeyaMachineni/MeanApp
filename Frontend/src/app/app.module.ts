@@ -35,7 +35,6 @@ import { InsurerListComponent } from './insurer/insurer-list/insurer-list.compon
 import { AddOrEditInsurerComponent } from './insurer/add-or-edit-insurer/add-or-edit-insurer.component';
 import { AddOrEditPackageComponent } from './insurer/add-or-edit-package/add-or-edit-package.component';
 import { UserPackagesListComponent } from './user-packages/user-packages-list/user-packages-list.component';
-
 import { AddOrEditUserPackagesComponent } from './user-packages/add-or-edit-user-packages/add-or-edit-user-packages.component';
 import { ViewUserPackageComponent } from './user-packages/view-user-package/view-user-package.component';
 import {AssignUsersComponent} from './assign-users/assign-users/assign-users.component';
@@ -47,6 +46,14 @@ import {MatTabsModule} from '@angular/material/tabs';
  import {AddOrEditUserClaimsComponent} from './user-claims/add-or-edit-user-claims/add-or-edit-user-claims.component';
  import {UserModule} from './user/user.module';
 import {UserEditComponent} from './user/user-edit/user-edit.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {HospitalsModule} from './hospitals/hospitals.module';
+import {HospitalPoCListComponent} from './hospitals/hospital-po-clist/hospital-po-clist.component';
+import {AddOrEditHospitalPoCComponent} from './hospitals/add-or-edit-hospital-po-c/add-or-edit-hospital-po-c.component';
+import {HospitalDetailsComponent} from './hospitals/hospital-details/hospital-details.component';
+import { StatusCodeDirective } from './status-code.directive';
+
+
 
 const appRoutes:Routes = [
   {path:'',component:LoginComponent},
@@ -71,7 +78,12 @@ const appRoutes:Routes = [
     {path:'myUsers',component:EmployeeUsersComponent},
     {path:'userDetails',component:UserDetailsComponent},
     {path:'addUserClaim',component:AddOrEditUserClaimsComponent},
-    {path:'editUser',component:UserEditComponent}
+    {path:'editUser',component:UserEditComponent},
+    {path:'dashboard',component:DashboardComponent},
+    {path:'hospitalPoc',component:HospitalPoCListComponent},
+    {path:'addOrEditHospitalPoc',component:AddOrEditHospitalPoCComponent},
+    {path:'hospitalDetails',component:HospitalDetailsComponent}
+
   ]},
   {path:'verify',component:VerifyUserComponent},
   
@@ -95,6 +107,8 @@ const appRoutes:Routes = [
     FileSelectDirective,
     EmployeeUsersComponent,
     UserDetailsComponent,
+    DashboardComponent,
+    StatusCodeDirective,
   //  AddOrEditUserClaimsComponent
  // UserComponent
   ],
@@ -122,7 +136,8 @@ const appRoutes:Routes = [
     UserPackagesModule,
     MatBadgeModule,
     MatTabsModule,
-    UserModule
+    UserModule,
+    HospitalsModule
     
     
   ],

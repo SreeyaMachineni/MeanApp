@@ -31,6 +31,7 @@ const userPackage = require('./routes/userPackage');
 const docs = require('./routes/docs');
 const notification = require('./routes/notification');
 const userClaims = require('./routes/userClaims');
+const hospitalPoc = require('./routes/hospitalPoc');
 // Port Number
 const port = 3000;
 
@@ -58,6 +59,7 @@ app.use('/userPackage',userPackage);
 app.use('/docs',docs);
 app.use('/notification',notification);
 app.use('/userClaims',userClaims);
+app.use('/hospitalPoc',hospitalPoc);
 
 // Index Route
 app.get('/', (req, res) => {

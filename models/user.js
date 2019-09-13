@@ -6,20 +6,20 @@ const config = require('../config/database');
 const UserSchema = mongoose.Schema({
   firstName: {type: String,required:true},
   lastName: {type: String,required:true},
-  dob: {type: Date,required: true},
   gender:{type:String,require:true},
   email: {type: String,required: true},
   password: {type: String,required: true},
   phone:{type:String,require:true},
   address:{type:String,require:true},
+  isAssigned:{type:Boolean},
+  assignedTo:{type:String,required:false},
+  userEmpId:{type:String,required:false},
   userrole:{type:String},
   pan:{type:String},
   passport:{type:String},
   qualification:{type:String},
   maritalStatus:{type:String},
-  isAssigned:{type:Boolean,required:true},
-  assignedTo:{type:String,required:false},
-  userEmpId:{type:String,required:false}
+  dob: {type: Date},
 
 });
 
