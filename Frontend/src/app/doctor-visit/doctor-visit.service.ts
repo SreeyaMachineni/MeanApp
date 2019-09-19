@@ -12,5 +12,9 @@ export class DoctorVisitService {
   getAction(){
     return this.action;
   }
+  addDoctorVisit(doctorVisit){
+    console.log(doctorVisit);
+    //return 
+  }
 
 }

@@ -1,9 +1,15 @@
 <div class="text-center p-2 pt-5 font-weight-bold">{{action}} Doctor Visit</div>
  
-<!-- <form [formGroup]="doctorVisitForm" class="offset-4 col-md-4 col-sm-7 d-flex flex-column pt-5 " autocomplete="off">
-        
+<form [formGroup]="doctorVisitForm" class="offset-4 col-md-4 col-sm-7 d-flex flex-column pt-5 " autocomplete="off">
+        <mat-form-field><input matInput placeholder="Hospital Name" formControlName="hospitalName" required></mat-form-field>
+        <mat-form-field><input matInput placeholder="Purpose" formControlName="purpose" required></mat-form-field>
+        <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="picker" placeholder="Date of Visit" formControlName="dataOfVisit">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
 </form>
 <div class="offset-md-7 pl-5 pt-3">
                 <button type="submit" class="btn btn-dark mr-2" (click)="cancel()">Cancel</button>
         <button type="submit" class="btn btn-dark" [disabled]="!doctorVisitForm.valid" (click)="save()">Save</button>
-</div> -->
+</div>
