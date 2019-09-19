@@ -11,6 +11,7 @@ export class HospitalPocService {
 action:String;
 uri = 'http://192.168.4.101:3000';
 hospital:Hospital;
+poc:any;
 constructor(private http: HttpClient) { }
   setAction(action){
     this.action = action;
@@ -36,5 +37,22 @@ constructor(private http: HttpClient) { }
   }
   getPocs(hospitalId){
     return this.http.get(this.uri+'/hospitalPoc/getPocs/'+hospitalId);
+  }
+  deletePoc(pocId){
+    return this.http.get(this.uri+'/hospitalPoc/deletePoc/'+pocId);
+  }
+  setHospPoc(poc){
+this.poc = poc;
+  }
+  getHospPoc(){
+    return this.poc;
+  }
+  editPoc(poc,pocId){
+    console.log(poc);
+    return this.http.post(this.uri+'/hospitalPoc/editPoc',{poc:poc,pocId:pocId},{
+      headers:new HttpHeaders(
+       { 'Content-Type':'application/json'}
+      )
+    });
   }
 }

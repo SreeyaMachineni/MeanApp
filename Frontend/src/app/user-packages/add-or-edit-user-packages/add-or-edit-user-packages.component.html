@@ -6,7 +6,7 @@
 
     <mat-form-field>
         <mat-label>Insurance Category</mat-label>
-        <mat-select required formControlName="category">
+        <mat-select required formControlName="category" [compareWith]="compareObjects">
           <mat-option *ngFor="let category of categories" [value]="category._id" (click)="selectedCategory(category.name)" >
             {{category.name}}
           </mat-option>
@@ -14,7 +14,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Insurance Provider</mat-label>
-        <mat-select required formControlName="insurer">
+        <mat-select required formControlName="insurer"  [compareWith]="compareObjects">
           <mat-option *ngFor="let insurer of insurers" [value]="insurer._id" (click)="selectedInsurance(insurer._id,insurer.name)">
             {{insurer.name}}
           </mat-option>
@@ -22,7 +22,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Package</mat-label>
-        <mat-select required formControlName="package">
+        <mat-select required formControlName="package" [compareWith]="compareObjects">
           <mat-option *ngFor="let package of packages" [value]="package._id" (click)="selectedPackage(package.name)">
             {{package.name}}
           </mat-option>

@@ -70,7 +70,7 @@ export class HospitalsComponent implements OnInit {
     this.router.navigate(['/home/addOrEditHospital']);
   }
   addHospPoC(){
-   // this.hospitalPocService.setAction('Add');
+   this.hospitalPocService.setAction('Add');
     this.router.navigate(['/home/addOrEditHospitalPoc']);
   }
   getRecord(hosp){

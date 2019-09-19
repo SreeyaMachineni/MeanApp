@@ -127,4 +127,7 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   cancel(){
     this.location.back();
   }
+  compareObjects(o1: any, o2: any): boolean {
+    return o1.name === o2.name && o1.id === o2.id;
+  }
 }

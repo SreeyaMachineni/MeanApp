@@ -98,3 +98,25 @@ module.exports.changePwd = function(userId,changedPwd,callback){
     });
   });
 }
+
+module.exports.getUserClaims = function(userId,callback){
+  User.aggregate([
+        {$match:{_id:mongoose.Types.ObjectId("5d5a8b83352b262670a4d47b")}},
+        {
+            $lookup:{
+                from:"UserClaim",
+                localField:"_id",
+                foreignField:"userId",
+                as:"claims"
+            }
+        },{
+            $unwind:"$claims"
+        }
+    ])
+    .exec().then((claims)=>{
+      console.log(claims);
+       callback(claims);
+    }).catch((err)=>{
+        console.log(err);
+    })
+}

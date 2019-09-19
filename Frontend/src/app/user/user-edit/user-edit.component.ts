@@ -59,6 +59,7 @@ export class UserEditComponent implements OnInit {
   verifyUser(){
     this.authService.editUser(this.user,this.otpForm.value.otp).subscribe(
       (data)=>{
+        this.router.navigate(['/profile']);
         if(data['success']){
           this.router.navigate(['/profile']);
         }

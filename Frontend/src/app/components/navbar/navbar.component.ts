@@ -41,7 +41,6 @@ export class NavbarComponent implements OnInit {
     this.authService.getNotifications(userId).subscribe(
       (notifications)=>{
         this.notifications = notifications;
-        console.log(this.notifications);
         this.noOfNotifications = this.notifications.length;
       }
     )

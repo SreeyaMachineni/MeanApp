@@ -5,6 +5,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
 import {HospitalPocService} from '../hospital-poc.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+
 @Component({
   selector: 'app-add-or-edit-hospital-po-c',
   templateUrl: './add-or-edit-hospital-po-c.component.html',
@@ -15,11 +16,13 @@ export class AddOrEditHospitalPoCComponent implements OnInit {
   poc:HospitalPoc;
   hospitals:any;
   hospitalName:String;
-  constructor(private location:Location,private hospitalPocService:HospitalPocService,private router:Router) { }
+  action:String;
+  constructor(private returnLocation:Location,private hospitalPocService:HospitalPocService,private router:Router) { }
 
   ngOnInit() {
     this.fetchHospitals();
-    this.poc = new HospitalPoc();
+   // this.poc = new HospitalPoc();
+    this.action = this.hospitalPocService.getAction();
     this.pocForm = new FormGroup({
       firstName: new FormControl(''),
       lastName: new FormControl(''),
@@ -28,23 +31,37 @@ export class AddOrEditHospitalPoCComponent implements OnInit {
       gender:new FormControl(''),
       address:new FormControl(''),
       hospitalName:new FormControl(''),
-      location:new FormControl('')
     })
   }
   fetchHospitals(){
     this.hospitalPocService.getHospitals().subscribe(
       (hospitals)=>{
         this.hospitals = hospitals;
-        this.pocForm = new FormGroup({
-          firstName: new FormControl(''),
-          lastName: new FormControl(''),
-          email: new FormControl(''),
-          phone: new FormControl(''),
-          gender:new FormControl(''),
-          address:new FormControl(''),
-          hospitalName:new FormControl(''),
-          location:new FormControl('')
-        })
+        if(this.action == 'Add'){
+          this.poc = new HospitalPoc();
+          this.pocForm = new FormGroup({
+            firstName: new FormControl(''),
+            lastName: new FormControl(''),
+            email: new FormControl(''),
+            phone: new FormControl(''),
+            gender:new FormControl(''),
+            address:new FormControl(''),
+            hospitalName:new FormControl(''),
+          })
+        }else{
+          this.poc = this.hospitalPocService.getHospPoc();
+          console.log(this.poc);
+          this.pocForm = new FormGroup({
+            firstName: new FormControl(this.poc.firstName),
+            lastName: new FormControl(this.poc.lastName),
+            email: new FormControl(this.poc.email),
+            phone: new FormControl(this.poc.phone),
+            gender:new FormControl(this.poc.gender),
+            address:new FormControl(this.poc.address),
+            hospitalName:new FormControl(this.poc.hospitalName),
+          })
+        }
+       
         console.log(this.hospitals);
       },
       (err)=>{
@@ -53,14 +70,13 @@ export class AddOrEditHospitalPoCComponent implements OnInit {
     )
   }
   cancel(){
-    this.location.back();
+    this.returnLocation.back();
   }
   selectedHospital(hospitalName){
     this.hospitalName = hospitalName;
   }
-  saveit(){   
+  saveit(pocId){   
     this.poc.hospitalName = this.hospitalName;
-    this.poc.location = this.pocForm.value.location;
     this.poc.hospitalId = this.pocForm.value.hospitalName;
     this.poc.firstName = this.pocForm.value.firstName;
     this.poc.lastName = this.pocForm.value.lastName;
@@ -69,11 +85,21 @@ export class AddOrEditHospitalPoCComponent implements OnInit {
     this.poc.gender = this.pocForm.value.gender;
     this.poc.address = this.pocForm.value.address;
     this.poc.password = 'poc'
-    this.hospitalPocService.addPoC(this.poc).subscribe(
-      (poc)=>{
-        this.router.navigate(['/home/hospitalPoc']);
-      }
-    )
+    if(this.action == 'Add'){
+      this.hospitalPocService.addPoC(this.poc).subscribe(
+        (poc)=>{
+         this.router.navigate(['/home/hospitals']);
+        // this.returnLocation.back();
+        }
+      )
+    }else{
+      this.hospitalPocService.editPoc(this.poc,pocId).subscribe(
+        (poc)=>{
+          this.returnLocation.back();
+        }
+      )
+    }
+    
     
   }
 }

@@ -47,7 +47,10 @@ export class ProfileComponent implements OnInit {
     this.uploader.uploadAll();
     this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any): any => {
       if(response){
-       console.log("response"+JSON.stringify(response));
+       //console.log("response"+JSON.stringify(response));
+       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['/profile']);
      }
     }
   }
@@ -61,7 +64,9 @@ export class ProfileComponent implements OnInit {
     console.log(this.passwordForm.value.currentPwd);
     this.authService.changePwd(this.passwordForm.value.currentPwd,this.passwordForm.value.changedPwd).subscribe(
       (changed)=>{
-        console.log('changed');
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['/profile']);
       },
       (err)=>{
         console.log('couldnot change');

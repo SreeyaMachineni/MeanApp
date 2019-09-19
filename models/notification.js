@@ -21,7 +21,8 @@ module.exports.addNotification = function(userId,comment,docName,callback){
     notification.save(callback)
 }
 module.exports.getNotifications = function(userId,callback){
-    const query = {userId:userId,verified:false};
+   // const query = {userId:userId,verified:false};
+   const query = {userId:userId};
     Notification.find(query,callback);
 }
 

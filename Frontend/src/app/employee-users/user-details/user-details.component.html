@@ -164,7 +164,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-dark float-left" [disabled]="!userdocsReject.valid" (click)="rejectIt()">Reject</button>
+                    <button type="submit" class="btn btn-dark float-left" [disabled]="!userdocsReject.valid" data-dismiss="modal" (click)="rejectIt()">Reject</button>
                 </div>
                 </div>
             </div>
@@ -219,7 +219,7 @@
                     </div>
                     <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-dark" [disabled]="!statusForm.valid" (click)="updateStatus()" data-dismiss="modal">Update Status</button>
+                      <button type="submit" class="btn btn-dark" [disabled]="!statusForm.valid"  data-dismiss="modal" (click)="updateStatus()">Update Status</button>
                       
                     </div>
                   </div>

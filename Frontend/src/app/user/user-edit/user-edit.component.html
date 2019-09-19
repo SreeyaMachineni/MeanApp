@@ -1,3 +1,4 @@
+<div class="text-center font-weight-bold p-5">Edit Your Details</div>
 <form [formGroup]="userEditForm" *ngIf="!verify" class="offset-4 col-md-3 col-sm-7 d-flex flex-column pt-5"  autocomplete="off"  (ngSubmit)="saveit()">
         <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required></mat-form-field>
         <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required></mat-form-field>

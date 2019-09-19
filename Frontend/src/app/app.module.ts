@@ -27,6 +27,7 @@ import { AddOrEditEmployeeComponent } from './components/add-or-edit-employee/ad
 import { HospitalsComponent } from './components/hospitals/hospitals.component';
 import { AddOrEditHospitalsComponent } from './components/add-or-edit-hospitals/add-or-edit-hospitals.component';
 import {CategoryModule} from './category/category.module';
+import {DoctorVisitModule} from './doctor-visit/doctor-visit.module';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import {InsurerModule} from './insurer/insurer.module';
 import {UserClaimsModule} from './user-claims/user-claims.module';
@@ -52,7 +53,8 @@ import {HospitalPoCListComponent} from './hospitals/hospital-po-clist/hospital-p
 import {AddOrEditHospitalPoCComponent} from './hospitals/add-or-edit-hospital-po-c/add-or-edit-hospital-po-c.component';
 import {HospitalDetailsComponent} from './hospitals/hospital-details/hospital-details.component';
 import { StatusCodeDirective } from './status-code.directive';
-
+import { DoctorVisitComponent } from './doctor-visit/doctor-visit/doctor-visit.component';
+import {AddOrEditDoctorVisitComponent} from './doctor-visit/add-or-edit-doctor-visit/add-or-edit-doctor-visit.component';
 
 
 const appRoutes:Routes = [
@@ -82,7 +84,9 @@ const appRoutes:Routes = [
     {path:'dashboard',component:DashboardComponent},
     {path:'hospitalPoc',component:HospitalPoCListComponent},
     {path:'addOrEditHospitalPoc',component:AddOrEditHospitalPoCComponent},
-    {path:'hospitalDetails',component:HospitalDetailsComponent}
+    {path:'hospitalDetails',component:HospitalDetailsComponent},
+    {path:'doctorVisit',component:DoctorVisitComponent},
+    {path:'addOrEditDoctorVisit',component:AddOrEditDoctorVisitComponent}
 
   ]},
   {path:'verify',component:VerifyUserComponent},
@@ -109,6 +113,7 @@ const appRoutes:Routes = [
     UserDetailsComponent,
     DashboardComponent,
     StatusCodeDirective,
+    
   //  AddOrEditUserClaimsComponent
  // UserComponent
   ],
@@ -116,7 +121,7 @@ const appRoutes:Routes = [
     CommonModule,
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { onSameUrlNavigation: 'reload' }),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -137,9 +142,8 @@ const appRoutes:Routes = [
     MatBadgeModule,
     MatTabsModule,
     UserModule,
-    HospitalsModule
-    
-    
+    HospitalsModule,
+    DoctorVisitModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

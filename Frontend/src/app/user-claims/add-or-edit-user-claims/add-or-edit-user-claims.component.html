@@ -3,7 +3,7 @@
     <form [formGroup]="userClaimsForm" class="offset-4 col-md-4 col-sm-7 d-flex flex-column pt-5 " autocomplete="off">
         <mat-form-field>
                 <mat-label>Package</mat-label>
-                <mat-select required formControlName="package">
+                <mat-select required formControlName="package" [compareWith]="compareObjects">
                         <mat-option *ngFor="let package of packages" [value]="package._id" (click)="selectedPackage(package.packageId,package.packageName)">
                         {{package.packageName}}
                         </mat-option>

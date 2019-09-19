@@ -24,10 +24,9 @@
     <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required></mat-form-field>   
     <mat-form-field><input matInput placeholder="Phone Number" formControlName="phone" required></mat-form-field>     
     <mat-form-field><input matInput placeholder="Address" formControlName="address" required></mat-form-field>
-    <mat-form-field><input matInput placeholder="Location" formControlName="location" required></mat-form-field>
 </div>
 </form>
 <div class="offset-md-8">
         <button type="submit" class="btn btn-dark mr-1" (click)="cancel()">Cancel</button>
-        <button type="submit" class="btn btn-dark" [disabled]="!pocForm.valid" (click)="saveit()">Save</button>
+        <button type="submit" class="btn btn-dark" [disabled]="!pocForm.valid" (click)="saveit(poc._id)">Save</button>
     </div>

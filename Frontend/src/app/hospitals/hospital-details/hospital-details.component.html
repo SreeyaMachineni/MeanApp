@@ -32,8 +32,8 @@
               <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef> Actions </th>
                 <td mat-cell *matCellDef="let poc" (click)="$event.stopPropagation()">
-                        <i class="fa fa-pencil pr-3"></i>
-                        <i class="fa fa-trash-o"></i>
+                        <i class="fa fa-pencil pr-3" (click)="editPoc(poc,poc._id)"></i>
+                        <i class="fa fa-trash-o" (click)="deletePoc(poc._id)"></i>
                         </td>
             </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

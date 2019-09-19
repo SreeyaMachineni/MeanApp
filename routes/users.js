@@ -250,24 +250,6 @@ router.post('/editUser', (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 router.get('/getNumOfUsersToAssign', (req, res) => {
   User.getNumOfUsersToAssign((err, count) => {
     if (err) throw err

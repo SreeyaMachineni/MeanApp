@@ -102,6 +102,10 @@ export class UserDetailsComponent implements OnInit {
     this.empUserService.rejectDoc(docId,this.userdocsReject.value.reason,this.userdocsReject.value.docName).subscribe(
       (rejected)=>{
         console.log('rejected');
+        this.empUserService.setUser(this.user);
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['/home/userDetails']);
       },
       (err)=>{
         console.log('could not reject');

@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const UserClaim = require('../models/userClaims');
+const User = require('../models/user');
+const HospitalPoC = require('../models/hospitalPoc');
+const Hospital = require('../models/hospital');
 const Notify = require('../models/notification');
 
 router.post('/addUserClaim',(req,res)=>{
@@ -105,24 +108,6 @@ router.post('/editUserClaim',(req,res)=>{
 
 router.post('/setStatus',(req,res)=>{
     console.log(req.body);
-    // User.findOne({ _id: userId }).then(user => {
-    //     if (user) {
-    //       User.update({ _id: userId }, { $set: {
-    //         firstName : req.body.user.firstName,
-    //              lastName : req.body.user.lastName,
-    //                dob : req.body.user.dob,
-    //               gender : req.body.user.gender,
-    //               phone : req.body.user.phone,
-    //                email : req.body.user.email,
-    //                address : req.body.user.address
-    //          } }, (err, ass) => {
-    //         (err) => { res.json({ success: false, msg: 'fail' }); },
-    //           (ass) => { res.json({ success: true, msg: 'success' }); }
-    //       })
-    //     } else {
-    //       console.log('err');
-    //     }
-    //   })
     var claimId = req.body.claimId;
     UserClaim.findOne({_id:claimId}).then(claim=>{
         if(claim){
@@ -133,6 +118,69 @@ router.post('/setStatus',(req,res)=>{
         }
     })
 
+})
+
+router.get('/getEmpClaims/:empId',(req,res)=>{
+   
+    // User.find({
+    //     userEmpId: {  $eq: mongoose.Types.ObjectId(req.params.empId) }
+    //     }).then((user)=>{
+    //         console.log(user);
+    //         let result = user.map(a => a._id);
+    //         UserClaim.find({
+    //             userId: { $in:result }
+    //         }).then((claim)=>{
+    //              res.json(claim);
+    //         });
+    //     });
+  
+    User.aggregate([
+        {$match:{userEmpId:req.params.empId}},
+        {
+            $lookup:{
+                from:"userclaims",
+                localField:"_id",
+                foreignField:"userId",
+                as:"claims"
+            }
+        },{
+            $unwind:"$claims"
+        }
+    ])
+    .exec().then((claims)=>{
+        res.json(claims);
+    }).catch((err)=>{
+        console.log(err);
+    })
+
+
+    // User.getUserClaims('5d5a8b83352b262670a4d47b',(err,claims)=>{
+    //     if(err) throw err;
+    //     console.log(claims);
+    // })
+
+});
+router.get('/getClaimsByHospital/:pocId',(req,res)=>{
+    var pocId = req.params.pocId;
+    const query = {pocId:mongoose.Types.ObjectId(pocId)};
+    HospitalPoC.find({ pocId: mongoose.Types.ObjectId(pocId) }).then(poc => {
+        if (poc) {
+            var hospId = poc[0].hospitalId;
+            Hospital.find({_id:hospId}).then(hosp=>{
+                if(hosp){  
+                    UserClaim.find({hospital:hosp[0].name}).then(claims=>{
+                        if(claims){
+                            console.log(claims);
+                            res.json(claims);
+                        }
+                    })
+                }
+            })
+        }
+    },(err)=>{
+        throw err;
+    })
+    
 })
 
 module.exports = router;

@@ -109,4 +109,8 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     }
    
   }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1.packageName === o2.packageName && o1.packageId === o2.packageId;
+  }
 }

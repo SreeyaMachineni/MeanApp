@@ -50,4 +50,11 @@ export class UserClaimsService {
       )
     });
   }
+  getEmployeeClaims(empId){
+    return this.http.get(this.uri+'/userClaims/getEmpClaims/'+empId);
+  }
+  getClaimsByHospital(pocId){
+    return this.http.get(this.uri+'/userClaims/getClaimsByHospital/'+pocId);
+  }
+  
 }

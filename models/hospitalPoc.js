@@ -9,20 +9,8 @@ const HospitalPocSchema = mongoose.Schema({
 })
 const HospitalPoc = module.exports = mongoose.model('HospitalPoc',HospitalPocSchema);
 
-// module.exports.addHospital = function(hospital,callback){
-   
-//     hospital.save(callback);
-// }
 module.exports.getPocs = function(hospitalId,callback){
-    
-    // Users.aggregate(
-    //     [
-    //         { "$match": {
-    //             "_id": { 
-    //                 "$in": db.hospitalpocs.distinct("pocId",{ "hospitalId": "ObjectId("5d38450c31ea69155427765d")" })
-    //             }
-    //         }}
-    //     ])
+
     User.aggregate(
         [
             {
@@ -37,3 +25,9 @@ module.exports.getPocs = function(hospitalId,callback){
 
 
 }
+module.exports.deletePoc = function(pocId,callback){
+    var pocId = pocId;
+    const query = {pocId:mongoose.Types.ObjectId(pocId)};
+    HospitalPoc.deleteOne(query,callback);
+}
+
