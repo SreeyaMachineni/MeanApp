@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 const config = require('../config/database');
 const NotificationSchema = mongoose.Schema({
-    // userId:{type:String},
-    // comments:{type:String},
     userId:{type:String},
     notifyAbout:{type:String},
     category:{type:String},
     comments:{type:String},
-    verified:{type:Boolean}
+    verified:{type:Boolean},
+    createDate:{type:Date,default: Date.now}
    
 });
 const Notification = module.exports = mongoose.model('Notification',NotificationSchema);
@@ -16,14 +15,14 @@ module.exports.addNotification = function(userId,comment,docName,callback){
         userId:userId,
         category:'docs',
         comments:docName+' has been rejected due to the following reason'+comment,
-        verified:false
+        verified:false,
+        
     });
     notification.save(callback)
 }
 module.exports.getNotifications = function(userId,callback){
-   // const query = {userId:userId,verified:false};
    const query = {userId:userId};
-    Notification.find(query,callback);
+Notification.find(query).sort('-createDate').exec(callback)
 }
 
 module.exports.addClaimNotification=function(userId,notifyTo,username,callback){

@@ -61,15 +61,8 @@ router.post('/rejectDoc',function(req,res){
                     res.send({success:true})
                 }
             })
-
-            //res.send({success:true})
         }
     })
 })
-
-
-
-
-
 
 module.exports=router;

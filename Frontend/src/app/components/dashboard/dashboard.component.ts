@@ -6,6 +6,7 @@ import { UserClaims } from '../../user-claims/user-claims';
 import {EmployeeUsersService} from '../../employee-users/employee-users.service';
 import {AuthService} from '../../auth.service';
 import {UserPackagesService} from '../../user-packages/user-packages.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit {
   claim:UserClaims;
   selectedUser:any;
   userPackage:any;
+  
     constructor(private router: Router,private userClaimService:UserClaimsService,
       private empUserService:EmployeeUsersService,private authService:AuthService,private userPackages:UserPackagesService) { }
 
@@ -71,7 +73,6 @@ export class DashboardComponent implements OnInit {
       this.userClaimService.getEmployeeClaims(empId).subscribe(
         (claims)=>{
           this.userClaims = claims;
-          console.log(this.userClaims)
         },(err)=>{
           console.log('err in fetching claims');
         }
@@ -96,48 +97,49 @@ export class DashboardComponent implements OnInit {
         this.empUserService.setUser(this.selectedUser);
         this.router.navigate(['/home/userDetails']);
       })
-      //this.empUserService.setUser(user);
-     
     }
 
     notificationDetails(notification){
-
       if(notification.category == 'claim' || notification.category == 'package'){
-  
-        this.authService.getUserById(notification.notifyAbout).subscribe(
-  
-          (user)=>{
-            this.empUserService.setUser(user);
-            this.router.navigate(['/home/userDetails']);
-            this.authService.updateNotification(notification._id).subscribe(
-              (updated)=>{
-                console.log('updated')
-              },
-              (err)=>{
-                console.log('failed to fetch')
-            }
-              )  },
-            
-            (err)=>{console.log('failed to fetch')}
-            )
-          
+        if(this.user.userrole == 'employee'){
+          this.authService.getUserById(notification.notifyAbout).subscribe(
+            (user)=>{
+              this.empUserService.setUser(user);
+              this.router.navigate(['/home/userDetails']);
+              this.authService.updateNotification(notification._id).subscribe(
+                (updated)=>{
+                  console.log('updated')
+                },
+                (err)=>{
+                  console.log('failed to fetch')
+              }
+                )  },
+              
+              (err)=>{console.log('failed to fetch')}
+              )
+        }else if(this.user.userrole == 'user'){
+          if(notification.category == 'claim'){
+            this.router.navigate(['/home/myclaims']);
+          }
+          if(notification.category == 'package'){
+            this.router.navigate(['/home/mypackages']);
+          }
+        }
         
       }
       else if(notification.category == 'docs'){
-        // this.authService.getUserById(notification.userId).subscribe(
-        //   (user)=>{
-          this.router.navigate(['/profile']);
-            
+          this.router.navigate(['/profile']); 
             this.authService.updateNotification(notification._id).subscribe(
             (updated)=>{
               console.log(updated);
             },  
             (err)=>{console.log('failed to fetch');
           }
-            
             )
-         // }
-        //)
       }
+    }
+    claimDetails(claim){
+      this.userClaimService.setClaim(claim);
+      this.router.navigate(['/home/claimDetails']);
     }
 }

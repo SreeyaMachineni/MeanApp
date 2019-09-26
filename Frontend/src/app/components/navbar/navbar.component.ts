@@ -3,7 +3,9 @@ import {User} from '../../user';
 import {Menu} from '../../menu';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
+import { Validators, FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import {EmployeeUsersService} from '../../employee-users/employee-users.service';
+import {ContactService} from '../../contact/contact.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -17,7 +19,14 @@ export class NavbarComponent implements OnInit {
   NoOfPkgsToVisit:any;
   notifications:any;
   noOfNotifications:any;
-  constructor(private authService:AuthService,private router: Router,private empUserService:EmployeeUsersService) { }
+  contactForm:FormGroup;
+  contact:any;
+  users:any;
+  userrole:any;
+  claim:any;
+  userContacts:any;
+  options: string[] = ['Notify Employee','Notify user and Employee'];
+  constructor(private authService:AuthService,private router: Router,private empUserService:EmployeeUsersService,private contactService:ContactService) { }
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
     var userRole = this.user.userrole;
@@ -25,6 +34,55 @@ export class NavbarComponent implements OnInit {
     this.getMenus(userRole);
     this.getNumOfUsersToAssign();
     this.getNotification(this.user['id']);
+
+    this.contact = {};
+    this.contactForm = new FormGroup({
+      regarding:new FormControl(''),
+      description:new FormControl(''),
+      user:new FormControl(' '),
+      notifyOption:new FormControl('')
+    });
+    
+    this.userrole = JSON.parse(localStorage.getItem('user')).userrole;
+    if(this.userrole == 'user'){
+      this.getMyContacts();
+    }
+    if(this.userrole == 'employee'){
+      this.fetchEmpUsers(JSON.parse(localStorage.getItem('user')).id);
+    }
+    
+  }
+
+  getMyContacts(){
+    this.contactService.getMyContacts(JSON.parse(localStorage.getItem('user')).id);
+  }
+  fetchEmpUsers(empId){
+    this.contactService.fetchEmpUsers(empId).subscribe(
+      (users)=>{
+        this.users = users;
+      },
+      (err)=>{
+        console.log('failed to fetch')
+      }
+    )
+  }
+  addContact(){
+    
+    this.contact.regarding = this.contactForm.value.regarding;
+    this.contact.description = this.contactForm.value.description;
+    this.contact.userrole = JSON.parse(localStorage.getItem('user')).userrole;
+
+    if(this.userrole == 'user'){
+      this.contact.userId = JSON.parse(localStorage.getItem('user')).id;
+      this.contact.userEmpId = JSON.parse(localStorage.getItem('user')).userEmpId;
+    }else if(this.userrole == 'employee'){
+      this.contact.userEmpId = this.contactForm.value.user;
+    }
+    
+    
+    this.contactService.addContact(this.contact).subscribe((contact)=>{
+      console.log(contact);
+    })
   }
 
   getNumOfPkgsToVisit(assignedTo){
@@ -94,8 +152,6 @@ export class NavbarComponent implements OnInit {
       
     }
     else if(notification.category == 'docs'){
-      // this.authService.getUserById(notification.userId).subscribe(
-      //   (user)=>{
         this.router.navigate(['/profile']);
           
           this.authService.updateNotification(notification._id).subscribe(
@@ -104,10 +160,7 @@ export class NavbarComponent implements OnInit {
           },  
           (err)=>{console.log('failed to fetch');
         }
-          
           )
-       // }
-      //)
     }
   }
 }

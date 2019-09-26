@@ -11,13 +11,6 @@ const MenuSchema = mongoose.Schema({
 const Menu = module.exports = mongoose.model('Menu', MenuSchema);
 
 module.exports.getMenuByRole = function(role, callback){
-    
-    
-//    const query ={menuId:3,menuName:"Employees",path:"/employees",accessTo:["admin"]};
-  
-//    new Menu(query).save();
-
     const query = {accessTo: role};
     Menu.find(query,callback);
- 
 }

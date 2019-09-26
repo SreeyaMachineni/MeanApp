@@ -16,26 +16,43 @@ export class AddOrEditDoctorVisitComponent implements OnInit {
   constructor(private router:Router,private location:Location,private doctorVisitService:DoctorVisitService) { }
 
   ngOnInit() {
-   // this.action = this.doctorVisitService.getAction();
-   this.doctorVisitForm=new FormGroup({
-    hospitalName:new FormControl(''),
-    purpose:new FormControl(''),
-    dataOfVisit:new FormControl('')
-   });
+  this.action = this.doctorVisitService.getAction();
+  if(this.action == 'Add'){
+    this.doctorVisit = new DoctorVisit();
+    this.doctorVisitForm=new FormGroup({
+     hospitalName:new FormControl(''),
+     purpose:new FormControl(''),
+     dateOfVisit:new FormControl('')
+    });
+  }else{
+    this.doctorVisit = this.doctorVisitService.getVisit();
+    this.doctorVisitForm=new FormGroup({
+      hospitalName:new FormControl(this.doctorVisit.hospital),
+      purpose:new FormControl(this.doctorVisit.purpose),
+      dateOfVisit:new FormControl(this.doctorVisit.dateOfVisit)
+     });
+  }
+  
   }
   cancel(){
     this.location.back();
   }
   save(){
-    console.log(this.doctorVisitForm.value);
     this.doctorVisit.userId = JSON.parse(localStorage.getItem('user')).id;
     this.doctorVisit.hospital = this.doctorVisitForm.value.hospitalName;
     this.doctorVisit.purpose = this.doctorVisitForm.value.purpose;
-    this.doctorVisit.dataOfVisit = this.doctorVisitForm.value.dataOfVisit
-    // this.doctorVisitService.addDoctorVisit(this.doctorVisit).subscribe(
-    //   (doctorVisit)=>{console.log(doctorVisit)},
-    //   (err)=>{console.log(err);}
-    // )
+    this.doctorVisit.dateOfVisit = this.doctorVisitForm.value.dateOfVisit;
+    if(this.action == 'Add'){
+      this.doctorVisitService.addDoctorVisit(this.doctorVisit).subscribe(
+        (doctorVisit)=>{ this.location.back();},
+        (err)=>{console.log(err);}
+      )
+    } else{
+      this.doctorVisitService.editDoctorVisit(this.doctorVisit).subscribe(
+        (doctorVisit)=>{ this.location.back();},
+        (err)=>{console.log(err);}
+      )
+    }
   }
 
 }

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
+
 import {ToastrModule} from 'ngx-toastr';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,7 +14,7 @@ import { MatTableModule, MatPaginatorModule, MatSortModule,MatNativeDateModule }
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
+// import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -43,9 +44,9 @@ import {EmployeeUsersComponent} from './employee-users/employee-users/employee-u
 import {UserDetailsComponent} from './employee-users/user-details/user-details.component';
 import {PackagesComponent} from './insurer/packages/packages.component';
 import {MatTabsModule} from '@angular/material/tabs';
- import { UserClaimsListComponent } from './user-claims/user-claims-list/user-claims-list.component';
- import {AddOrEditUserClaimsComponent} from './user-claims/add-or-edit-user-claims/add-or-edit-user-claims.component';
- import {UserModule} from './user/user.module';
+import { UserClaimsListComponent } from './user-claims/user-claims-list/user-claims-list.component';
+import {AddOrEditUserClaimsComponent} from './user-claims/add-or-edit-user-claims/add-or-edit-user-claims.component';
+import {UserModule} from './user/user.module';
 import {UserEditComponent} from './user/user-edit/user-edit.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import {HospitalsModule} from './hospitals/hospitals.module';
@@ -55,12 +56,17 @@ import {HospitalDetailsComponent} from './hospitals/hospital-details/hospital-de
 import { StatusCodeDirective } from './status-code.directive';
 import { DoctorVisitComponent } from './doctor-visit/doctor-visit/doctor-visit.component';
 import {AddOrEditDoctorVisitComponent} from './doctor-visit/add-or-edit-doctor-visit/add-or-edit-doctor-visit.component';
-
+import {ContactModule} from './contact/contact.module';
+import {ContactComponent} from './contact/contact/contact.component';
+import {ClaimDetailsComponent} from './user-claims/claim-details/claim-details.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {ContactHistoryComponent} from './contact/contact-history/contact-history.component';
+import { NotificationDirective } from './notification.directive';
 
 const appRoutes:Routes = [
-  {path:'',component:LoginComponent},
+ // {path:'',component:LoginComponent},
   {path:'register',component:RegisterComponent},
-  {path:'login',component:LoginComponent},
+ // {path:'login',component:LoginComponent},
   {path:'profile',component:ProfileComponent,canActivate:[AuthGuard]},
   {path:'home',component:HomeComponent,canActivate:[AuthGuard],children:[
     {path:'employees',component:EmployeeComponent},
@@ -86,7 +92,10 @@ const appRoutes:Routes = [
     {path:'addOrEditHospitalPoc',component:AddOrEditHospitalPoCComponent},
     {path:'hospitalDetails',component:HospitalDetailsComponent},
     {path:'doctorVisit',component:DoctorVisitComponent},
-    {path:'addOrEditDoctorVisit',component:AddOrEditDoctorVisitComponent}
+    {path:'addOrEditDoctorVisit',component:AddOrEditDoctorVisitComponent},
+    {path:'contact',component:ContactComponent},
+    {path:'claimDetails',component:ClaimDetailsComponent}
+
 
   ]},
   {path:'verify',component:VerifyUserComponent},
@@ -97,7 +106,7 @@ const appRoutes:Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+  //  LoginComponent,
     HomeComponent,
     RegisterComponent,
     ProfileComponent,
@@ -113,6 +122,8 @@ const appRoutes:Routes = [
     UserDetailsComponent,
     DashboardComponent,
     StatusCodeDirective,
+    NotificationDirective,
+  
     
   //  AddOrEditUserClaimsComponent
  // UserComponent
@@ -143,7 +154,9 @@ const appRoutes:Routes = [
     MatTabsModule,
     UserModule,
     HospitalsModule,
-    DoctorVisitModule
+    DoctorVisitModule,
+    ContactModule,
+    MatRadioModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

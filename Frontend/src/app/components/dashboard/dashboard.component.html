@@ -26,7 +26,14 @@
 <div class="offset-md-1 pb-4 pl-4">Here are your active claims.</div> -->
 <div class="row m-0" *ngIf="user.userrole == 'user'">
   <div class="col-6 FixedHeightContainer m-3">
-      <div class="p-2 pl-3 font-weight-bold " style="font-size: 20px">Your Active Claims<hr></div>
+      <!-- <span class="p-2 pl-3 font-weight-bold float-left" style="font-size: 20px">Your Active Claims</span>
+      <span class="p-2 pl-3 font-weight-bold float-right" style="font-size: 20px">Your Active Claims</span>
+       -->
+       <div class="row border-bottom">
+         <div class="col-6 p-2 pl-3 font-weight-bold" style="font-size: 20px">Your Active Claims</div>
+      <div class="col-6 p-2 pl-3 text-right" style="font-size: 16px">all claims</div>
+      
+       </div>
       <div class="Content">
         <div class="border-bottom m-2" *ngFor="let claim of userClaims">
         <div class="row m-0">
@@ -46,7 +53,7 @@
   <div class="col-5 m-3 FixedHeightContainer">
       <div class="p-2 pl-3 font-weight-bold " style="font-size: 20px">Notifications<hr></div>
       <div class="Content">
-        <div class="border-bottom m-2 pb-2" style="font-size: 16px" *ngFor="let notification of notifications" (click)="notificationDetails(notification)">
+        <div class="border-bottom m-2 pb-2" style="font-size: 16px" *ngFor="let notification of notifications" (click)="notificationDetails(notification)" appNotification [verified]="notification.verified">
             {{notification.comments}}
           </div>
 
@@ -54,7 +61,7 @@
     </div>
   </div>
 </div>
-<hr class="m-5 mb-0" *ngIf="user.userrole == 'user'">
+<hr class="mt-3 ml-5 mr-5 mb-0" *ngIf="user.userrole == 'user'">
 <div class="row m-0" *ngIf="user.userrole == 'user'">
     <div class="col-7 FixedHeightContainer m-3">
         <div class="p-2 pl-3 font-weight-bold " style="font-size: 20px">Your Current Packages<hr></div>
@@ -77,34 +84,6 @@
 </div>
 
 
-
-
-
-
-
-
-<!-- <div class="container" *ngIf="user.userrole == 'employee'">
-    <div class="offset-md-1 h4 pl-4 pt-4">Welcome  {{user.firstName}},</div>
-    <div class="row m-0" *ngFor="let claim of userClaims" (click)="userDetails(claim)">
-      <div class="offset-md-1 col-sm-10">
-        <div class="card m-2">
-          <div class="card-body">        
-            <div class="row">
-              <div class="col-6 text-left h5">{{claim.packageName}}</div>
-              <div class="col-6 text-right h5" appStatusCode [status]="claim.status" data-toggle="modal" data-target="#statusDetails" (click)="setClaim(claim)">{{claim.status}}</div>
-            </div>
-            <div class="row">
-                <div class="col-6 text-left">
-                  <div>Date of Surgery : {{claim.dateOfSurgery | date}}</div>
-                  <div>Purpose : {{claim.disease}}</div>
-                  <div>Hospital : {{claim.hospital}}</div>
-                </div>
-              </div>
-          </div>
-          </div>
-        </div>
-      </div>
-</div> -->
 
 
 <div class="row m-0" *ngIf="user.userrole == 'employee'">
@@ -131,7 +110,7 @@
     <div class="col-4 m-3 FixedHeightContainer">
         <div class="p-2 pl-3 font-weight-bold ">Notifications<hr></div>
         <div class="Content">
-          <div class="border-bottom m-2 pb-2" style="font-size: 16px" *ngFor="let notification of notifications" (click)="notificationDetails(notification)">
+          <div class="border-bottom m-2 pb-2"  style="font-size: 16px" *ngFor="let notification of notifications" (click)="notificationDetails(notification)" appNotification [verified]="notification.verified">
               {{notification.comments}}
             </div>
   
@@ -165,7 +144,7 @@
     </div>
     <div class="container" *ngIf="user.userrole == 'poc'">
       <div class="offset-md-1 h4 pl-4 pt-4">Welcome  {{user.firstName}},</div>
-      <div class="row m-0" *ngFor="let claim of userClaims">
+      <div class="row m-0" *ngFor="let claim of userClaims" (click)="claimDetails(claim)">
         <div class="offset-md-1 col-sm-10">
           <div class="card m-2">
             <div class="card-body">        

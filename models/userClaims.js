@@ -28,10 +28,3 @@ module.exports.deleteClaim = function(claimId,callback){
     const query = {_id:claimId};
     UserClaim.deleteOne(query,callback);
 } 
-
-// User.getUserById(req.params.userId, (err, user) => {
-//     if (err) throw err
-//     else {
-//       res.json(user);
-//     }
-//   })

@@ -31,9 +31,6 @@ router.get('/getCategories',(req,res)=>{
  })
 )
 
-
-
-
  router.get('/deleteCategory/:categoryId',(req,res)=>{
     Category.deleteCategory(req.params.categoryId,(err,success)=>{
       if(err) throw err;

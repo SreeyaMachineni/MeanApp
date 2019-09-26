@@ -114,10 +114,10 @@ router.post('/editPackage/:packageId',(req,res)=>{
                 }
               });
             package.name                         = req.body.package.name,
-            insProviderId                        = req.body.package.insProviderId,
-            insCategoryId                        = req.body.package.insCategoryId,
-            insProviderName                          = req.body.package.insCategory,
-            insCategoryName                          = req.body.package.insCategory,
+            package.insProviderId                        = req.body.package.insProviderId,
+            package.insCategoryId                        = req.body.package.insCategoryId,
+            package.insProviderName                          = req.body.package.insCategory,
+            package.insCategoryName                          = req.body.package.insCategory,
             package.maxSumAssured                = req.body.package.maxSumAssured,
             package.minSumAssured                = req.body.package.minSumAssured,
             package.premiumAmnt                  = req.body.package.premiumAmnt,

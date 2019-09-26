@@ -50,10 +50,6 @@ module.exports.getNumOfUsersToAssign = function(callback){
     
 }
 
-// module.exports.getUserPackages = function(callback){
-//     UserPackage.find({ username: {$ne:null} }, { username: 1 ,_id:0},callback)
-// }
-
 module.exports.getUserPackages = function(userId,callback){
     const query ={userId:userId}
     UserPackage.find(query,callback);

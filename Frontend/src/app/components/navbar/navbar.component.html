@@ -63,6 +63,14 @@
                 </span>
 
             </ng-template>
+
+            <ng-template [ngSwitchCase]="14">
+              <a class="nav-link active" id="dropdown04" data-toggle="modal"  data-target="#contactModal">{{menuItem.menuName}}</a>              
+            </ng-template>
+            <ng-template [ngSwitchCase]="15">
+              <a class="nav-link active" id="dropdown04" data-toggle="modal"  data-target="#contactModal">{{menuItem.menuName}}</a>              
+            </ng-template>
+
             <ng-template ngSwitchDefault>
                 <span class="nav-link active" routerLink="{{menuItem.path}}" >{{menuItem.menuName }}</span >
             </ng-template>
@@ -73,3 +81,41 @@
         </form>
     </div>
   </nav>
+
+  <div class="modal" id="contactModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header"><h4 class="modal-title">Contact</h4></div>
+        <div class="modal-body text-center">
+            <form [formGroup]="contactForm" class="offset-2 col-md-8 col-sm-8 d-flex flex-column p-3 " autocomplete="off">
+                    <mat-form-field *ngIf="userrole == 'employee'">
+                            <mat-label>Users</mat-label>
+                            <mat-select required formControlName="user">
+                                <mat-option *ngFor="let user of users" [value]="user._id" >
+                                {{user.firstName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Regarding</mat-label>
+                       <mat-select required formControlName="regarding" required>
+                         <mat-option value="package">Package</mat-option>
+                         <mat-option value="claim">Claim</mat-option>
+                         <mat-option value="docs">Docs</mat-option>
+                       </mat-select>
+                </mat-form-field> 
+                <mat-form-field> <textarea matInput placeholder="Leave a comment" required formControlName="description"></textarea></mat-form-field>
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="notifyOption" *ngIf="userrole=='poc'">
+                    <mat-radio-button class="example-radio-button" *ngFor="let opt of options" [value]="opt">
+                    {{opt}}
+                    </mat-radio-button>
+              </mat-radio-group>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-dark float-left" [disabled]="!contactForm.valid" (click)="addContact()">Submit</button>
+        </div>
+        </div>
+    </div>
+</div>

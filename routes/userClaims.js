@@ -121,19 +121,6 @@ router.post('/setStatus',(req,res)=>{
 })
 
 router.get('/getEmpClaims/:empId',(req,res)=>{
-   
-    // User.find({
-    //     userEmpId: {  $eq: mongoose.Types.ObjectId(req.params.empId) }
-    //     }).then((user)=>{
-    //         console.log(user);
-    //         let result = user.map(a => a._id);
-    //         UserClaim.find({
-    //             userId: { $in:result }
-    //         }).then((claim)=>{
-    //              res.json(claim);
-    //         });
-    //     });
-  
     User.aggregate([
         {$match:{userEmpId:req.params.empId}},
         {
@@ -152,13 +139,6 @@ router.get('/getEmpClaims/:empId',(req,res)=>{
     }).catch((err)=>{
         console.log(err);
     })
-
-
-    // User.getUserClaims('5d5a8b83352b262670a4d47b',(err,claims)=>{
-    //     if(err) throw err;
-    //     console.log(claims);
-    // })
-
 });
 router.get('/getClaimsByHospital/:pocId',(req,res)=>{
     var pocId = req.params.pocId;

@@ -67,6 +67,4 @@ router.get('/getInsuresList',(req,res)=>
     })
 )
 
-
-
 module.exports = router;

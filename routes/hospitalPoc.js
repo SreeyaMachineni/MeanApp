@@ -22,7 +22,6 @@ User.addUser(user, (err, user) => {
       res.json({ success: false, msg: 'Failed to add employee' });
     }
     else {
-     // res.json({ success: true, msg: 'Successfully added employee' });
      let hospitalPoc = new HospitalPoc({
                     pocId:user._id,
                     hospitalId:mongoose.Types.ObjectId(req.body.poc.hospitalId),
@@ -65,30 +64,8 @@ router.get('/deletePoc/:pocId',(req,res)=>{
     })
 })
 
-router.post('/editPoc',(req,res)=>{
-    
-    // HospitalPoc.findById(req.body.poc.pocId,(err,poc)=>{
-    //     if(!poc){
-    //     res.json({success: false, msg:'Unable to load doc'});
-    //     }
-    //     else{
-    //     hosp.name=req.body.hosp.name,
-    //     hosp.specialization=req.body.hosp.specialization,
-    //     hosp.location=req.body.hosp.location,
-    //     hosp.address=req.body.hosp.address,
-    //     hosp.pointOfContact=req.body.hosp.pointOfContact,
-    //     hosp.save().then((hosp)=>{
-    //         res.json({success: true, msg:'Updated'});
-    //     },
-    //     err=>{
-    //         res.json({success: false, msg:'Update failed'});
-    //     }
-    //     );
-    //     }
-    // })
-    console.log(req.body);
+router.post('/editPoc',(req,res)=>{ 
     var pocId = req.body.pocId;
-    console.log(pocId);
     User.findById(mongoose.Types.ObjectId(req.body.pocId),(err,poc)=>{
         if(!poc){
             res.json({success:false,msg:'unable to load doc'});

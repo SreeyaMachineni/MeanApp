@@ -8,11 +8,13 @@ import { MatTableModule, MatPaginatorModule, MatSortModule,MatNativeDateModule }
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-
-
+import { ClaimDetailsComponent } from './claim-details/claim-details.component';
+import {ContactModule} from '../contact/contact.module';
+import {ContactComponent} from '../contact/contact/contact.component';
+import {MatRadioModule} from '@angular/material/radio';
 @NgModule({
   declarations: [
-    AddOrEditUserClaimsComponent, UserClaimsListComponent
+    AddOrEditUserClaimsComponent, UserClaimsListComponent, ClaimDetailsComponent,ContactComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,9 @@ import {MatSelectModule} from '@angular/material/select';
     MatDatepickerModule,
     MatTableModule, MatPaginatorModule, MatSortModule,MatNativeDateModule,
     FormsModule,ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    ContactModule,
+    MatRadioModule
   ]
 })
 export class UserClaimsModule { }

@@ -1,0 +1,28 @@
+<app-contact></app-contact>
+<div class="container pt-5">
+        <!-- <div class="text-right pb-3">
+            <button type="button" class="btn btn-success">Notify</button>
+        </div> -->
+        <div class="text-center font-weight-bold">Claim Details</div>
+        <div class="row pt-5">
+            <div class="col-6 text-right">Package Name</div>
+            <div class="col-5 text-left">{{claim.packageName}}</div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-6 text-right">Purpose</div>
+            <div class="col-5 text-left">{{claim.disease}}</div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-6 text-right">Hospital</div>
+            <div class="col-5 text-left">{{claim.hospital}}</div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-6 text-right">Location</div>
+            <div class="col-5 text-left">{{claim.location}}</div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-6 text-right">Date of Surgery</div>
+            <div class="col-5 text-left">{{claim.dateOfSurgery | date}}</div>
+        </div>
+        
+    </div>

@@ -22,8 +22,7 @@ user:User;
   fetchUserClaims(){
     this.userClaimService.getUserClaims(JSON.parse(localStorage.getItem('user')).id).subscribe(
       (claims)=>{
-        this.userClaims = claims;
-        console.log(this.userClaims);        
+        this.userClaims = claims;    
       },(err)=>{
         console.log('err in fetching claims');
       }
