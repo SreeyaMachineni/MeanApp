@@ -12,6 +12,7 @@ const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 const Menu = require('../models/menu');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 var requestId;
 // Init Nexmo
 const nexmo = new Nexmo({
@@ -21,9 +22,12 @@ const nexmo = new Nexmo({
 
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
+  
   const firstName = req.body.firstName;
   const password = req.body.password;
+console.log(firstName);
   User.getUserByUsername(firstName, (err, user) => {
+  
     if (err) throw err;
     if (!user) {
       return res.json({ success: false, msg: 'User not found' });
@@ -224,30 +228,58 @@ router.post('/editUser', (req, res) => {
   }, (err, result) => {
     if (err) throw err;
     if (result['status'] == 0) {
-      const query = {_id:userId};
+      // const query = {_id:userId};
    
-      User.findOne({ _id: userId }).then(user => {
-        if (user) {
-          User.update({ _id: userId }, { $set: {
-            firstName : req.body.user.firstName,
-                 lastName : req.body.user.lastName,
-                   dob : req.body.user.dob,
-                  gender : req.body.user.gender,
-                  phone : req.body.user.phone,
-                   email : req.body.user.email,
-                   address : req.body.user.address
-             } }, (err, ass) => {
-            (err) => { res.json({ success: false, msg: 'fail' }); },
-              (ass) => { res.json({ success: true, msg: 'success' }); }
-          })
-        } else {
-          console.log('err');
+      // User.findOne({ _id: userId }).then(user => {
+      //   if (user) {
+      //     User.update({ _id: userId }, { $set: {
+      //       firstName : req.body.user.firstName,
+      //            lastName : req.body.user.lastName,
+      //              dob : req.body.user.dob,
+      //             gender : req.body.user.gender,
+      //             phone : req.body.user.phone,
+      //              email : req.body.user.email,
+      //              address : req.body.user.address
+      //        } }, (err, ass) => {
+      //       (err) => { res.json({ success: false, msg: 'fail' }); },
+      //         (ass) => { res.json({ success: true, msg: 'success' }); }
+      //     })
+      //   } else {
+      //     console.log('err');
+      //   }
+      // })
+      User.editUser(req.body.user,userId,(user,err)=>{
+        (user) => { res.json({ success: false, msg: 'fail' }); },
+        (err)=>{
+          res.json({ success: true, msg: 'success' });
         }
       })
     }
   });
 })
 
+
+router.post('/editUserSamePhone',(req,res)=>{
+  
+  var userId = req.body.user.id;
+  User.editUser(req.body.user,userId,(user,err)=>{
+    (user) => {
+      console.log('user edited')
+       res.json({ success: true, msg: 'success' }); 
+      },
+    (err)=>{
+      res.json({ success: false, msg: 'fail' });
+    }
+  })
+  // User.editUser(req.body.user,userId).then((user,err)=>{
+  //   (user)=>{
+  //     res.json({success:true,msg:'success'});
+  //   },
+  //   (err)=>{
+  //     res.json({success:false,msg:'fail'});
+  //   }
+  // })
+})
 
 
 router.get('/getNumOfUsersToAssign', (req, res) => {
@@ -316,6 +348,7 @@ router.get('/getEmpUsers/:empId', (req, res) => {
 })
 
 router.get('/getUserById/:userId', (req, res) => {
+  console.log(console.log(req.params.userId))
   User.getUserById(req.params.userId, (err, user) => {
     if (err) throw err
     else {

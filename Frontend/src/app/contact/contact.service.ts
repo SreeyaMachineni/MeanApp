@@ -10,6 +10,7 @@ export class ContactService {
   uri = 'http://192.168.4.101:3000';
   constructor(private http: HttpClient) { }
   addContact(contact){
+    console.log(contact);
     return this.http.post(this.uri+'/notification/addNotification',{contact},{
       headers:new HttpHeaders(
        { 'Content-Type':'application/json'}

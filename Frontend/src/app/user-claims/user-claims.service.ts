@@ -38,6 +38,7 @@ export class UserClaimsService {
     return this.http.get(this.uri+'/userClaims/getUserClaims/'+userId);
   }
   fetchCoveredDiseases(packageId){
+    console.log(packageId);
     return this.http.get(this.uri+'/package/getCoveredDiseases/'+packageId); 
   }
   deleteUserClaim(claimId){

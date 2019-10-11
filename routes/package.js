@@ -40,6 +40,8 @@ router.post('/addPackage',(req,res)=>{
                         res.json({success: false, msg:'Failed to add package'});
                     }
                     else{
+
+                        
                       res.json({success:true,msg:'Successfully added package'});
                     }
                   })
@@ -153,10 +155,11 @@ router.get('/getPackageDetails/:packge',(req,res)=>{
 })
 
 router.get('/getCoveredDiseases/:packageId',(req,res)=>{
+    
     Package.getCoveredDiseases(req.params.packageId,(err,diseases)=>{
         if(err) throw err;
         else{
-            res.json(diseases);
+            res.json(...diseases);
         }
     })
 })

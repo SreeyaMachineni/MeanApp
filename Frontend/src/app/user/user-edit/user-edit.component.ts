@@ -39,16 +39,25 @@ export class UserEditComponent implements OnInit {
     this.user.gender = this.userEditForm.value.gender;
     this.user.address = this.userEditForm.value.address;
     this.user.dob = this.userEditForm.value.dob;
-    console.log(this.user);
     if(this.user.phone != this.userEditForm.value.phone){
-      console.log('here');
       this.user.phone = this.userEditForm.value.phone;
       this.authService.sendOtp(this.user).subscribe(
         (data)=>{
           this.verify = true;
-          
         },
         (err)=>{console.log('unable to verify')}
+      )
+    }else{
+      this.user.phone = this.userEditForm.value.phone;
+      this.authService.editUserSamePhone(this.user).subscribe(
+        (data)=>{
+          console.log(data);
+          console.log('edited');
+          this.router.navigate(['/profile']);
+        },
+        (err)=>{
+          console.log('err in editing');
+        }
       )
     }
   }
@@ -70,5 +79,6 @@ export class UserEditComponent implements OnInit {
       (err)=>console.log(err)
     );
   }
+
 
 }

@@ -3,6 +3,8 @@ const router = express.Router();
 const UserPackage = require('../models/UserPackage');
 const Notify = require('../models/notification');
 router.post('/addUserPackage',(req,res)=>{
+
+    console.log(req.body);
     let userPackage = new UserPackage({
         userId:req.body.package.userId,
         username:req.body.package.username,
@@ -21,7 +23,12 @@ router.post('/addUserPackage',(req,res)=>{
         res.json({success: false, msg:'Failed to add user package'});
     }
     else{
-      res.json({success:true,msg:'Successfully added user package'});
+        Notify.addPackageNotification(req.body.package.userId,req.body.notify,req.body.package.username,req.body.package.packageName,'added',(err,notify)=>{
+            if(err) throw err
+            else{
+       res.json({success:true,msg:'Successfully added user package'});
+            }
+        })
     }
   })
   })
@@ -64,7 +71,7 @@ router.post('/editUserPackage/:packageId',(req,res)=>{
         userPackage.activeTo = req.body.package.activeTo,
         userPackage.notify = true
         userPackage.save().then((userPackage)=>{
-        Notify.addPackageNotification(req.body.package.userId,req.body.notify,req.body.package.username,req.body.package.packageName,(err,notify)=>{
+        Notify.addPackageNotification(req.body.package.userId,req.body.notify,req.body.package.username,req.body.package.packageName,'updated',(err,notify)=>{
             if(err) throw err
             else{
                 res.send({success:true})

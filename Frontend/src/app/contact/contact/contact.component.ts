@@ -18,7 +18,7 @@ export class ContactComponent implements OnInit {
   userrole:any;
   claim:any;
   userContacts:any;
-  options: string[] = ['Notify Employee','Notify user and Employee'];
+  //options: string[] = ['Notify Only Employee','Notify user and Employee'];
   ngOnInit() {
     this.contact = {};
 

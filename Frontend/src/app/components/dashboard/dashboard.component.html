@@ -31,22 +31,25 @@
        -->
        <div class="row border-bottom">
          <div class="col-6 p-2 pl-3 font-weight-bold" style="font-size: 20px">Your Active Claims</div>
-      <div class="col-6 p-2 pl-3 text-right" style="font-size: 16px">all claims</div>
+      <!-- <div class="col-6 p-2 pl-3 text-right" style="font-size: 16px">all claims</div> -->
       
        </div>
       <div class="Content">
         <div class="border-bottom m-2" *ngFor="let claim of userClaims">
-        <div class="row m-0">
+        <div class="row m-0" *ngIf="userHasClaims">
             <div class="col-6 text-left h5" style="font-size: 18px">{{claim.packageName}}</div>
             <div class="col-6 text-right h5" style="font-size: 18px" appStatusCode [status]="claim.status" data-toggle="modal" data-target="#statusDetails" (click)="setClaim(claim)">{{claim.status}}</div>
           </div>
-          <div class="row m-0">
+          <div class="row m-0" *ngIf="userHasClaims">
               <div class="col-6 text-left">
                 <div style="font-size: 16px">Date of Surgery : {{claim.dateOfSurgery | date}}</div>
                 <div style="font-size: 16px">Purpose : {{claim.disease}}</div>
                 <div class="pb-4" style="font-size: 16px">Hospital : {{claim.hospital}}</div>
               </div>
             </div>
+          </div>
+          <div class="row m-0" *ngIf="!userHasClaims">
+            <div class="mt-5 pt-5 pl-5 ml-5">You donot have any active claims.<br>Please go to <b>MyClaims</b> to make a claim</div> 
           </div>
     </div>
   </div>
@@ -67,18 +70,21 @@
         <div class="p-2 pl-3 font-weight-bold " style="font-size: 20px">Your Current Packages<hr></div>
         <div class="Content">
           <div class="border-bottom m-2" *ngFor="let package of userPackage">
-          <div class="row m-0">
+          <div class="row m-0" *ngIf="userHasPackages">
               <div class="col-6 text-left h5" style="font-size: 18px">{{package.packageName}}</div>
-              <!-- <div class="col-6 text-right h5" appStatusCode [status]="claim.status" data-toggle="modal" data-target="#statusDetails" (click)="setClaim(claim)" style="font-size: 20px">{{claim.status}}</div> -->
             </div>
-            <div class="row m-0">
+            <div class="row m-0" *ngIf="userHasPackages">
                 <div class="col-6 text-left">
                   <div style="font-size: 16px">Insurer : {{package.insurerName}}</div>
                   <div style="font-size: 16px">Active From : {{package.activeFrom | date}}</div>
                   <div class="pb-4" style="font-size: 16px">Active To: {{package.activeTo | date}} </div>
                 </div>
               </div>
+              
             </div>
+            <div class="row m-0" *ngIf="!userHasPackages">
+                <div class="mt-5 pt-5 pl-5 ml-5">You donot have any Packages added.<br>Please go to <b>My Packages</b> to add a package</div> 
+              </div>
       </div>
     </div>
 </div>
@@ -87,13 +93,14 @@
 
 
 <div class="row m-0" *ngIf="user.userrole == 'employee'">
-    <div class="col-7 FixedHeightContainer m-3">
+    <div class="col-7 FixedHeightContainerE m-3">
         <div class="p-2 pl-3 font-weight-bold " style="font-size: 20px">Pending Claims<hr></div>
-        <div class="Content">
+        <div class="ContentE">
           <div class="border-bottom m-2" *ngFor="let claim of userClaims" (click)="userDetails(claim)">
           <div class="row m-0">
               <div class="col-6 text-left h5" style="font-size: 18px">{{claim.claims.packageName}}</div>
-              <div class="col-6 text-right h5" appStatusCode [status]="claim.claims.status" data-toggle="modal" data-target="#statusDetails" (click)="setClaim(claim)" style="font-size: 18px">{{claim.claims.status}}</div>
+              <div class="col-6 text-right h5" appStatusCode [status]="claim.claims.status"  (click)="$event.stopPropagation();setClaim(claim);"  style="font-size: 18px">{{claim.claims.status}}</div>
+              <!-- (click)="setClaim(claim);$event.stopPropagation();" -->
             </div>
             <div class="row m-0">
                 <div class="col-6 text-left">
@@ -107,9 +114,9 @@
             </div>
       </div>
     </div>
-    <div class="col-4 m-3 FixedHeightContainer">
+    <div class="col-4 m-3 FixedHeightContainerE">
         <div class="p-2 pl-3 font-weight-bold ">Notifications<hr></div>
-        <div class="Content">
+        <div class="ContentE">
           <div class="border-bottom m-2 pb-2"  style="font-size: 16px" *ngFor="let notification of notifications" (click)="notificationDetails(notification)" appNotification [verified]="notification.verified">
               {{notification.comments}}
             </div>
@@ -120,7 +127,7 @@
   </div>
 
 
-  <div *ngIf="claim" class="modal fade" id="statusDetails" role="dialog">
+  <div *ngIf="claim" class="modal fade" id="statusDetails" #status role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header"><h4 class="modal-title">Status Details</h4></div>

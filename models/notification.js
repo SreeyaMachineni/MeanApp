@@ -36,13 +36,13 @@ module.exports.addClaimNotification=function(userId,notifyTo,username,callback){
     notification.save(callback);
 }
 
-module.exports.addPackageNotification = function(userId,notifyTo,username,packageName,callback){
+module.exports.addPackageNotification = function(userId,notifyTo,username,packageName,message,callback){
     console.log(userId,notifyTo,username,packageName);
     let notification = new Notification({
         userId:notifyTo,
         notifyAbout:userId,
         category:'package',
-        comments:username+' updated package: '+packageName,
+        comments:username+' '+message+' '+'package: '+packageName,
         verified:false
     });
     notification.save(callback)

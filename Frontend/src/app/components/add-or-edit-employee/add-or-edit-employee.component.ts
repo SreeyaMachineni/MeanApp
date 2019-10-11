@@ -16,13 +16,16 @@ export class AddOrEditEmployeeComponent implements OnInit {
   action:String;
   employeeForm:FormGroup;
   empIdToEdit:any;
+  gender:any;
   constructor(private authService:AuthService,private router: Router,private location: Location) { }
 
   ngOnInit() {
     this.emp = new User();
+    this.gender = '';
     this.action = this.authService.getAction();
     if(this.action == 'edit'){
       this.emp = this.authService.getUser();
+     // this.gender = this.emp.gender;
       this.employeeForm = new FormGroup(
         {
           firstName: new FormControl(this.emp.firstName),

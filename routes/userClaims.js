@@ -35,6 +35,8 @@ router.post('/addUserClaim',(req,res)=>{
 
 
 router.get('/getUserClaims/:userId',(req,res)=>{
+    console.log('herrr');
+    console.log(req.params.userId);
     UserClaim.getUserClaims(mongoose.Types.ObjectId(req.params.userId),(err,claims)=>{
         if(err) throw err;
         else{

@@ -51,5 +51,5 @@ module.exports.getPackageDetails = function(package,callback){
 module.exports.getCoveredDiseases = function(packageId,callback){
     var packageId = packageId;
     const query = {_id:packageId};
-    Package.find({ _id: packageId }, { diseasesCovered: 1 ,_id:0},callback)
+    Package.find({ _id: mongoose.Types.ObjectId(packageId) }, { diseasesCovered: 1 ,_id:0},callback)
 }

@@ -25,6 +25,7 @@ router.get('/updateNotification/:notificationId',(req,res)=>{
 })
 
 router.post('/addNotification',(req,res)=>{
+    console.log(req.body);
     let notication;
     if(req.body.contact.userrole == 'user'){
         notication = new Notification({  
@@ -58,6 +59,7 @@ router.post('/addNotification',(req,res)=>{
       
     }
     else if(req.body.contact.userrole == 'poc'){
+        console.log('herrrrrrr');
         if(req.body.contact.notifyOption == 'Notify Employee'){
             var userId = req.body.contact.userEmpId;
             User.findOne({ _id: userId }).then(emp => {
@@ -65,7 +67,8 @@ router.post('/addNotification',(req,res)=>{
                 notication = new Notification({  
                     category:req.body.contact.regarding,
                     comments:req.body.contact.description,
-                    userId:emp.userEmpId,    
+                    userId:emp.userEmpId,
+                    notifyAbout:   req.body.contact.userEmpId, 
                     verified:false,
                 });
                 notication.save().then((err,notication)=>{
@@ -79,13 +82,17 @@ router.post('/addNotification',(req,res)=>{
                 }
               })
         }else{
+            console.log('notify both');
             var userId = req.body.contact.userEmpId;
+
             User.findOne({ _id: userId }).then(emp => {
                 if (emp) {
+                    console.log(emp);
                 notication = new Notification({  
                     category:req.body.contact.regarding,
                     comments:req.body.contact.description,
                     userId:emp.userEmpId,    
+                    notifyAbout:   req.body.contact.userEmpId, 
                     verified:false,
                 });
                

@@ -5,7 +5,7 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
+// import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
@@ -18,6 +18,6 @@ const routes: Routes = [
     FormsModule,ReactiveFormsModule,MatFormFieldModule,CommonModule,MatInputModule
   ],
   exports: [RouterModule],
-  declarations: [LoginComponent,HomeComponent]
+  declarations: [LoginComponent]
 })
 export class AppRoutingModule { }

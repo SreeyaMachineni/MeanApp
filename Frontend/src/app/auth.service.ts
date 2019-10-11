@@ -15,6 +15,7 @@ export class AuthService {
   user:any;
   hosp:Hospital;
   action:String
+  isLoggedIn:any;
   constructor(private http: HttpClient) { }
 
   createUser(otp:String):Observable<User>{  
@@ -218,6 +219,22 @@ addEmp(emp:User){
   }
   updateNotification(notificationId){
     return this.http.get(this.uri+'/notification/updateNotification/'+notificationId);
+  }
+  editUserSamePhone(user:User):Observable<User>{  
+    
+    return this.http.post<User>(this.uri+'/users/editUserSamePhone',{user:this.user},{
+      headers:new HttpHeaders(
+        {
+          'Content-Type':'application/json'
+        }
+      )
+    });
+  }
+  setLoggedIn(login){
+    this.isLoggedIn = login;
+  }
+  getLoggedIn(){
+    return this.isLoggedIn;
   }
 
 }

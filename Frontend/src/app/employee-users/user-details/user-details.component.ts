@@ -32,7 +32,7 @@ export class UserDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.empUserService.getUser();
-    
+    console.log(this.user);
     this.getUserPackages(this.user._id);
 
     this.getUserDocs(this.user._id);

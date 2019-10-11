@@ -89,6 +89,29 @@ module.exports.getUserById = function(userId,callback){
   const query={_id:userId}
   User.findOne(query,callback);
 }
+
+
+module.exports.editUser = function(user,userId,callback){
+  const query = {_id:userId};
+  User.findOne({ _id: userId }).then(usertoupdate => {
+    if (usertoupdate) {
+      User.update({ _id: userId }, { $set: {
+        firstName : user.firstName,
+             lastName : user.lastName,
+               dob : user.dob,
+              gender : user.gender,
+              phone : user.phone,
+               email : user.email,
+               address : user.address
+         } }, callback
+     )
+    } else {
+      console.log('err');
+    }
+  })
+}
+
+
 module.exports.changePwd = function(userId,changedPwd,callback){
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(changedPwd, salt, (err, hash) => {
@@ -120,3 +143,5 @@ module.exports.getUserClaims = function(userId,callback){
         console.log(err);
     })
 }
+
+

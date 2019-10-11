@@ -8,7 +8,6 @@ export class NotificationDirective {
   constructor(private el: ElementRef) {}
   @Input() verified: string;
   ngOnInit() {
-    console.log(this.verified);
     if(this.verified){
       this.el.nativeElement.style.color = 'purple';
     }else{

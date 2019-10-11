@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {User} from '../../user';
 import { AuthService } from '../../auth.service';
 import {ToastrService} from 'ngx-toastr';
+import { HostListener } from '@angular/core';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,6 +17,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginUser = new User();
+    this.authService.setLoggedIn(false);
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+   this.router.navigate(['/login']);
   }
   loginForm = new FormGroup(
     {
@@ -31,6 +38,7 @@ export class LoginComponent implements OnInit {
         (data)=>{
           if(data['success']){
            //  this.authService.storeUserData(data['token'],data['user']);
+           this.authService.setLoggedIn(true);
             this.authService.storeUserData(data['token'],data['user'],data['expiresin']);
             this.router.navigate(['/home/dashboard']);
           }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import {User} from '../../user';
 import {UserClaimsService} from '../../user-claims/user-claims.service';
@@ -19,6 +19,12 @@ export class DashboardComponent implements OnInit {
   claim:UserClaims;
   selectedUser:any;
   userPackage:any;
+  userHasClaims=false;
+  userHasPackages=false;
+  show =true;
+
+  // @ViewChild("status", {static:false}) somename: ElementRef;
+
   
     constructor(private router: Router,private userClaimService:UserClaimsService,
       private empUserService:EmployeeUsersService,private authService:AuthService,private userPackages:UserPackagesService) { }
@@ -35,6 +41,8 @@ export class DashboardComponent implements OnInit {
        this.fetchPendingClaims(this.user['id']);
       }
       if(this.user.userrole == 'poc'){
+        console.log('poc')
+        console.log(this.user['id']);
         this.fetchClaimsByHospital(this.user['id']);
       }
       
@@ -43,8 +51,6 @@ export class DashboardComponent implements OnInit {
       this.authService.getNotifications(userId).subscribe(
         (notifications)=>{
           this.notifications = notifications;
-          
-        //  this.noOfNotifications = this.notifications.length;
         }
       )
     }
@@ -52,7 +58,9 @@ export class DashboardComponent implements OnInit {
       this.userClaimService.getUserClaims(JSON.parse(localStorage.getItem('user')).id).subscribe(
         (claims)=>{
           this.userClaims = claims;
-          console.log(this.userClaims);        
+          if(this.userClaims.length > 0){
+            this.userHasClaims = true;
+          }      
         },(err)=>{
           console.log('err in fetching claims');
         }
@@ -63,7 +71,9 @@ export class DashboardComponent implements OnInit {
     this.userPackages.fetchUserPackages(userId).subscribe(
       (userPackage)=>{
         this.userPackage = userPackage;
-       
+        if(this.userPackage.length > 0){
+          this.userHasPackages = true;         
+        }
        },
       (err)=>console.log('err in fetching hospitals')
     
@@ -88,8 +98,14 @@ export class DashboardComponent implements OnInit {
         }
       )
     }
-    setClaim(claim){
+    setClaim(claim,e){
+      // event.preventDefault();
+      // event.stopPropagation();
       this.claim=claim;
+      // this.somename.nativeElement.show();
+      // return false;
+  
+      
     }
     userDetails(claim){
       this.authService.getUserById(claim.claims.userId).subscribe((user)=>{

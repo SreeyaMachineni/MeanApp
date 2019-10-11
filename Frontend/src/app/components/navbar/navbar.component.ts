@@ -6,6 +6,7 @@ import { AuthService } from '../../auth.service';
 import { Validators, FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import {EmployeeUsersService} from '../../employee-users/employee-users.service';
 import {ContactService} from '../../contact/contact.service';
+import {UserClaimsService} from '../../user-claims/user-claims.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -25,8 +26,10 @@ export class NavbarComponent implements OnInit {
   userrole:any;
   claim:any;
   userContacts:any;
-  options: string[] = ['Notify Employee','Notify user and Employee'];
-  constructor(private authService:AuthService,private router: Router,private empUserService:EmployeeUsersService,private contactService:ContactService) { }
+  userClaim:any;
+  options: string[] = [' Notify only the Employee','Notify user and Employee'];
+  constructor(private authService:AuthService,private router: Router,
+    private empUserService:EmployeeUsersService,private contactService:ContactService,private userClaimService:UserClaimsService) { }
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
     var userRole = this.user.userrole;
@@ -34,7 +37,7 @@ export class NavbarComponent implements OnInit {
     this.getMenus(userRole);
     this.getNumOfUsersToAssign();
     this.getNotification(this.user['id']);
-
+this.userClaim = this.userClaimService.getClaim();
     this.contact = {};
     this.contactForm = new FormGroup({
       regarding:new FormControl(''),
@@ -71,12 +74,18 @@ export class NavbarComponent implements OnInit {
     this.contact.regarding = this.contactForm.value.regarding;
     this.contact.description = this.contactForm.value.description;
     this.contact.userrole = JSON.parse(localStorage.getItem('user')).userrole;
-
+    //this.contact.userId = JSON.parse(localStorage.getItem('user')).id;
     if(this.userrole == 'user'){
       this.contact.userId = JSON.parse(localStorage.getItem('user')).id;
       this.contact.userEmpId = JSON.parse(localStorage.getItem('user')).userEmpId;
     }else if(this.userrole == 'employee'){
       this.contact.userEmpId = this.contactForm.value.user;
+    }else if(this.userrole == 'poc'){
+      console.log(this.contactForm.value);
+      
+      this.claim = this.userClaimService.getClaim();
+      this.contact.notifyOption = this.contactForm.value.notifyOption;
+      this.contact.userEmpId = this.claim.userId;
     }
     
     
@@ -124,6 +133,7 @@ export class NavbarComponent implements OnInit {
 
   onLogout(){
     this.authService.logout();
+    this.authService.setLoggedIn(false);
     this.router.navigate(['/login']);
     return false;
   }

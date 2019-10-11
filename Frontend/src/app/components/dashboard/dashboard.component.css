@@ -10,6 +10,20 @@
    overflow:auto;
  
 }
+
+
+.FixedHeightContainerE
+{
+ 
+  height: 550px;
+ 
+}
+.ContentE
+{
+  height:450px;
+   overflow:auto;
+ 
+}
 /* width */
 ::-webkit-scrollbar {
     width: 5px;

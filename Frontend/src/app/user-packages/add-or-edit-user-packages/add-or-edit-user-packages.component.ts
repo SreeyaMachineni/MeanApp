@@ -36,6 +36,7 @@ export class AddOrEditUserPackagesComponent implements OnInit {
     );
     this.userPackage = new UserPackage();
     if(this.action == 'add'){
+      
       this.userPackageForm = new FormGroup({  
         insurer:new FormControl(' '),
         package:new FormControl(' '),
@@ -45,6 +46,9 @@ export class AddOrEditUserPackagesComponent implements OnInit {
       });
     }else{
       this.userPackage = this.userPackageService.getUserPackage();
+      this.categoryName = this.userPackage.categoryName;
+      this.insuranceName = this.userPackage.insurerName;
+      this.packageName = this.userPackage.packageName;
       console.log(this.userPackage);
       this.selectedInsurance(this.userPackage.insurerId);
       this.userPackageForm = new FormGroup({  
@@ -69,11 +73,10 @@ export class AddOrEditUserPackagesComponent implements OnInit {
     this.userPackage.packageName = this.packageName;
     this.userPackage.activeFrom = this.userPackageForm.value.activeFrom;
     this.userPackage.activeTo = this.userPackageForm.value.activeTo;
-   
-    
     if(this.action == 'add'){
       this.userPackage.isAssigned = false;
       this.userPackage.assignedTo = null;
+      console.log(this.userPackage);
       this.userPackageService.addUserPackage(this.userPackage).subscribe(
         (userPackage)=>{
           this.router.navigate(['/home/mypackages'])
