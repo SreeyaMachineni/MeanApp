@@ -73,6 +73,7 @@ var upload;
 
 router.post('/sendotp', (req, res) => {
   const number = req.body.phone;
+  console.log(number)
   nexmo.verify.request({
     number: number,
     brand: 'Nexmo',

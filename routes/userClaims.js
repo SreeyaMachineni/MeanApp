@@ -20,6 +20,7 @@ router.post('/addUserClaim',(req,res)=>{
     });
     UserClaim.adduserClaim(userClaim,(err,claim)=>{
     if(err){
+        throw err;
         res.json({success: false, msg:'Failed to add claim'});
     }
     else{

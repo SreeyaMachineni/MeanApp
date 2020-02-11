@@ -20,6 +20,7 @@ router.post('/addUserPackage',(req,res)=>{
     });
     UserPackage.addUserPackage(userPackage,(err,userPackage)=>{
     if(err){
+        throw err;
         res.json({success: false, msg:'Failed to add user package'});
     }
     else{

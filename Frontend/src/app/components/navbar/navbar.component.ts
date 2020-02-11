@@ -88,7 +88,7 @@ this.userClaim = this.userClaimService.getClaim();
       this.contact.userEmpId = this.claim.userId;
     }
     
-    
+    console.log(this.contact);
     this.contactService.addContact(this.contact).subscribe((contact)=>{
       console.log(contact);
     })

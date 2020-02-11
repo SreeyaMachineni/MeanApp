@@ -11,6 +11,7 @@ let storage = multer.diskStorage({
 });
 let upload = multer({storage: storage});
 router.post('/upload/:id',upload.single('photo'), function (req, res) {
+    
     if (!req.file) {
         return res.send({success: false});
       } else {

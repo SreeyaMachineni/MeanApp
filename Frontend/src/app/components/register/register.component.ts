@@ -49,6 +49,7 @@ export class RegisterComponent implements OnInit {
     this.signedUpUser.isAssigned=false;
     this.signedUpUser.assignedTo = null;  
     // change it when editing the user values
+console.log(this.signedUpUser);
     this.authService.sendOtp(this.signedUpUser).subscribe(
       (data)=>{
         this.router.navigate(['/verify']);

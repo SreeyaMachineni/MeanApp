@@ -8,7 +8,7 @@ import {UserClaims} from './user-claims';
   providedIn: 'root'
 })
 export class UserClaimsService {
-  uri = 'http://192.168.4.101:3000';
+  uri = 'http://192.168.195.52:3000';
   action:String;
   userClaim:UserClaims;
   constructor(private http: HttpClient) { }
@@ -38,7 +38,6 @@ export class UserClaimsService {
     return this.http.get(this.uri+'/userClaims/getUserClaims/'+userId);
   }
   fetchCoveredDiseases(packageId){
-    console.log(packageId);
     return this.http.get(this.uri+'/package/getCoveredDiseases/'+packageId); 
   }
   deleteUserClaim(claimId){

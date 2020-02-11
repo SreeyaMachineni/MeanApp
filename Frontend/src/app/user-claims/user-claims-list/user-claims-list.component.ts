@@ -23,7 +23,9 @@ export class UserClaimsListComponent implements OnInit {
     this.fetchUserClaims();
   }
 
-  addClaim(){
+
+ 
+ addClaim(){
     this.userClaimsService.setAction('Add');
     this.router.navigate(['/home/addUserClaim']);
   }
@@ -33,9 +35,11 @@ export class UserClaimsListComponent implements OnInit {
         this.userClaims = claims;
         this.dataSource = new MatTableDataSource(this.userClaims);
         this.dataSource.paginator = this.paginator;
-       this.dataSource.sort = this.sort;
+       //this.dataSource.sort = this.sort;
       },(err)=>{
         console.log('err in fetching claims');
+
+        
       }
     )
   }
@@ -48,7 +52,6 @@ export class UserClaimsListComponent implements OnInit {
   deleteClaim(claimId){
     this.userClaimsService.deleteUserClaim(claimId).subscribe(
       (deleted)=>{
-        console.log('deleted');
         this.fetchUserClaims();
       },
       (err)=>{
@@ -59,7 +62,6 @@ export class UserClaimsListComponent implements OnInit {
   editClaim(userClaims){
     this.userClaimsService.setAction('edit');
     this.userClaimsService.setClaim(userClaims);
-    
     this.router.navigate(['/home/addUserClaim']);
   }
 }

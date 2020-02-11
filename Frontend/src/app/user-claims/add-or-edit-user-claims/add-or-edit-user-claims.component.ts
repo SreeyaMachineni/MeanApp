@@ -55,10 +55,10 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     this.userClaimsService.getUserPackages(userId).subscribe(
       (packages)=>{
         this.packages = packages;
+        console.log(this.packages);
         if(this.packages.length > 0){
           this.userHasPackages = true;
         }
-        console.log(this.packages);
       },(err)=>{
         console.log('err in fetching packages');
       }
@@ -75,10 +75,7 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     this.userClaimsService.fetchCoveredDiseases(packageId).subscribe(
       (diseases)=>{
         this.diseases = diseases;
-     //   this.diseases = this.diseases[0].diseasesCovered;
-      this.covered =this.diseases.diseasesCovered; 
-      console.log(this.diseases)
-     
+      this.covered =this.diseases.diseasesCovered;    
       }
     )
   }
@@ -105,7 +102,6 @@ export class AddOrEditUserClaimsComponent implements OnInit {
       )
     }
     else{
-     console.log(this.userClaim);
       this.userClaimsService.editUserClaim(this.userClaim).subscribe(
         (userPackage)=>{
           this.router.navigate(['/home/mypackages'])

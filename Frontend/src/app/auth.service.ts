@@ -10,7 +10,7 @@ import { Hospital } from './hospital';
   providedIn: 'root'
 })
 export class AuthService {
-  uri = 'http://192.168.4.101:3000';
+  uri = 'http://192.168.195.52:3000';
   authToken:any;
   user:any;
   hosp:Hospital;

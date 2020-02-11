@@ -8,7 +8,7 @@ import {UserPackage} from '../user-packages/user-packages';
   providedIn: 'root'
 })
 export class UserPackagesService {
-  uri = 'http://192.168.4.101:3000';
+  uri = 'http://192.168.195.52:3000';
   action:String;
   userPackage:UserPackage;
   constructor(private http: HttpClient) { }
@@ -28,6 +28,7 @@ export class UserPackagesService {
     return this.http.get(this.uri+'/category/getCategoryList');
   }
   addUserPackage(userPackage){
+    
     return this.http.post(this.uri+'/userPackage/addUserPackage',{package:userPackage,notify:JSON.parse(localStorage.getItem('user')).userEmpId,},{
       headers:new HttpHeaders(
        { 'Content-Type':'application/json'}
