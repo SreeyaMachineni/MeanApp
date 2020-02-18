@@ -17,6 +17,7 @@ export class UserEditComponent implements OnInit {
   constructor(private authService:AuthService,private router: Router,private location: Location,) { }
   ngOnInit() {
     this.user = this.authService.getUser();
+    console.log(this.user);
     this.userEditForm=new FormGroup({
       firstName: new FormControl(this.user.firstName),
       lastName: new FormControl(this.user.lastName),

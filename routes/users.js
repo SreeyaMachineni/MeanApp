@@ -48,6 +48,7 @@ console.log(firstName);
             lastName: user.lastName,
             dob: user.dob,
             email: user.email,
+            gender:user.gender,
             phone: user.phone,
             address: user.address,
             userrole: user.userrole,
@@ -87,52 +88,97 @@ router.post('/sendotp', (req, res) => {
 
 // Register
 router.post('/register', (req, res) => {
-  nexmo.verify.check({
-    request_id: requestId,
-    code: req.body.otp
-  }, (err, result) => {
-    if (result['status'] == 0) {
-      let newUser = new User({
-        firstName: req.body.user.firstName,
-        lastName: req.body.user.lastName,
-        dob: req.body.user.dob,
-        gender: req.body.user.gender,
-        phone: req.body.user.phone,
-        email: req.body.user.email,
-        address: req.body.user.address,
-        password: req.body.user.password,
-        userrole: req.body.user.userrole,
-        isAssigned: req.body.user.isAssigned,
-        assignedTo: req.body.user.assignedTo
-      });
 
-      User.addUser(newUser, (err, user) => {
-        if (err) {
-          res.json({ success: false, msg: 'Failed to register user' });
-        } else {
-          const token = jwt.sign({ data: user }, config.secret, {
-            expiresIn: 604800 // 1 week
-          });
-          res.json({
-            success: true,
-            msg: 'user registered',
-            token: `Bearer ${token}`,
-            user: {
-              id: user._id,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              dob: user.dob,
-              email: user.email,
-              phone: user.phone,
-              address: user.address,
-              userrole: user.userrole
-            },
-            expiresin: 604800
-          });
-        }
+
+  // nexmo.verify.check({
+  //   request_id: requestId,
+  //   code: req.body.otp
+  // }, (err, result) => {
+  //   if (result['status'] == 0) {
+  //     let newUser = new User({
+  //       firstName: req.body.user.firstName,
+  //       lastName: req.body.user.lastName,
+  //       dob: req.body.user.dob,
+  //       gender: req.body.user.gender,
+  //       phone: req.body.user.phone,
+  //       email: req.body.user.email,
+  //       address: req.body.user.address,
+  //       password: req.body.user.password,
+  //       userrole: req.body.user.userrole,
+  //       isAssigned: req.body.user.isAssigned,
+  //       assignedTo: req.body.user.assignedTo
+  //     });
+
+  //     User.addUser(newUser, (err, user) => {
+  //       if (err) {
+  //         res.json({ success: false, msg: 'Failed to register user' });
+  //       } else {
+  //         const token = jwt.sign({ data: user }, config.secret, {
+  //           expiresIn: 604800 // 1 week
+  //         });
+  //         res.json({
+  //           success: true,
+  //           msg: 'user registered',
+  //           token: `Bearer ${token}`,
+  //           user: {
+  //             id: user._id,
+  //             firstName: user.firstName,
+  //             lastName: user.lastName,
+  //             dob: user.dob,
+  //             email: user.email,
+  //             phone: user.phone,
+  //             address: user.address,
+  //             userrole: user.userrole
+  //           },
+  //           expiresin: 604800
+  //         });
+  //       }
+  //     });
+  //   }
+  // });
+
+  let newUser = new User({
+    firstName: req.body.user.firstName,
+    lastName: req.body.user.lastName,
+    dob: req.body.user.dob,
+    gender: req.body.user.gender,
+    phone: req.body.user.phone,
+    email: req.body.user.email,
+    address: req.body.user.address,
+    password: req.body.user.password,
+    userrole: req.body.user.userrole,
+    isAssigned: req.body.user.isAssigned,
+    assignedTo: req.body.user.assignedTo
+  });
+
+  User.addUser(newUser, (err, user) => {
+    if (err) {
+      res.json({ success: false, msg: 'Failed to register user' });
+    } else {
+      const token = jwt.sign({ data: user }, config.secret, {
+        expiresIn: 604800 // 1 week
+      });
+      res.json({
+        success: true,
+        msg: 'user registered',
+        token: `Bearer ${token}`,
+        user: {
+          id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          dob: user.dob,
+          email: user.email,
+          phone: user.phone,
+          address: user.address,
+          userrole: user.userrole,
+          gender:user.gender
+        },
+        expiresin: 604800
       });
     }
   });
+
+  
 });
 
 router.post('/addEmp', (req, res) => {

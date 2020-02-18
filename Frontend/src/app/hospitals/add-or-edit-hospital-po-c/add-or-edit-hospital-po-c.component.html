@@ -1,32 +1,42 @@
-<form [formGroup]="pocForm" class="row m-0 pt-5" autocomplete="off">
-    <div class="offset-md-3 col-md-3 col-sm-7 d-flex flex-column">
-        <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required></mat-form-field>
-        <mat-form-field><input matInput placeholder="Email" formControlName="email" required></mat-form-field>
-            <!-- <mat-form-field><input matInput placeholder="Hospital" formControlName="hospitalName" required></mat-form-field> -->
+<div class="container pt-3">
+    <div class="row">
+        <div class="col h5">{{action|titlecase}} Point of Contact</div>
+        <div class="col font-weight-bold text-right">
+            <i class="fa fa-reply" (click)="cancel()"></i>
+        </div>
+    </div>
+
+    <form class="row pt-4" [formGroup]="pocForm" autocomplete="off">
+        <div class="col-md-6 col-sm-7 d-flex flex-column">
+            <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required></mat-form-field>
+            <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required></mat-form-field>
+            <mat-form-field><input matInput placeholder="Email" formControlName="email" required></mat-form-field>
+            <mat-form-field><input matInput placeholder="Phone Number" formControlName="phone" required></mat-form-field>
+        </div>
+        <div class="col-md-6 col-sm-7 d-flex flex-column">
             <mat-form-field>
-                    <mat-label>Hospital</mat-label>
-                    <mat-select required formControlName="hospitalName">
-                            <mat-option *ngFor="let hospital of hospitals" [value]="hospital._id" (click)="selectedHospital(hospital.name)">
-                            {{hospital.name}}
-                            </mat-option>
-                    </mat-select>
+                <mat-label>Hospital</mat-label>
+                <mat-select required formControlName="hospitalName">
+                    <mat-option *ngFor="let hospital of hospitals" [value]="hospital._id"
+                        (click)="selectedHospital(hospital.name)">
+                        {{hospital.name}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
-        <mat-form-field>
-            <mat-label>Gender</mat-label>
-            <mat-select required formControlName="gender">
-                <mat-option value="female">Female</mat-option>
-                <mat-option value="male">Male</mat-option>
-                <mat-option value="others">Others</mat-option>
-            </mat-select>
-    </mat-form-field> 
+            <mat-form-field>
+                <mat-label>Gender</mat-label>
+                <mat-select required formControlName="gender">
+                    <mat-option value="female">Female</mat-option>
+                    <mat-option value="male">Male</mat-option>
+                    <mat-option value="others">Others</mat-option>
+                </mat-select>
+            </mat-form-field>         
+            <mat-form-field><input matInput placeholder="Address" formControlName="address" required></mat-form-field>
+        </div>
+    </form>
+
+    <div *ngIf="!verify" class="pull-right">
+        <button type="submit" class="row btn btn-light mr-3" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn btn-dark " [disabled]="!pocForm.valid" (click)="saveit(poc._id)">Save</button>
     </div>
-<div class="col-md-3 col-sm-7  d-flex flex-column">   
-    <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required></mat-form-field>   
-    <mat-form-field><input matInput placeholder="Phone Number" formControlName="phone" required></mat-form-field>     
-    <mat-form-field><input matInput placeholder="Address" formControlName="address" required></mat-form-field>
 </div>
-</form>
-<div class="offset-md-8">
-        <button type="submit" class="btn btn-dark mr-1" (click)="cancel()">Cancel</button>
-        <button type="submit" class="btn btn-dark" [disabled]="!pocForm.valid" (click)="saveit(poc._id)">Save</button>
-    </div>

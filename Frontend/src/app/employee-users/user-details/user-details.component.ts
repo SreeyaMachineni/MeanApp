@@ -7,6 +7,8 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { FormGroup, FormControl } from '@angular/forms';
 import { UserClaims } from '../../user-claims/user-claims';
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
@@ -27,7 +29,7 @@ export class UserDetailsComponent implements OnInit {
   dataSource: MatTableDataSource<UserPackage>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  constructor(private empUserService:EmployeeUsersService,private router: Router) { }
+  constructor(private empUserService:EmployeeUsersService,private router: Router, private location: Location) { }
 
 
   ngOnInit() {
@@ -128,5 +130,7 @@ export class UserDetailsComponent implements OnInit {
     })
   }
   
-
+  cancel(){
+    this.location.back();
+  }
 }

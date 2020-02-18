@@ -1,32 +1,50 @@
-<div class="text-center font-weight-bold p-5">Edit Your Details</div>
-<form [formGroup]="userEditForm" *ngIf="!verify" class="offset-4 col-md-3 col-sm-7 d-flex flex-column pt-5"  autocomplete="off"  (ngSubmit)="saveit()">
-        <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required></mat-form-field>
-        <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required></mat-form-field>
-        <mat-form-field><input matInput placeholder="Email" formControlName="email" required></mat-form-field>
-        <mat-form-field><input matInput placeholder="Phone Number" formControlName="phone" required></mat-form-field>
-        <mat-form-field class="example-full-width">
-            <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dob">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Gender</mat-label>
-            <mat-select required formControlName="gender">
-                <mat-option value="female">Female</mat-option>
-                <mat-option value="male">Male</mat-option>
-                <mat-option value="others">Others</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field><input matInput placeholder="Address" formControlName="address" required></mat-form-field>
-</form>
-<div class="offset-md-6 pl-5 pt-3 pr-5" *ngIf="!verify">
-    <button type="submit" class="btn btn-dark mr-1" (click)="cancel()">Cancel</button>
-    <button type="submit" class="btn btn-dark" [disabled]="!userEditForm.valid" (click)="saveit()">Save</button>
+<div class="container pt-3">
+    <div class="row">
+        <div class="col h5">Edit Details</div>
+        <div class="col font-weight-bold text-right">
+            <i class="fa fa-reply" (click)="cancel()"></i>
+        </div>
+    </div>
+
+    <form class="row pt-5" [formGroup]="userEditForm" *ngIf="!verify" autocomplete="off" (ngSubmit)="saveit()">
+        <div class="col-md-6 col-sm-7 d-flex flex-column">
+            <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Email" formControlName="email" required></mat-form-field>
+            <mat-form-field><input matInput placeholder="Phone Number" formControlName="phone" required>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6 col-sm-7 d-flex flex-column">
+            <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dob">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Gender</mat-label>
+                <mat-select required formControlName="gender">
+                    <mat-option value="male">Male</mat-option>
+                    <mat-option value="female">Female</mat-option>
+                    <mat-option value="others">Others</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Address" formControlName="address" required></mat-form-field>
+        </div>
+    </form>
+
+    <div *ngIf="!verify" class="pull-right">
+        <button type="submit" class="row btn btn-light mr-3" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn btn-dark " [disabled]="!userEditForm.valid"
+            (click)="saveit()">Save</button>
+    </div>
+
+    <form [formGroup]="otpForm" *ngIf="verify" class="offset-4 col-md-3 col-sm-7 d-flex flex-column pt-5" autocomplete="off" (ngSubmit)="verifyUser()">
+        <div class="text-black pb-5 font-weight-bold" style="font-size: 25px;">Please verify your mobile number to
+            proceed</div>
+        <mat-form-field><input matInput placeholder="OTP" formControlName="otp" required></mat-form-field>
+        <button type="submit" class="btn btn-dark" [disabled]="!otpForm.valid" (click)="verifyUser()">Save</button>
+    </form>
+
 </div>
-
-<form [formGroup]="otpForm" *ngIf="verify" class="offset-4 col-md-3 col-sm-7 d-flex flex-column pt-5"  autocomplete="off"  (ngSubmit)="verifyUser()">
-    <div class="text-black pb-5 font-weight-bold" style="font-size: 25px;">Please verify your mobile number to proceed</div>
-    <mat-form-field><input matInput placeholder="OTP" formControlName="otp" required></mat-form-field>
-    <button type="submit" class="btn btn-dark" [disabled]="!otpForm.valid" (click)="verifyUser()">Save</button>
-</form>
-

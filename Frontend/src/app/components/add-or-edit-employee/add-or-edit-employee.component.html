@@ -1,47 +1,58 @@
-<div class="text-center p-2 pt-5 font-weight-bold">{{action}} Employee</div>
- 
-<form [formGroup]="employeeForm" class="row m-0 pt-5" autocomplete="off">
-        <div class="offset-md-3 col-md-3 col-sm-7 d-flex flex-column">
-    
-        <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required></mat-form-field>
-        <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required></mat-form-field>
-        <mat-form-field><input matInput placeholder="Email" formControlName="email" required></mat-form-field>
-        <mat-form-field><input matInput placeholder="Phone Number" formControlName="phone" required></mat-form-field>
-        <mat-form-field class="example-full-width">
-                <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dob">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-                <mat-label>Gender</mat-label>
-                   <mat-select required formControlName="gender" >
-                     <mat-option value="female">Female</mat-option>
-                     <mat-option value="male">Male</mat-option>
-                     <mat-option value="others">Others</mat-option>
-                   </mat-select>
-       </mat-form-field> 
-    </div>
-    <div class="col-md-3 col-sm-7  d-flex flex-column">
+<div class="container pt-3">
+        <div class="row">
+                <div class="col h5">{{action|titlecase}} Employee</div>
+                <div class="col font-weight-bold text-right">
+                        <i class="fa fa-reply" (click)="cancel()"></i>
+                </div>
+        </div>
 
-               
-        <mat-form-field><input matInput placeholder="Address" formControlName="address" required></mat-form-field>
-        <mat-form-field><input matInput placeholder="Passport" formControlName="passport"></mat-form-field>
-        <mat-form-field><input matInput placeholder="PAN" formControlName="pan"></mat-form-field>
-        <mat-form-field><input matInput placeholder="Qualification" formControlName="qualification"></mat-form-field>
-        <mat-form-field>
-                <mat-label>Marital Status</mat-label>
-                <mat-select required formControlName="maritalStatus">
-                  <mat-option value="married">Married</mat-option>
-                  <mat-option value="unmarried">UnMarried</mat-option>
-                  <mat-option value="divorced">Divorced</mat-option>
-                </mat-select>
-              </mat-form-field>  
-            </div>
-           
-        <!--  -->
-</form>
+        <form class="row pt-4" [formGroup]="employeeForm" autocomplete="off">
+                <div class="col-md-6 col-sm-7 d-flex flex-column">
+                        <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required>
+                        </mat-form-field>
+                        <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required>
+                        </mat-form-field>
+                        <mat-form-field><input matInput placeholder="Email" formControlName="email" required>
+                        </mat-form-field>
+                        <mat-form-field><input matInput placeholder="Phone Number" formControlName="phone" required>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                                <input matInput [matDatepicker]="picker" placeholder="Date of Birth"
+                                        formControlName="dob">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field>
+                                <mat-label>Gender</mat-label>
+                                <mat-select required formControlName="gender">
+                                        <mat-option value="female">Female</mat-option>
+                                        <mat-option value="male">Male</mat-option>
+                                        <mat-option value="others">Others</mat-option>
+                                </mat-select>
+                        </mat-form-field>
+                </div>
+                <div class="col-md-6 col-sm-7 d-flex flex-column">
+                        <mat-form-field><input matInput placeholder="Address" formControlName="address" required>
+                        </mat-form-field>
+                        <mat-form-field><input matInput placeholder="Passport" formControlName="passport">
+                        </mat-form-field>
+                        <mat-form-field><input matInput placeholder="PAN" formControlName="pan"></mat-form-field>
+                        <mat-form-field><input matInput placeholder="Qualification" formControlName="qualification">
+                        </mat-form-field>
+                        <mat-form-field>
+                                <mat-label>Marital Status</mat-label>
+                                <mat-select required formControlName="maritalStatus">
+                                        <mat-option value="married">Married</mat-option>
+                                        <mat-option value="unmarried">UnMarried</mat-option>
+                                        <mat-option value="divorced">Divorced</mat-option>
+                                </mat-select>
+                        </mat-form-field>
+                </div>
+        </form>
 
-<div class="offset-md-8">
-        <button type="submit" class="btn btn-dark m-2" (click)="cancel()">Cancel</button>
-        <button type="submit" class="btn btn-dark" [disabled]="!employeeForm.valid" (click)="saveit(emp._id)">Save</button>
+        <div *ngIf="!verify" class="pull-right">
+                <button type="submit" class="row btn btn-light mr-3" (click)="cancel()">Cancel</button>
+                <button type="submit" class="btn btn-dark " [disabled]="!employeeForm.valid"
+                        (click)="saveit(emp._id)">Save</button>
+        </div>
 </div>

@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
+    console.log(this.user,'getted');
     this.id = JSON.parse(localStorage.getItem('user')).id;
     this.getDocs(this.id);
   URL=URL+this.id;
@@ -73,10 +74,10 @@ export class ProfileComponent implements OnInit {
       }
     )
   }
+  
   editUser(user){
     console.log('clicked');
     this.authService.setUser(user);
-    
     this.router.navigate(['/home/editUser']);
   }
 }

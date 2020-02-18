@@ -1,26 +1,26 @@
 <div class="container">
-        
+
     <div class="Left d-flex flex-column justify-content-center align-items-center">
-            <div class="text-black pb-2 font-weight-bold text-white" style="font-size: 35px;">Something</div>
-            <div class=" text-white">some tag goes here</div>
-            
+        <div class="text-black pb-2 font-weight-bold text-white" style="font-size: 35px;">Something</div>
+        <div class=" text-white">some tag goes here</div>
     </div>
-    <form [formGroup]="loginForm" class="Right d-flex flex-column  justify-content-center align-items-center" autocomplete="off"  (ngSubmit)="loginSubmit()">
-         
+    
+    <form [formGroup]="loginForm" class="Right d-flex flex-column  justify-content-center align-items-center"
+        autocomplete="off" (ngSubmit)="loginSubmit()">
         <div class="text-black pb-2 font-weight-bold for-mob" style="font-size: 35px;">Something</div>
-            <div class="text-black pb-5 font-weight-bold for-mob" style="font-size: 15px;">Some tag goes heer</div>
-            <div *ngIf="invalid"  class="alert alert-danger m-2">
-                Invalid Credentials.Please check your username and password.
-              </div> 
-        <div class="text-black pb-5 font-weight-bold" style="font-size: 30px;">Login</div>
-            <mat-form-field><input matInput placeholder="Username" formControlName="username" required></mat-form-field>
-                  <mat-form-field> <input matInput placeholder="password" formControlName="password" type="password" required></mat-form-field>
-                  <button type="submit" class="btn btn-dark p-0 pt-1 pb-1 pl-4 pr-4" [disabled]="!loginForm.valid">Login</button>
-   <div class="text-black pt-5" >Do not have account?
-        <!-- <a routerLink="/signup" class="font-weight-bold text-black">SignUp</a> -->
-        <a routerLink="/register" routerLinkActive="active">SignUp</a>
-    </div>                   
-            
-</form>
-   
+        <div class="text-black pb-5 font-weight-bold for-mob" style="font-size: 15px;">Some tag goes here</div>
+        <div *ngIf="invalid" class="alert alert-danger m-2">
+            Invalid Credentials.Please check your Username and Password.
+        </div>
+        <div class="pb-5 font-weight-bold" style="font-size: 30px;">Login</div>
+        <mat-form-field><input matInput placeholder="Username" formControlName="username" required></mat-form-field>
+        <mat-form-field class="pb-3" ><input matInput placeholder="Password" formControlName="password" type="password" required>
+        </mat-form-field>
+        <button type="submit" class="btn btn-dark p-0 pt-1 pb-1 pl-4 pr-4" [disabled]="!loginForm.valid">Login</button>
+        <div class="text-black pt-4">Do not have an account?
+            <!-- <a routerLink="/signup" class="font-weight-bold text-black">SignUp</a> -->
+            <a routerLink="/register" routerLinkActive="active">SignUp</a>
+        </div>
+    </form>
+
 </div>

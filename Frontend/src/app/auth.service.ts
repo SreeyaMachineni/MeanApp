@@ -5,12 +5,14 @@ import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { User} from './user';
 import { Hospital } from './hospital';
+import * as environment from 'src/environments/environment';
+
 // import {tokenNotExpired} from '@auth0/angular-jwt';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  uri = 'http://192.168.195.52:3000';
+  url = environment.environment.ServerUrl;
   authToken:any;
   user:any;
   hosp:Hospital;
@@ -19,7 +21,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   createUser(otp:String):Observable<User>{  
-    return this.http.post<User>(this.uri+'/users/register',{user:this.user,otp:otp},{
+    return this.http.post<User>(this.url+'/users/register',{user:this.user,otp:otp},{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'
@@ -29,7 +31,7 @@ export class AuthService {
   }
 
   editUser(user:User,otp:String):Observable<User>{  
-    return this.http.post<User>(this.uri+'/users/editUser',{user:this.user,otp:otp},{
+    return this.http.post<User>(this.url+'/users/editUser',{user:this.user,otp:otp},{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'
@@ -41,7 +43,7 @@ export class AuthService {
 
 
   authenticateUser(user:User):Observable<User>{
-    return this.http.post<User>(this.uri+'/users/authenticate',user,{
+    return this.http.post<User>(this.url+'/users/authenticate',user,{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'
@@ -56,7 +58,7 @@ export class AuthService {
     // headers.append('Content-Type','application/json');
     
     const headers = new HttpHeaders().set('Authorization', this.authToken);
-    return this.http.get(this.uri+'/users/profile',{headers:headers});
+    return this.http.get(this.url+'/users/profile',{headers:headers});
   }
 
   loggedIn(){
@@ -77,7 +79,9 @@ export class AuthService {
   // storeUserData(token,user){
     storeUserData(token,user,expiresin){
     localStorage.setItem('id_token',token);
+    console.log(user)
     localStorage.setItem('user',JSON.stringify(user));
+    console.log(localStorage.getItem('user'),'setted');
     this.authToken = token;
     this.user=user;
     
@@ -95,7 +99,7 @@ export class AuthService {
 sendOtp(user:User){
 //  console.log(otp);
   this.user=user;
-  return this.http.post(this.uri+'/users/sendotp',{phone:this.user.phone},{
+  return this.http.post(this.url+'/users/sendotp',{phone:this.user.phone},{
     headers:new HttpHeaders(
       {
         'Content-Type':'application/json'
@@ -108,18 +112,18 @@ getUser(){
 }
 
 fileUpload(fd):Observable<any>{
-return this.http.post(this.uri+'/users/test',{image:fd},{headers:new HttpHeaders({'Content-Type':'application/json'})});
+return this.http.post(this.url+'/users/test',{image:fd},{headers:new HttpHeaders({'Content-Type':'application/json'})});
 }
 
 uploadImg():Observable<any>{
-return this.http.get(this.uri+'/users/uploadtest');
+return this.http.get(this.url+'/users/uploadtest');
 }
 getMenus(userRole){
-  return this.http.get(this.uri+'/users/menus/'+userRole);
+  return this.http.get(this.url+'/users/menus/'+userRole);
 }
 addEmp(emp:User){
     this.user=emp;
-    return this.http.post(this.uri+'/users/addEmp',{emp:this.user},{
+    return this.http.post(this.url+'/users/addEmp',{emp:this.user},{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'
@@ -128,10 +132,10 @@ addEmp(emp:User){
     });
   }
   getEmployees(userrole){
-    return this.http.get(this.uri+'/users/getEmp/'+userrole);
+    return this.http.get(this.url+'/users/getEmp/'+userrole);
   }
   deleteEmp(empid){
-    return this.http.get(this.uri+'/users/deleteEmp/'+empid);
+    return this.http.get(this.url+'/users/deleteEmp/'+empid);
   }
   setAction(action){
     this.action=action;
@@ -143,7 +147,7 @@ addEmp(emp:User){
     this.user = user;
   }
   editEmp(emp:User,empId){
-    return this.http.post(this.uri+'/users/editEmp/'+empId,{emp:emp},{
+    return this.http.post(this.url+'/users/editEmp/'+empId,{emp:emp},{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'
@@ -152,7 +156,7 @@ addEmp(emp:User){
     });
   }
   addHospital(hosp:Hospital){
-    return this.http.post(this.uri+'/hospital/addHosp',{hosp},{
+    return this.http.post(this.url+'/hospital/addHosp',{hosp},{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'
@@ -162,10 +166,10 @@ addEmp(emp:User){
   }
 
   getHospitals(){
-    return this.http.get(this.uri+'/hospital/getHosp');
+    return this.http.get(this.url+'/hospital/getHosp');
   }
   deleteHosp(hospid){
-    return this.http.get(this.uri+'/hospital/deleteHosp/'+hospid);
+    return this.http.get(this.url+'/hospital/deleteHosp/'+hospid);
   }
   setHosp(hosp:Hospital){
     this.hosp = hosp;
@@ -174,7 +178,7 @@ addEmp(emp:User){
     return this.hosp;
   }
   editHosp(hosp,hospid){
-    return this.http.post(this.uri+'/hospital/editHosp/'+hospid,{hosp:hosp},{
+    return this.http.post(this.url+'/hospital/editHosp/'+hospid,{hosp:hosp},{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'
@@ -183,46 +187,46 @@ addEmp(emp:User){
     });
   }
   getNumOfUsersToAssign(){
-    return this.http.get(this.uri+'/users/getNumOfUsersToAssign');
+    return this.http.get(this.url+'/users/getNumOfUsersToAssign');
   }
 
   getUsers(){
-    return this.http.get(this.uri+'/users/getUsers');
+    return this.http.get(this.url+'/users/getUsers');
   }
 
   getUnassignedUsers(){
-    return this.http.get(this.uri+'/users/getUnassignedUsers');
+    return this.http.get(this.url+'/users/getUnassignedUsers');
   }
 
   getNumOfPkgsToVisit(assignedTo){
-    return this.http.get(this.uri+'/userPackage/getNumOfPackagesToVisit/'+assignedTo);
+    return this.http.get(this.url+'/userPackage/getNumOfPackagesToVisit/'+assignedTo);
   }
  
   getDocs(id){
-    return this.http.get(this.uri+'/docs/getDocs/'+id);
+    return this.http.get(this.url+'/docs/getDocs/'+id);
   } 
   getNotifications(userId){
-    return this.http.get(this.uri+'/notification/getNotifications/'+userId);
+    return this.http.get(this.url+'/notification/getNotifications/'+userId);
   }
 
   getUserById(userId){
-    return this.http.get(this.uri+'/users/getUserById/'+userId);
+    return this.http.get(this.url+'/users/getUserById/'+userId);
   }
 
 
 
   changePwd(currentPwd,changedPwd){
     var userId = JSON.parse(localStorage.getItem('user')).id;
-    return this.http.post(this.uri+'/users/changePwd',{currentPwd:currentPwd,changedPwd:changedPwd,userId:userId},{
+    return this.http.post(this.url+'/users/changePwd',{currentPwd:currentPwd,changedPwd:changedPwd,userId:userId},{
       headers:new HttpHeaders({'Content-Type':'application/json'})
     });
   }
   updateNotification(notificationId){
-    return this.http.get(this.uri+'/notification/updateNotification/'+notificationId);
+    return this.http.get(this.url+'/notification/updateNotification/'+notificationId);
   }
   editUserSamePhone(user:User):Observable<User>{  
     
-    return this.http.post<User>(this.uri+'/users/editUserSamePhone',{user:this.user},{
+    return this.http.post<User>(this.url+'/users/editUserSamePhone',{user:this.user},{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'
