@@ -50,7 +50,7 @@ export class AddOrEditHospitalPoCComponent implements OnInit {
           })
         }else{
           this.poc = this.hospitalPocService.getHospPoc();
-          console.log(this.poc);
+          
           this.pocForm = new FormGroup({
             firstName: new FormControl(this.poc.firstName),
             lastName: new FormControl(this.poc.lastName),
@@ -62,7 +62,7 @@ export class AddOrEditHospitalPoCComponent implements OnInit {
           })
         }
        
-        console.log(this.hospitals);
+        
       },
       (err)=>{
         console.log('err in fetching')

@@ -70,7 +70,7 @@ export class UserPackagesListComponent implements OnInit {
         if(success['success']){
          // console.log(this.successAlert);
           this.show = this.success = true;
-          console.log(this.alertSuccess);
+          
           this.fetchUserPackages();
           
         }

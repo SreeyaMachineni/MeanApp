@@ -52,8 +52,8 @@ export class UserEditComponent implements OnInit {
       this.user.phone = this.userEditForm.value.phone;
       this.authService.editUserSamePhone(this.user).subscribe(
         (data)=>{
-          console.log(data);
-          console.log('edited');
+          
+          
           this.router.navigate(['/profile']);
         },
         (err)=>{

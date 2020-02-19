@@ -25,7 +25,7 @@ router.post('/authenticate', (req, res, next) => {
   
   const firstName = req.body.firstName;
   const password = req.body.password;
-console.log(firstName);
+
   User.getUserByUsername(firstName, (err, user) => {
   
     if (err) throw err;
@@ -74,7 +74,7 @@ var upload;
 
 router.post('/sendotp', (req, res) => {
   const number = req.body.phone;
-  console.log(number)
+  
   nexmo.verify.request({
     number: number,
     brand: 'Nexmo',
@@ -311,7 +311,7 @@ router.post('/editUserSamePhone',(req,res)=>{
   var userId = req.body.user.id;
   User.editUser(req.body.user,userId,(user,err)=>{
     (user) => {
-      console.log('user edited')
+      
        res.json({ success: true, msg: 'success' }); 
       },
     (err)=>{
@@ -395,7 +395,7 @@ router.get('/getEmpUsers/:empId', (req, res) => {
 })
 
 router.get('/getUserById/:userId', (req, res) => {
-  console.log(console.log(req.params.userId))
+  
   User.getUserById(req.params.userId, (err, user) => {
     if (err) throw err
     else {

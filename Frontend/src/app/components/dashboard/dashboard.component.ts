@@ -55,8 +55,8 @@ export class DashboardComponent implements OnInit {
        this.fetchPendingClaims(this.user['id']);
       }
       if(this.user.userrole == 'poc'){
-        console.log('poc')
-        console.log(this.user['id']);
+      //  console.log('poc')
+     //   console.log(this.user['id']);
         this.fetchClaimsByHospital(this.user['id']);
       }
       
@@ -101,7 +101,7 @@ export class DashboardComponent implements OnInit {
         (claims)=>{
           this.userClaims = claims;
         },(err)=>{
-          console.log('err in fetching claims');
+      //    console.log('err in fetching claims');
         }
       )
     }
@@ -109,7 +109,7 @@ export class DashboardComponent implements OnInit {
       this.userClaimService.getClaimsByHospital(pocId).subscribe(
         (claims)=>{
           this.userClaims = claims
-          console.log(this.userClaims);
+      //    console.log(this.userClaims);
         },(err)=>{
           console.log('err in fetching')
         }

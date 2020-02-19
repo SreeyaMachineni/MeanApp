@@ -50,7 +50,7 @@ this.poc = poc;
     return this.poc;
   }
   editPoc(poc,pocId){
-    console.log(poc);
+    
     return this.http.post(this.url+'/hospitalPoc/editPoc',{poc:poc,pocId:pocId},{
       headers:new HttpHeaders(
        { 'Content-Type':'application/json'}

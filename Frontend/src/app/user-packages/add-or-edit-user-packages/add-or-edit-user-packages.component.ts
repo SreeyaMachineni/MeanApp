@@ -22,6 +22,7 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   constructor(private router:Router,private userPackageService:UserPackagesService,private location: Location) { }
 
   ngOnInit() {
+    debugger
     this.action = this.userPackageService.getAction();
     this.userPackageService.getInsurers().subscribe(
       (insurers)=>{
@@ -31,12 +32,10 @@ export class AddOrEditUserPackagesComponent implements OnInit {
     this.userPackageService.getCategories().subscribe(
       (categories)=>{
         this.categories = categories;
-        console.log(this.categories);
       }
     );
     this.userPackage = new UserPackage();
-    if(this.action == 'add'){
-      
+    if(this.action == 'add'){ 
       this.userPackageForm = new FormGroup({  
         insurer:new FormControl(' '),
         package:new FormControl(' '),
@@ -45,19 +44,21 @@ export class AddOrEditUserPackagesComponent implements OnInit {
         activeTo:new FormControl(' ')
       });
     }else{
+
       this.userPackage = this.userPackageService.getUserPackage();
-      this.categoryName = this.userPackage.categoryName;
-      this.insuranceName = this.userPackage.insurerName;
-      this.packageName = this.userPackage.packageName;
       console.log(this.userPackage);
+      // this.categoryName = this.userPackage.categoryName;
+      // this.insuranceName = this.userPackage.insurerName;
+      // this.packageName = this.userPackage.packageName;
       this.selectedInsurance(this.userPackage.insurerId);
       this.userPackageForm = new FormGroup({  
-        insurer:new FormControl(this.userPackage.activeTo),
+        insurer:new FormControl(this.userPackage.insurerName),
         package:new FormControl(this.userPackage.packageName),
         category:new FormControl(this.userPackage.categoryName),
         activeFrom:new FormControl(this.userPackage.activeFrom),
         activeTo:new FormControl(this.userPackage.activeTo)
       });
+      console.log(this.userPackageForm);
     }
     
   }
@@ -76,13 +77,11 @@ export class AddOrEditUserPackagesComponent implements OnInit {
     if(this.action == 'add'){
       this.userPackage.isAssigned = false;
       this.userPackage.assignedTo = null;
-      console.log(this.userPackage);
       this.userPackageService.addUserPackage(this.userPackage).subscribe(
         (userPackage)=>{
           this.router.navigate(['/home/mypackages'])
     
         },(err)=>{
-          console.log('err in adding');
         }
       )
     }else{
@@ -91,7 +90,6 @@ export class AddOrEditUserPackagesComponent implements OnInit {
         (userPackage)=>{
           this.router.navigate(['/home/mypackages'])
         },(err)=>{
-          console.log('err in adding');
         }
       )
     }
@@ -101,9 +99,7 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   deleteUserPackage(packageId){
     this.userPackageService.deleteUserPackage(packageId).subscribe(
       (userPackage)=>{
-        console.log('up deleted');
       },(err)=>{
-        console.log('unable to delete');
       }
     )
   }
@@ -124,7 +120,6 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   }
  
   compareThem(o1, o2): boolean{
-    console.log('compare with');
     return o1.name === o2.name;
   }
   cancel(){

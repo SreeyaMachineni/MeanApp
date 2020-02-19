@@ -47,7 +47,7 @@ export class CategoryListComponent implements OnInit {
       this.categoryService.addCategory(this.categories).subscribe(
         (category)=>{
           this.fetchCategories();
-          console.log('category add');
+       //   console.log('category add');
       },
         (err)=>{console.log('failed to add category');}
       )
@@ -84,7 +84,6 @@ export class CategoryListComponent implements OnInit {
   fetchCategories(){
     this.categoryService.fetchCategories().subscribe(
       (categories)=>{
-        console.log('Success');
         this.category=categories;
         this.dataSource = new MatTableDataSource(this.category);
         this.dataSource.paginator = this.paginator;

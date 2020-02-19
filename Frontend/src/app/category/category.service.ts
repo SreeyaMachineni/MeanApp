@@ -17,7 +17,7 @@ categoryId:any;
 constructor(private http: HttpClient) { }
 
   addCategory(category:Category){
-    console.log(category);
+  //  console.log(category);
     return this.http.post(this.url+'/category/addCategory',{category},{
       headers:new HttpHeaders(
         {

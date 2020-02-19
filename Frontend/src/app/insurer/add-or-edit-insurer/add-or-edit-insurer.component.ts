@@ -18,10 +18,10 @@ export class AddOrEditInsurerComponent implements OnInit {
   ngOnInit() {
     this.insurer = new Insurer();
     this.action = this.insurerService.getAction();
-    console.log(this.action);
+    
     if(this.action == 'edit'){
       this.insurer = this.insurerService.getInsurer();
-      console.log(this.insurer);
+      
       this.insurerForm=this.fb.group({
         name:[this.insurer.name,[Validators.required]],
         location:[this.insurer.location,[Validators.required]],

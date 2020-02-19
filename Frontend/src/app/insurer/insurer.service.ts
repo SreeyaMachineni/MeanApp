@@ -18,7 +18,6 @@ insurerId:any;
   constructor(private http: HttpClient) { }
   
   addInsurer(insurer){
-    console.log(insurer);
     return this.http.post(this.url+'/insurer/addInsurer',{insurer},{
       headers:new HttpHeaders(
        { 'Content-Type':'application/json'}

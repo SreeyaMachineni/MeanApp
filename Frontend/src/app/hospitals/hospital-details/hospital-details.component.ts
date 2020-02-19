@@ -29,7 +29,7 @@ export class HospitalDetailsComponent implements OnInit {
     this.hospitalPocService.getPocs(this.hospital._id).subscribe(
       (poc)=>{
         this.poc = poc;
-        console.log(poc);
+        
         this.dataSource = new MatTableDataSource(this.poc);
         this.dataSource.paginator = this.paginator;
        this.dataSource.sort = this.sort;
@@ -50,6 +50,11 @@ export class HospitalDetailsComponent implements OnInit {
   editPoc(poc,pocId){
     this.hospitalPocService.setAction('Edit');
     this.hospitalPocService.setHospPoc(poc);
+    this.router.navigate(['/home/addOrEditHospitalPoc']);
+  }
+
+  addHospPoC(){
+    this.hospitalPocService.setAction('Add');
     this.router.navigate(['/home/addOrEditHospitalPoc']);
   }
  

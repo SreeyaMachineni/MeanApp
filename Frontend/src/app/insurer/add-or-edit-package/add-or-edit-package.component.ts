@@ -125,7 +125,6 @@ export class AddOrEditPackageComponent implements OnInit {
     // this.packge.diseasesCovered = this.packageForm.value.diseasesCovered;
     // this.packge.diseasesUnCovered = this.packageForm.value.diseasesUnCovered;
     if(this.action == 'add'){
-      console.log(this.packge);
       this.packageService.addPackage(this.packge).subscribe(
         (data)=>{
           if(data['success']){ this.router.navigate(['/home/insurers']); }    

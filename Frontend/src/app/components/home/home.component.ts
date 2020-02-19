@@ -35,9 +35,9 @@ user:User;
 //   }
 
   onfileSelected(event){
-    console.log(event);
+    //console.log(event);
     this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
+    //console.log(this.selectedFile);
     // const fd = new FormData();
     
     // // fd.append('image',this.selectedFile,this.selectedFile.name);

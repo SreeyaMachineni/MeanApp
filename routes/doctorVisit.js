@@ -4,7 +4,7 @@ const router = express.Router();
 const DoctorVisit = require('../models/doctorVisit');
 const mongoose = require('mongoose');
 router.post('/addDoctorVisit',(req,res)=>{
-    console.log(req.body);
+    
        let doctorVisit = new DoctorVisit({
         userId:mongoose.Types.ObjectId(req.body.doctorVisit.userId),
         hospital:req.body.doctorVisit.hospital,

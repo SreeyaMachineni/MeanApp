@@ -8,7 +8,7 @@
                         <mat-form-field>
                                 <mat-label>Package</mat-label>
                                 <mat-select required formControlName="package">
-                                        <mat-option *ngFor="let package of packages" [value]="package._id"
+                                        <mat-option *ngFor="let package of packages" [value]="package.packageName"
                                                 (click)="selectedPackage(package.packageId,package.packageName)">
                                                 {{package.packageName}}
                                         </mat-option>
@@ -40,6 +40,6 @@
         <div *ngIf="!verify" class="col-md-6 col-sm-7 pull-right">
                 <button type="submit" class="row btn btn-light mr-3" (click)="cancel()">Cancel</button>
                 <button type="submit" class="btn btn-dark " [disabled]="!userClaimsForm.valid"
-                        (click)="save(userPackage._id)">Save</button>
+                        (click)="save(userClaim._id)">Save</button>
         </div>
 </div>

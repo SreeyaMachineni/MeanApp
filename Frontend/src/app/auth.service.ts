@@ -79,7 +79,6 @@ export class AuthService {
   // storeUserData(token,user){
     storeUserData(token,user,expiresin){
     localStorage.setItem('id_token',token);
-    console.log(user)
     localStorage.setItem('user',JSON.stringify(user));
     console.log(localStorage.getItem('user'),'setted');
     this.authToken = token;
@@ -156,6 +155,7 @@ addEmp(emp:User){
     });
   }
   addHospital(hosp:Hospital){
+    console.log('in add hosp service')
     return this.http.post(this.url+'/hospital/addHosp',{hosp},{
       headers:new HttpHeaders(
         {
