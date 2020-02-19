@@ -1,29 +1,15 @@
 .FixedHeightContainer
 {
- 
-  height: 350px;
- 
+   height: 450px;
 }
+
 .Content
 {
-  height:250px;
-   overflow:auto;
- 
+  height:400px;
+  overflow:auto;
 }
 
 
-.FixedHeightContainerE
-{
- 
-  height: 550px;
- 
-}
-.ContentE
-{
-  height:450px;
-   overflow:auto;
- 
-}
 /* width */
 ::-webkit-scrollbar {
     width: 5px;

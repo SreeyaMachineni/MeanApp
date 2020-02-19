@@ -1,19 +1,23 @@
 <div class="container">
-    <div class="Left d-flex flex-column justify-content-center align-items-center">
-            <div class="text-white" style="font-size:25px;">Some Name</div>
-            <div class=" text-white">some tag goes here</div>  
-    </div>
-        <form [formGroup]="userProfileForm" class="Right d-flex flex-column justify-content-center align-items-center"  autocomplete="off"  (ngSubmit)="saveit()">
+        <div class="Left d-flex flex-column justify-content-center align-items-center">
+                <div class="text-black pb-2 font-weight-bold text-white" style="font-size: 35px;">Something</div>
+                <div class=" text-white">some tag goes here</div>
+        </div>
+        <form [formGroup]="userProfileForm" class="Right d-flex flex-column justify-content-center align-items-center"
+                autocomplete="off" (ngSubmit)="saveit()">
                 <div class="text-black pb-2 font-weight-bold for-mob" style="font-size: 35px;">Something</div>
-                <div class="text-black pb-5 font-weight-bold for-mob" style="font-size: 15px;">Some tag goes heer</div>   
-            <div class="text-black pb-5 font-weight-bold" style="font-size: 30px;">Sign Up</div>
-                <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required></mat-form-field>
-                <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required></mat-form-field>
-                <mat-form-field>
-                        <input type="email" matInput placeholder="Email" formControlName="email" required>
+                <div class="text-black pb-5 font-weight-bold for-mob" style="font-size: 15px;">Some tag goes here</div>
+                <div class="text-black pt-5 pb-3 font-weight-bold" style="font-size: 30px;">Sign Up</div>
+                <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required>
                 </mat-form-field>
-                <mat-form-field><input matInput placeholder="Password" formControlName="password" required></mat-form-field>
-                <mat-form-field><input matInput placeholder="Phone Number" formControlName="phone" required></mat-form-field>
+                <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required>
+                </mat-form-field>
+                <mat-form-field><input type="email" matInput placeholder="Email" formControlName="email" required>
+                </mat-form-field>
+                <mat-form-field><input matInput placeholder="Password" formControlName="password" type="password" required>
+                </mat-form-field>
+                <mat-form-field><input matInput placeholder="Phone Number" formControlName="phone" required>
+                </mat-form-field>
                 <mat-form-field class="example-full-width">
                         <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dob">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -22,17 +26,14 @@
                 <mat-form-field>
                         <mat-label>Gender</mat-label>
                         <mat-select required formControlName="gender">
-                          <mat-option value="female">Female</mat-option>
-                          <mat-option value="male">Male</mat-option>
-                          <mat-option value="others">Others</mat-option>
+                                <mat-option value="female">Female</mat-option>
+                                <mat-option value="male">Male</mat-option>
+                                <mat-option value="others">Others</mat-option>
                         </mat-select>
                 </mat-form-field>
-                <mat-form-field><input matInput placeholder="Address" formControlName="address" required></mat-form-field>
+                <mat-form-field class="pb-2"><input matInput placeholder="Address" formControlName="address" required>
+                </mat-form-field>
                 <button type="submit" class="btn btn-dark p-0 pt-1 pb-1 pl-4 pr-4" [disabled]="!userProfileForm.valid">Sign Up</button>
+                <a routerLink="/login" class="pt-3" routerLinkActive="active">Go back to Login</a>
         </form>
-   
-                      
-            
-  
-   
 </div>

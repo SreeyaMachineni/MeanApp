@@ -2,21 +2,50 @@ const express = require('express');
 const router = express.Router();
 const Hospital = require('../models/hospital');
 
+// router.post('/addHosp',(req,res)=>{
+//     let hospital = new Hospital({
+//     name:req.body.hosp.name,
+//     specialization:req.body.hosp.specialization,
+//     location:req.body.hosp.location,
+//     address:req.body.hosp.address,
+//     pointOfContact:req.body.hosp.pointOfContact,
+// });
+
+// Hospital.addHospital(hospital,(err,hosp)=>{
+
+//   (err)=>{res.json({success:false,msg:'failed to add hospital'})},
+//   (hosp)=>{
+//     console.log('hospital added');
+//       res.json({success:true,msg:'successfully added hospital'})
+    
+//     }
+// })
+
+// });
+
+
 router.post('/addHosp',(req,res)=>{
     let hospital = new Hospital({
-    name:req.body.hosp.name,
-    specialization:req.body.hosp.specialization,
-    location:req.body.hosp.location,
-    address:req.body.hosp.address,
-    pointOfContact:req.body.hosp.pointOfContact,
-});
+        name:req.body.hosp.name,
+        specialization:req.body.hosp.specialization,
+        location:req.body.hosp.location,
+        address:req.body.hosp.address,
+        pointOfContact:req.body.hosp.pointOfContact,
+    });
+    Hospital.addHospital(hospital,(err,hospital)=>{
+    if(err){
+        res.json({success: false, msg:'Failed to add hospital'});
+    }
+    else{
+      res.json({success:true,msg:'Successfully added hospital'});
+    }
+  })
+  })
 
-Hospital.addHospital(hospital,(err,hosp)=>{
-  (err)=>{res.json({success:false,msg:'failed to add hospital'})},
-  (hosp)=>{res.json({success:true,msg:'successfully added hospital'})}
-})
 
-});
+
+
+
 
 router.get('/getHosp',(req,res)=>{
     Hospital.find(function(err,hosp){

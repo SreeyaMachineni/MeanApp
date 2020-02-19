@@ -5,6 +5,7 @@ import {EmployeeUsersService} from '../employee-users.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+
 @Component({
   selector: 'app-employee-users',
   templateUrl: './employee-users.component.html',
@@ -18,7 +19,7 @@ user:any;
   expandedElement: User | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-constructor(private empUserService:EmployeeUsersService,private router: Router) { }
+constructor(private empUserService:EmployeeUsersService, private router: Router) { }
   ngOnInit() {
     this.getEmpUsers();
   }
@@ -46,4 +47,5 @@ constructor(private empUserService:EmployeeUsersService,private router: Router) 
     this.empUserService.setUser(user);
     this.router.navigate(['/home/userDetails']);
   }
+
 }

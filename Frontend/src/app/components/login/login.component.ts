@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
       this.authService.authenticateUser(this.loginUser).subscribe(
         (data)=>{
           if(data['success']){
+            
            //  this.authService.storeUserData(data['token'],data['user']);
            this.authService.setLoggedIn(true);
             this.authService.storeUserData(data['token'],data['user'],data['expiresin']);

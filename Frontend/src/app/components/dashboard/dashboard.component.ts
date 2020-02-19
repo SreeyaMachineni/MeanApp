@@ -21,7 +21,10 @@ export class DashboardComponent implements OnInit {
   userPackage:any;
   userHasClaims=false;
   userHasPackages=false;
+  userHasNotifications=false;
   show =true;
+  currentHours:any;
+  greeting:any;
 
   // @ViewChild("status", {static:false}) somename: ElementRef;
 
@@ -31,6 +34,17 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit() {
       this.user = JSON.parse(localStorage.getItem('user'));
+      this.currentHours = new Date().getHours();
+      if(this.currentHours < 12) {
+        this.greeting = 'Good Morning ';
+      }
+      else if(this.currentHours < 4) {
+        this.greeting = 'Good Afternoon ';
+      }
+      else {
+        this.greeting = 'Good Evening ';
+      }
+
       this.getNotification(this.user['id']);
       this.fetchUserPackages();
       
@@ -41,8 +55,8 @@ export class DashboardComponent implements OnInit {
        this.fetchPendingClaims(this.user['id']);
       }
       if(this.user.userrole == 'poc'){
-        console.log('poc')
-        console.log(this.user['id']);
+      //  console.log('poc')
+     //   console.log(this.user['id']);
         this.fetchClaimsByHospital(this.user['id']);
       }
       
@@ -51,6 +65,9 @@ export class DashboardComponent implements OnInit {
       this.authService.getNotifications(userId).subscribe(
         (notifications)=>{
           this.notifications = notifications;
+          if(this.notifications.length > 0){
+            this.userHasNotifications = true;
+          } 
         }
       )
     }
@@ -84,7 +101,7 @@ export class DashboardComponent implements OnInit {
         (claims)=>{
           this.userClaims = claims;
         },(err)=>{
-          console.log('err in fetching claims');
+      //    console.log('err in fetching claims');
         }
       )
     }
@@ -92,7 +109,7 @@ export class DashboardComponent implements OnInit {
       this.userClaimService.getClaimsByHospital(pocId).subscribe(
         (claims)=>{
           this.userClaims = claims
-          console.log(this.userClaims);
+      //    console.log(this.userClaims);
         },(err)=>{
           console.log('err in fetching')
         }

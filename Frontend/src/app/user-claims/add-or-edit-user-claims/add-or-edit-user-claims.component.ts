@@ -29,9 +29,11 @@ export class AddOrEditUserClaimsComponent implements OnInit {
 
   ngOnInit() {
     this.userClaim = new UserClaims();
+
     var userId =JSON.parse(localStorage.getItem('user')).id;
     this.action = this.userClaimsService.getAction();
     this.fetchUserPackages(userId);
+
     if(this.action == 'Add'){
       this.userClaimsForm = new FormGroup({  
         package:new FormControl(''),
@@ -43,7 +45,9 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     }
     else{
       this.userClaim = this.userClaimsService.getClaim();
-      
+      debugger
+      this.fetchCoveredDiseases(this.userClaim.packageId);
+
       this.userClaimsForm = new FormGroup({  
         package:new FormControl(this.userClaim.packageName),
         hospital:new FormControl(this.userClaim.hospital),
@@ -51,6 +55,8 @@ export class AddOrEditUserClaimsComponent implements OnInit {
         location:new FormControl(this.userClaim.location),
         dateOfSurgery:new FormControl(this.userClaim.dateOfSurgery),
       });
+      
+      
     }
     
   }
@@ -59,7 +65,7 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     this.userClaimsService.getUserPackages(userId).subscribe(
       (packages)=>{
         this.packages = packages;
-        console.log(this.packages);
+        
         if(this.packages.length > 0){
           this.userHasPackages = true;
         }
@@ -68,14 +74,18 @@ export class AddOrEditUserClaimsComponent implements OnInit {
       }
     );
   }
+
   selectedPackage(packageId,packageName){
     this.packageName=packageName;
     this.fetchCoveredDiseases(packageId);
   }
+
   cancel(){
     this.location.back();
   }
+
   fetchCoveredDiseases(packageId){
+    
     this.userClaimsService.fetchCoveredDiseases(packageId).subscribe(
       (diseases)=>{
         this.diseases = diseases;

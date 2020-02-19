@@ -59,11 +59,11 @@ router.post('/addPackage',(req,res)=>{
 
 
 router.get('/getPackagesByInsurer/:insurer',(req,res)=>{
-    console.log(req.params.insurer);
+    
     Package.getPackagesByInsurer(req.params.insurer,(err,package)=>{
         if(err) throw err;
         else{
-            console.log(package);
+            
             res.json(package)
         }
     })

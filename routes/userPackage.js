@@ -54,7 +54,7 @@ router.get('/deleteUserPackage/:packageId',(req,res)=>{
 })
   
 router.post('/editUserPackage/:packageId',(req,res)=>{
-    console.log(req.body);
+    
     UserPackage.findById(req.params.packageId,(err,userPackage)=>{
     if(!userPackage){
     res.json({success: false, msg:'Unable to load doc'});

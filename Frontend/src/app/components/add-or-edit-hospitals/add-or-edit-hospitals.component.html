@@ -1,34 +1,49 @@
-<div class="text-center p-2 pt-5 font-weight-bold">{{action}} Hospital</div>
- 
-<form [formGroup]="hospForm" class="offset-4 col-md-4 col-sm-7 d-flex flex-column pt-5 " autocomplete="off">
-        <mat-form-field><input matInput placeholder="Hospital Name" formControlName="name" required></mat-form-field>
-        <mat-form-field><input matInput placeholder="Specialization" formControlName="specialization" required></mat-form-field>
-        <mat-form-field><input matInput placeholder="Location/City" formControlName="location" required></mat-form-field>
-        <mat-form-field><input matInput placeholder="Complete Address" formControlName="address" required></mat-form-field>
-        <div formArrayName="pointOfContact">
-            <div *ngFor="let poc of hospForm.controls.pointOfContact.controls;let i = index">
-                    <div>
-                        <span>Point of contact {{i+1}}</span>
-                        <span *ngIf="hospForm.controls.pointOfContact.controls.length > 1" (click)="removePoC(i)" class="float-right">
-                            
-                            <i class="fa fa-trash-o"></i>
-                        </span>
-                        <hr>
-                    </div>
-                    <div [formGroupName]="i" class="d-flex flex-column">
-                            <mat-form-field><input matInput placeholder="Name" formControlName="name" required></mat-form-field>
-                            <mat-form-field><input matInput placeholder="Phone" formControlName="phone" required></mat-form-field>
-                    </div>
-            </div>   
+<div class="container pt-3">
+        <div class="row">
+                <div class="col h5">{{action|titlecase}} Hospital</div>
+                <div class="col font-weight-bold text-right">
+                        <i class="fa fa-reply" (click)="cancel()"></i>
+                </div>
         </div>
-        <div class="p-2">
-                <span (click)="addPoC()" class="float-right" style="cursor: pointer">
-                  Add another point of Contact
-                </span>
-              </div>
 
-</form>
-<div class="offset-md-7 pl-5 pt-3">
-                <button type="submit" class="btn btn-dark mr-2" (click)="cancel()">Cancel</button>
-        <button type="submit" class="btn btn-dark" [disabled]="!hospForm.valid" (click)="save(hospForm,hosp._id)">Save</button>
+        <form class="row pt-4" [formGroup]="hospForm" autocomplete="off">
+                <div class="col-md-6 col-sm-7 d-flex flex-column">
+                        <mat-form-field><input matInput placeholder="Hospital Name" formControlName="name" required></mat-form-field>
+                        <mat-form-field><input matInput placeholder="Specialization" formControlName="specialization"required></mat-form-field>
+                </div>
+                <div class="col-md-6 col-sm-7 d-flex flex-column">
+                        <mat-form-field><input matInput placeholder="Location/City" formControlName="location" required></mat-form-field>
+                        <mat-form-field><input matInput placeholder="Complete Address" formControlName="address" required></mat-form-field>
+                </div>
+                <hr>
+                <div class="col-md-6 col-sm-7 d-flex flex-column">
+                        <div formArrayName="pointOfContact">
+                                <div *ngFor="let poc of hospForm.controls.pointOfContact.controls;let i = index">
+                                        <div>
+                                                <span>Point of contact {{i+1}}</span>
+                                                <span *ngIf="hospForm.controls.pointOfContact.controls.length > 1"
+                                                        (click)="removePoC(i)" class="float-right">
+                                                        <i class="fa fa-trash-o"></i>
+                                                </span>
+                                                <hr>
+                                        </div>
+                                        <div [formGroupName]="i" class="d-flex flex-column">
+                                                <mat-form-field><input matInput placeholder="Name"
+                                                                formControlName="name" required></mat-form-field>
+                                                <mat-form-field><input matInput placeholder="Phone"
+                                                                formControlName="phone" required></mat-form-field>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="p-2">
+                                <span (click)="addPoC()" class="float-right" style="cursor: pointer">Add another point of Contact</span>
+                        </div>
+                </div>
+        </form>
+
+        <div *ngIf="!verify" class="pull-right">
+                <button type="submit" class="row btn btn-light mr-3" (click)="cancel()">Cancel</button>
+                <button type="submit" class="btn btn-dark " [disabled]="!hospForm.valid"
+                        (click)="save(hospForm,hosp._id)">Save</button>
+        </div>
 </div>

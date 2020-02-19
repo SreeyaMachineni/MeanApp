@@ -4,16 +4,19 @@ import { throwError } from 'rxjs';
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import {User} from '../user';
+import * as environment from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class EmployeeUsersService {
   user:User;
   docId:String;
-  uri = 'http://192.168.4.101:3000';
+  url = environment.environment.ServerUrl;
   constructor(private http: HttpClient) { }
   getEmpUsers(empId){
-    return this.http.get(this.uri+'/users/getEmpUsers/'+empId);
+    return this.http.get(this.url+'/users/getEmpUsers/'+empId);
   }
   setUser(user){
     this.user = user;
@@ -22,11 +25,11 @@ export class EmployeeUsersService {
     return this.user;
   }
   getUserPackages(userId){
-    return this.http.get(this.uri+'/userPackage/getUserPackages/'+userId);
+    return this.http.get(this.url+'/userPackage/getUserPackages/'+userId);
   }
   getDocs(userId){
     
-    return this.http.get(this.uri+'/docs/getDocs/'+userId);
+    return this.http.get(this.url+'/docs/getDocs/'+userId);
   } 
   setDocId(docId){
     this.docId = docId;
@@ -35,20 +38,20 @@ export class EmployeeUsersService {
     return this.docId;
   }
   approveDoc(docId,docName){
-    return this.http.post(this.uri+'/docs/approveDoc',{docId:docId,approve:true,docName:docName},{
+    return this.http.post(this.url+'/docs/approveDoc',{docId:docId,approve:true,docName:docName},{
       headers:new HttpHeaders({'Content-Type':'application/json'})
     });
   }
   rejectDoc(docId,reason,docName){
-    return this.http.post(this.uri+'/docs/rejectDoc',{docId:docId,userId:this.user['_id'],approve:false,reason:reason,docName:docName},{
+    return this.http.post(this.url+'/docs/rejectDoc',{docId:docId,userId:this.user['_id'],approve:false,reason:reason,docName:docName},{
       headers:new HttpHeaders({'Content-Type':'application/json'})
     });
   }
   getUserClaims(userId){
-    return this.http.get(this.uri+'/userClaims/getUserClaims/'+userId);
+    return this.http.get(this.url+'/userClaims/getUserClaims/'+userId);
   }
   setStatus(status,claimId){
-    return this.http.post(this.uri+'/userClaims/setStatus',{status:status,claimId:claimId},{
+    return this.http.post(this.url+'/userClaims/setStatus',{status:status,claimId:claimId},{
       headers:new HttpHeaders({'Content-Type':'application/json'})
     });
   }

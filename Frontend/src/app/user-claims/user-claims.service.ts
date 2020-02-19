@@ -4,16 +4,18 @@ import { throwError } from 'rxjs';
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import {UserClaims} from './user-claims';
+import * as environment from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserClaimsService {
-  uri = 'http://192.168.195.52:3000';
+  url = environment.environment.ServerUrl;
   action:String;
   userClaim:UserClaims;
   constructor(private http: HttpClient) { }
   getUserPackages(userId){
-    return this.http.get(this.uri+'/userPackage/getUserPackages/'+userId);
+    return this.http.get(this.url+'/userPackage/getUserPackages/'+userId);
   }
   setAction(action){
     this.action = action;
@@ -28,7 +30,7 @@ export class UserClaimsService {
     return this.userClaim;
   }
   addUserClaim(userClaim){
-    return this.http.post(this.uri+'/userClaims/addUserClaim',{claim:userClaim,notify:JSON.parse(localStorage.getItem('user')).userEmpId,username:JSON.parse(localStorage.getItem('user')).firstName},{
+    return this.http.post(this.url+'/userClaims/addUserClaim',{claim:userClaim,notify:JSON.parse(localStorage.getItem('user')).userEmpId,username:JSON.parse(localStorage.getItem('user')).firstName},{
       headers:new HttpHeaders(
        { 'Content-Type':'application/json'}
       )
@@ -38,26 +40,26 @@ export class UserClaimsService {
 
   }
   getUserClaims(userId){
-    return this.http.get(this.uri+'/userClaims/getUserClaims/'+userId);
+    return this.http.get(this.url+'/userClaims/getUserClaims/'+userId);
   }
   fetchCoveredDiseases(packageId){
-    return this.http.get(this.uri+'/package/getCoveredDiseases/'+packageId); 
+    return this.http.get(this.url+'/package/getCoveredDiseases/'+packageId); 
   }
   deleteUserClaim(claimId){
-    return this.http.get(this.uri+'/userClaims/deleteUserClaim/'+claimId);
+    return this.http.get(this.url+'/userClaims/deleteUserClaim/'+claimId);
   }
   editUserClaim(userClaim){
-    return this.http.post(this.uri+'/userClaims/editUserClaim',{claim:userClaim,notify:JSON.parse(localStorage.getItem('user')).userEmpId,username:JSON.parse(localStorage.getItem('user')).firstName},{
+    return this.http.post(this.url+'/userClaims/editUserClaim',{claim:userClaim,notify:JSON.parse(localStorage.getItem('user')).userEmpId,username:JSON.parse(localStorage.getItem('user')).firstName},{
       headers:new HttpHeaders(
        { 'Content-Type':'application/json'}
       )
     });
   }
   getEmployeeClaims(empId){
-    return this.http.get(this.uri+'/userClaims/getEmpClaims/'+empId);
+    return this.http.get(this.url+'/userClaims/getEmpClaims/'+empId);
   }
   getClaimsByHospital(pocId){
-    return this.http.get(this.uri+'/userClaims/getClaimsByHospital/'+pocId);
+    return this.http.get(this.url+'/userClaims/getClaimsByHospital/'+pocId);
   }
   
 }

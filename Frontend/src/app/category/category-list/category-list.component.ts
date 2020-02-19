@@ -45,7 +45,10 @@ export class CategoryListComponent implements OnInit {
     this.categories.details = this.categoryForm.value.details;
     if(this.action == 'add'){
       this.categoryService.addCategory(this.categories).subscribe(
-        (category)=>{console.log('category add');},
+        (category)=>{
+          this.fetchCategories();
+       //   console.log('category add');
+      },
         (err)=>{console.log('failed to add category');}
       )
     }

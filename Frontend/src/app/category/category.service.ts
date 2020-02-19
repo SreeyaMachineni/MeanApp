@@ -4,19 +4,21 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
+import * as environment from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 category:Category;
-uri = 'http://192.168.4.101:3000';
+url = environment.environment.ServerUrl;
 action:String;
 categoryId:any;
 constructor(private http: HttpClient) { }
 
   addCategory(category:Category){
-    console.log(category);
-    return this.http.post(this.uri+'/category/addCategory',{category},{
+  //  console.log(category);
+    return this.http.post(this.url+'/category/addCategory',{category},{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'
@@ -26,15 +28,15 @@ constructor(private http: HttpClient) { }
   }
 
   fetchCategories(){
-    return this.http.get(this.uri+'/category/getCategories');
+    return this.http.get(this.url+'/category/getCategories');
   }
 
   deleteCategory(categoryId){
-    return this.http.get(this.uri+'/category/deleteCategory/'+categoryId);
+    return this.http.get(this.url+'/category/deleteCategory/'+categoryId);
   }
 
   editCategory(categoryId,category){
-    return this.http.post(this.uri+'/category/editCategory/'+categoryId,{category},{
+    return this.http.post(this.url+'/category/editCategory/'+categoryId,{category},{
       headers:new HttpHeaders(
         {
           'Content-Type':'application/json'

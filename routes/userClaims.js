@@ -8,6 +8,7 @@ const Hospital = require('../models/hospital');
 const Notify = require('../models/notification');
 
 router.post('/addUserClaim',(req,res)=>{
+    
     let userClaim = new UserClaim({
         userId:mongoose.Types.ObjectId(req.body.claim.userId),
         packageId:req.body.claim.packageId,
@@ -36,8 +37,8 @@ router.post('/addUserClaim',(req,res)=>{
 
 
 router.get('/getUserClaims/:userId',(req,res)=>{
-    console.log('herrr');
-    console.log(req.params.userId);
+    
+    
     UserClaim.getUserClaims(mongoose.Types.ObjectId(req.params.userId),(err,claims)=>{
         if(err) throw err;
         else{
@@ -110,7 +111,7 @@ router.post('/editUserClaim',(req,res)=>{
 });
 
 router.post('/setStatus',(req,res)=>{
-    console.log(req.body);
+    
     var claimId = req.body.claimId;
     UserClaim.findOne({_id:claimId}).then(claim=>{
         if(claim){
@@ -153,7 +154,7 @@ router.get('/getClaimsByHospital/:pocId',(req,res)=>{
                 if(hosp){  
                     UserClaim.find({hospital:hosp[0].name}).then(claims=>{
                         if(claims){
-                            console.log(claims);
+                            
                             res.json(claims);
                         }
                     })

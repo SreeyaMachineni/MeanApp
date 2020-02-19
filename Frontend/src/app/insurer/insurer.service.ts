@@ -4,34 +4,34 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
+import * as environment from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InsurerService {
   insurer:Insurer;
-  uri = 'http://192.168.4.101:3000';
+  url = environment.environment.ServerUrl;
 action:String;
 insurerId:any;
 
   constructor(private http: HttpClient) { }
   
   addInsurer(insurer){
-    console.log(insurer);
-    return this.http.post(this.uri+'/insurer/addInsurer',{insurer},{
+    return this.http.post(this.url+'/insurer/addInsurer',{insurer},{
       headers:new HttpHeaders(
        { 'Content-Type':'application/json'}
       )
     });
   }
   fetchInsurers(){
-   return this.http.get(this.uri+'/insurer/getInsurers');
+   return this.http.get(this.url+'/insurer/getInsurers');
   }
   deleteInsurers(insurerId){
-    return this.http.get(this.uri+'/insurer/deleteInsurer/'+insurerId);
+    return this.http.get(this.url+'/insurer/deleteInsurer/'+insurerId);
   }
   editInsurer(insurerId,insurer){
-    return this.http.post(this.uri+'/insurer/editInsurer/'+insurerId,{insurer},{
+    return this.http.post(this.url+'/insurer/editInsurer/'+insurerId,{insurer},{
       headers:new HttpHeaders({'Content-Type':'application/json'})
     });
   }

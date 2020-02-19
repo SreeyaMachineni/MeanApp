@@ -17,6 +17,7 @@ export class UserEditComponent implements OnInit {
   constructor(private authService:AuthService,private router: Router,private location: Location,) { }
   ngOnInit() {
     this.user = this.authService.getUser();
+    console.log(this.user);
     this.userEditForm=new FormGroup({
       firstName: new FormControl(this.user.firstName),
       lastName: new FormControl(this.user.lastName),
@@ -51,8 +52,8 @@ export class UserEditComponent implements OnInit {
       this.user.phone = this.userEditForm.value.phone;
       this.authService.editUserSamePhone(this.user).subscribe(
         (data)=>{
-          console.log(data);
-          console.log('edited');
+          
+          
           this.router.navigate(['/profile']);
         },
         (err)=>{
