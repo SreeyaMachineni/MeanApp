@@ -4,6 +4,11 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {UserPackage} from '../../user-packages/user-packages';
 import {UserPackagesService} from '../../user-packages/user-packages.service';
 import { Location } from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
+
+
+
 @Component({
   selector: 'app-add-or-edit-user-packages',
   templateUrl: './add-or-edit-user-packages.component.html',
@@ -19,7 +24,7 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   categoryName:String;
   insuranceName:String;
   packageName:String;
-  constructor(private router:Router,private userPackageService:UserPackagesService,private location: Location) { }
+  constructor(private router:Router,private userPackageService:UserPackagesService,private location: Location,private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.action = this.userPackageService.getAction();
@@ -79,7 +84,10 @@ export class AddOrEditUserPackagesComponent implements OnInit {
       console.log(this.userPackage);
       this.userPackageService.addUserPackage(this.userPackage).subscribe(
         (userPackage)=>{
-          this.router.navigate(['/home/mypackages'])
+          this.router.navigate(['/home/mypackages']);
+          this._snackBar.open('Package successfully added', 'x', {
+            duration: 3000
+          });
     
         },(err)=>{
           console.log('err in adding');
@@ -89,7 +97,10 @@ export class AddOrEditUserPackagesComponent implements OnInit {
      
       this.userPackageService.editUserPackage(packageId,this.userPackage).subscribe(
         (userPackage)=>{
-          this.router.navigate(['/home/mypackages'])
+          this.router.navigate(['/home/mypackages']);
+          this._snackBar.open('Package successfully edited', 'x', {
+            duration: 3000
+          });
         },(err)=>{
           console.log('err in adding');
         }
@@ -102,6 +113,9 @@ export class AddOrEditUserPackagesComponent implements OnInit {
     this.userPackageService.deleteUserPackage(packageId).subscribe(
       (userPackage)=>{
         console.log('up deleted');
+        this._snackBar.open('Package successfully deleted', 'x', {
+          duration: 3000
+        });
       },(err)=>{
         console.log('unable to delete');
       }

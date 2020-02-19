@@ -12,6 +12,10 @@ import { ClaimDetailsComponent } from './claim-details/claim-details.component';
 import {ContactModule} from '../contact/contact.module';
 import {ContactComponent} from '../contact/contact/contact.component';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
+
+
 @NgModule({
   declarations: [
     AddOrEditUserClaimsComponent, UserClaimsListComponent, ClaimDetailsComponent,ContactComponent
@@ -25,7 +29,8 @@ import {MatRadioModule} from '@angular/material/radio';
     FormsModule,ReactiveFormsModule,
     MatInputModule,
     ContactModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSnackBarModule
   ]
 })
 export class UserClaimsModule { }

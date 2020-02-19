@@ -8,6 +8,7 @@ import { MatTableModule, MatPaginatorModule, MatSortModule,MatNativeDateModule }
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ViewUserPackageComponent } from './view-user-package/view-user-package.component';
 @NgModule({
   declarations: [AddOrEditUserPackagesComponent, UserPackagesListComponent, ViewUserPackageComponent],
@@ -22,7 +23,8 @@ import { ViewUserPackageComponent } from './view-user-package/view-user-package.
     MatNativeDateModule,
     MatDatepickerModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ]
 })
 export class UserPackagesModule { }

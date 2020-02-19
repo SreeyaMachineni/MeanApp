@@ -1,12 +1,17 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Hospital, PointOfContact } from '../../hospital';
 import { AuthService } from '../../auth.service';
 import {HospitalPocService} from '../../hospitals/hospital-poc.service';
+
+
+
+
+
+
 @Component({
   selector: 'app-hospitals',
   templateUrl: './hospitals.component.html',
@@ -30,6 +35,7 @@ export class HospitalsComponent implements OnInit {
    this.router.navigate(['/home/addOrEditHospital']);
   }
   fetchHosp(){
+    //
     
     this.authService.getHospitals().subscribe(
       (hosp)=>{

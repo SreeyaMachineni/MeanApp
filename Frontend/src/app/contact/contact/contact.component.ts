@@ -3,6 +3,8 @@ import { Validators, FormGroup, FormArray, FormBuilder, FormControl } from '@ang
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {ContactService} from '../contact.service';
 import {UserClaimsService} from '../../user-claims/user-claims.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-contact',
@@ -11,7 +13,7 @@ import {UserClaimsService} from '../../user-claims/user-claims.service';
 })
 export class ContactComponent implements OnInit {
 
-  constructor(private contactService:ContactService,private claimService:UserClaimsService) { }
+  constructor(private contactService:ContactService,private claimService:UserClaimsService,private _snackBar: MatSnackBar) { }
   contactForm:FormGroup;
   contact:any;
   users:any;
@@ -69,9 +71,12 @@ export class ContactComponent implements OnInit {
       this.contact.userEmpId = this.claim.userId;
     }
     
-    
+    console.log('trying to contact');
     this.contactService.addContact(this.contact).subscribe((contact)=>{
       console.log(contact);
+      this._snackBar.open('Your request has been submited', 'x', {
+        duration: 3000
+      });
     })
   }
 

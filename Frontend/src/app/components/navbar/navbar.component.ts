@@ -7,6 +7,9 @@ import { Validators, FormGroup, FormArray, FormBuilder, FormControl } from '@ang
 import {EmployeeUsersService} from '../../employee-users/employee-users.service';
 import {ContactService} from '../../contact/contact.service';
 import {UserClaimsService} from '../../user-claims/user-claims.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -29,7 +32,7 @@ export class NavbarComponent implements OnInit {
   userClaim:any;
   options: string[] = [' Notify only the Employee','Notify user and Employee'];
   constructor(private authService:AuthService,private router: Router,
-    private empUserService:EmployeeUsersService,private contactService:ContactService,private userClaimService:UserClaimsService) { }
+    private empUserService:EmployeeUsersService,private contactService:ContactService,private userClaimService:UserClaimsService,private _snackBar: MatSnackBar) { }
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
     var userRole = this.user.userrole;
@@ -88,9 +91,11 @@ this.userClaim = this.userClaimService.getClaim();
       this.contact.userEmpId = this.claim.userId;
     }
     
-    console.log(this.contact);
+    
     this.contactService.addContact(this.contact).subscribe((contact)=>{
-      console.log(contact);
+      this._snackBar.open('YOur request has been submitted', 'x', {
+        duration: 3000
+      });
     })
   }
 

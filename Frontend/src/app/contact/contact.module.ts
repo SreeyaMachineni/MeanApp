@@ -7,6 +7,8 @@ import { MatTableModule, MatPaginatorModule, MatSortModule,MatNativeDateModule }
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [],
@@ -20,7 +22,9 @@ import {MatRadioModule} from '@angular/material/radio';
     MatNativeDateModule,
     MatDatepickerModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSnackBarModule
+    
   ]
 })
 export class ContactModule { }

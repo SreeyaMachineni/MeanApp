@@ -6,6 +6,8 @@ import { User } from '../../user';
 import { AuthService } from '../../auth.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
@@ -18,7 +20,7 @@ export class EmployeeComponent implements OnInit {
   expandedElement: User | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  constructor(private authService:AuthService,private router: Router) { }
+  constructor(private authService:AuthService,private router: Router,private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
      this.emp = new User();
@@ -48,6 +50,9 @@ export class EmployeeComponent implements OnInit {
         if(success['success']){
           this.fetchemp();
           this.router.navigate(['/home/employees']);
+          this._snackBar.open('Employee successfully deleted', 'x', {
+            duration: 3000
+          });
         }
         
       },

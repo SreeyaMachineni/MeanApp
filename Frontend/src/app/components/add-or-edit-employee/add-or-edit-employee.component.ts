@@ -5,6 +5,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { User } from '../../user';
 import { AuthService } from '../../auth.service';
 import { Location } from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
+
 @Component({
   selector: 'app-add-or-edit-employee',
   templateUrl: './add-or-edit-employee.component.html',
@@ -17,7 +20,7 @@ export class AddOrEditEmployeeComponent implements OnInit {
   employeeForm:FormGroup;
   empIdToEdit:any;
   gender:any;
-  constructor(private authService:AuthService,private router: Router,private location: Location) { }
+  constructor(private authService:AuthService,private router: Router,private location: Location,private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.emp = new User();
@@ -83,7 +86,10 @@ export class AddOrEditEmployeeComponent implements OnInit {
   this.authService.addEmp(this.emp).subscribe(
     (data)=>{
       if(data['success']){
-        this.router.navigate(['/home/employees'])
+        this.router.navigate(['/home/employees']);
+        this._snackBar.open('Employee successfully Added', 'x', {
+          duration: 3000
+        });
       }
     },
       err=>console.log('err in adding employee')
@@ -93,7 +99,10 @@ export class AddOrEditEmployeeComponent implements OnInit {
       this.authService.editEmp(this.emp,empId).subscribe(
         (data)=>{
           if(data['success']){
-            this.router.navigate(['/home/employees'])
+            this.router.navigate(['/home/employees']);
+            this._snackBar.open('Employee successfully edited', 'x', {
+              duration: 3000
+            });
           }
         },
         err=>console.log('err in editing employee')

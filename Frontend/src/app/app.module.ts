@@ -62,6 +62,8 @@ import {ClaimDetailsComponent} from './user-claims/claim-details/claim-details.c
 import {MatRadioModule} from '@angular/material/radio';
 import {ContactHistoryComponent} from './contact/contact-history/contact-history.component';
 import { NotificationDirective } from './notification.directive';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 const appRoutes:Routes = [
  // {path:'',component:LoginComponent},
@@ -156,7 +158,8 @@ const appRoutes:Routes = [
     HospitalsModule,
     DoctorVisitModule,
     ContactModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSnackBarModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

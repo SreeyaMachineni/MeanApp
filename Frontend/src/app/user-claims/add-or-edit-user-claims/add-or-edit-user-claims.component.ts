@@ -4,6 +4,9 @@ import { Validators, FormGroup, FormArray, FormBuilder, FormControl } from '@ang
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UserClaims } from '../user-claims';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
+
 @Component({
   selector: 'app-add-or-edit-user-claims',
   templateUrl: './add-or-edit-user-claims.component.html',
@@ -21,7 +24,8 @@ export class AddOrEditUserClaimsComponent implements OnInit {
   diseases:any;
   covered:any;
   userHasPackages=false;
-  constructor(private userClaimsService:UserClaimsService,private location: Location,private router:Router,) { }
+  constructor(private userClaimsService:UserClaimsService,private location: Location,
+    private router:Router,private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.userClaim = new UserClaims();
@@ -94,7 +98,10 @@ export class AddOrEditUserClaimsComponent implements OnInit {
       
       this.userClaimsService.addUserClaim(this.userClaim).subscribe(
         (userClaim)=>{
-          this.router.navigate(['/home/myclaims'])
+          this.router.navigate(['/home/myclaims']);
+          this._snackBar.open('Claim successfully Added', 'x', {
+            duration: 3000
+          });
     
         },(err)=>{
           console.log('err in adding');
@@ -104,7 +111,10 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     else{
       this.userClaimsService.editUserClaim(this.userClaim).subscribe(
         (userPackage)=>{
-          this.router.navigate(['/home/mypackages'])
+          this.router.navigate(['/home/mypackages']);
+          this._snackBar.open('Claim successfully edited', 'x', {
+            duration: 3000
+          });
         },(err)=>{
           console.log('err in adding');
         }

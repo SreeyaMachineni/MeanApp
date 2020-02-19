@@ -32,7 +32,10 @@ export class UserClaimsService {
       headers:new HttpHeaders(
        { 'Content-Type':'application/json'}
       )
+     
+     
     });
+
   }
   getUserClaims(userId){
     return this.http.get(this.uri+'/userClaims/getUserClaims/'+userId);

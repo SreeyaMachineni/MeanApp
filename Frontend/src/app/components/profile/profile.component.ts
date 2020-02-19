@@ -5,7 +5,11 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import {  FileUploader, FileSelectDirective, FileItem } from 'ng2-file-upload/ng2-file-upload';
 import { HttpClient } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
+
 var URL = 'http://localhost:3000/docs/upload/';
+
 http:HttpClient;
 @Component({
   selector: 'app-profile',
@@ -19,7 +23,7 @@ export class ProfileComponent implements OnInit {
   docs:any;
   changePwd = false;
   passwordForm:FormGroup;
-  constructor(private authService:AuthService,private router: Router) { }
+  constructor(private authService:AuthService,private router: Router,private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
@@ -39,6 +43,10 @@ export class ProfileComponent implements OnInit {
       (err)=>{console.log(err)}
     )
   }
+
+ 
+  
+
   buildData(){
     this.uploader.onBuildItemForm=(FileItem:any,form:any)=>{
       form.append('id',this.id);
@@ -47,7 +55,7 @@ export class ProfileComponent implements OnInit {
     this.uploader.uploadAll();
     this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any): any => {
       if(response){
-       //console.log("response"+JSON.stringify(response));
+       
        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
         this.router.navigate(['/profile']);
@@ -57,6 +65,12 @@ export class ProfileComponent implements OnInit {
   setChangePwd(){
     this.changePwd = true;
   }
+ 
+
+
+
+
+
   cancel(){
     this.changePwd = false;
   }
@@ -67,6 +81,10 @@ export class ProfileComponent implements OnInit {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
         this.router.navigate(['/profile']);
+        
+        this._snackBar.open('Password Changed', 'x', {
+          duration: 3000
+        });
       },
       (err)=>{
         console.log('couldnot change');

@@ -5,7 +5,11 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {UserPackagesService} from '../../user-packages/user-packages.service';
-import {UserPackage} from '../../user-packages/user-packages'
+import {UserPackage} from '../../user-packages/user-packages';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
+
+
 @Component({
   selector: 'app-user-packages-list',
   templateUrl: './user-packages-list.component.html',
@@ -30,7 +34,7 @@ export class UserPackagesListComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   
-  constructor(private router:Router,private userPackageService:UserPackagesService) { }
+  constructor(private router:Router,private userPackageService:UserPackagesService,private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.userPackage = new UserPackage();
@@ -70,8 +74,11 @@ export class UserPackagesListComponent implements OnInit {
         if(success['success']){
          // console.log(this.successAlert);
           this.show = this.success = true;
-          console.log(this.alertSuccess);
+          
           this.fetchUserPackages();
+          this._snackBar.open('Package successfully deleted', 'x', {
+            duration: 3000
+          });
           
         }
       },(err)=>{
