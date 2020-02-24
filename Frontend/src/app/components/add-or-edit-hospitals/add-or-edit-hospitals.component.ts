@@ -4,16 +4,23 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Hospital } from '../../hospital';
 import { AuthService } from '../../auth.service';
 import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-add-or-edit-hospitals',
   templateUrl: './add-or-edit-hospitals.component.html',
   styleUrls: ['./add-or-edit-hospitals.component.css']
 })
+
 export class AddOrEditHospitalsComponent implements OnInit {
   hospForm:FormGroup;
   hosp:Hospital;
   action:String;
-  constructor(private fb:FormBuilder,private authService:AuthService,private router:Router,private location: Location) { }
+  constructor(private fb:FormBuilder,
+    private authService:AuthService,
+    private router:Router,
+    private location: Location,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.hosp = new Hospital();
@@ -36,7 +43,6 @@ export class AddOrEditHospitalsComponent implements OnInit {
         location:['',[Validators.required]],
         address:['',[Validators.required]],
         pointOfContact:this.fb.array([this.initPoC(this.action)])
-  
       });
     }
   }
@@ -47,7 +53,6 @@ export class AddOrEditHospitalsComponent implements OnInit {
         name:['',Validators.required],
         phone:['',Validators.required]
       });
-
     }
     else{
       return this.fb.group({
@@ -55,8 +60,8 @@ export class AddOrEditHospitalsComponent implements OnInit {
         phone:[this.hosp.pointOfContact[0].phone,Validators.required]
       });
     }
-    
   }
+
   loadpocs(){
     for(let i=1; i<this.hosp.pointOfContact.length; i++){
       const control = <FormArray>this.hospForm.controls['pointOfContact'];
@@ -68,14 +73,17 @@ export class AddOrEditHospitalsComponent implements OnInit {
       );
   }
   }
+
   addPoC(){
     const control = <FormArray>this.hospForm.controls['pointOfContact'];
     control.push(this.initPoC('add'));
   }
+
   removePoC(i:number){
     const control = <FormArray>this.hospForm.controls['pointOfContact'];
     control.removeAt(i);
   }
+
   save(hospForm,hospid?){
     this.hosp.name=this.hospForm.value.name;
     this.hosp.specialization= this.hospForm.value.specialization;
@@ -85,19 +93,24 @@ export class AddOrEditHospitalsComponent implements OnInit {
     if(this.action == 'add'){
         this.authService.addHospital(this.hosp).subscribe(
           (data)=>{
-            if(data['success']){ this.router.navigate(['/home/hospitals']); }    
+            if(data['success']){ this.router.navigate(['/home/hospitals']);
+            this._snackBar.open('Hospital added successfully', 'x', { duration: 3000 });
+          }    
           },
-          err=>{console.log(err)}
+          err=>
+          this._snackBar.open('Error while adding Hospital', 'x', { duration: 3000 })
         )
-    }else{
-        this.authService.editHosp(this.hosp,hospid).subscribe(
-          (data)=>{if(data['success']){ this.router.navigate(['/home/hospitals']); }},
-          err=>{console.log(err)}
-        )
-
     }
-    
+    else{
+        this.authService.editHosp(this.hosp,hospid).subscribe(
+          (data)=>{if(data['success']){ this.router.navigate(['/home/hospitals']);
+          this._snackBar.open('Hospital updated successfully', 'x', { duration: 3000 });
+        }},
+          err=>{this._snackBar.open('Error while updating Hospital', 'x', { duration: 3000 })}
+        )
+    }  
   }
+
   cancel(){
     this.location.back();
   }

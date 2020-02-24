@@ -17,7 +17,6 @@ categoryId:any;
 constructor(private http: HttpClient) { }
 
   addCategory(category:Category){
-  //  console.log(category);
     return this.http.post(this.url+'/category/addCategory',{category},{
       headers:new HttpHeaders(
         {
@@ -44,18 +43,23 @@ constructor(private http: HttpClient) { }
       )
     });
   }
+
   setCategory(category){
     this.category=category;
   }
+
   getCategory(){
     return this.category;
   }
+
   setAction(action){
     this.action = action;
   }
+
   getcategoryId(){
     return this.categoryId;
   }
+  
   setcategoryId(categoryId){
     this.categoryId = categoryId;
   }

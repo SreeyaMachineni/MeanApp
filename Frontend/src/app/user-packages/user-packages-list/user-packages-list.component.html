@@ -8,13 +8,12 @@
         </div>
         <div class="offset-md-2">
                 <div *ngIf="!success && show" class="col-10 alert alert-danger m-2 alert-dismissible">
-
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <span #failure>Unable to Add Package at this point of time.Please try again later.</span>
+                        <span #failure>Unable to Add Package at this point of time. Please try again later.</span>
                 </div>
                 <div *ngIf="success && show" class="col-10 alert alert-success m-2 alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <span #success>Package has been successfully added.</span>
+                        <span #success>Package has been added successfully.</span>
                 </div>
         </div>
         <mat-form-field>

@@ -8,7 +8,7 @@
                         <mat-form-field>
                                 <mat-label>Package</mat-label>
                                 <mat-select required formControlName="package">
-                                        <mat-option *ngFor="let package of packages" [value]="package.packageName"
+                                        <mat-option *ngFor="let package of packages" [value]="package.packageId"
                                                 (click)="selectedPackage(package.packageId,package.packageName)">
                                                 {{package.packageName}}
                                         </mat-option>

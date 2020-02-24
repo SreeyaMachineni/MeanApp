@@ -1,12 +1,12 @@
-<div class="container p-3">
-        <div class="text-left pb-3 pt-3 font-weight-bold">
-                Packages provided by {{insurer.name}}
+<div class="container pt-3">
+        <div class="row">
+                <div class="col h5">Packages provided by {{insurer.name}}</div>
+                <div class="col font-weight-bold text-right">
+                        <button type="button" class="btn btn-dark" (click)="addPackage()"><i class="fa fa-plus pr-1"
+                                        aria-hidden="true"></i>Add Package</button>
+                </div>
         </div>
-        <div class="text-right pb-3">
-                <button type="button" class="btn btn-dark" (click)="addPackage()">
-                        <i class="fa fa-plus pr-1" aria-hidden="true"></i>Add Package
-                </button>
-        </div>
+
         <mat-form-field>
                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         </mat-form-field>
@@ -43,6 +43,6 @@
                         <tr mat-row *matRowDef="let insurer; columns: displayedColumns;">
                         </tr>
                 </table>
-                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
         </div>
 </div>

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {UserClaimsService} from '../user-claims.service';
+import { UserClaimsService } from '../user-claims.service';
 import { Validators, FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UserClaims } from '../user-claims';
-import {MatSnackBar} from '@angular/material/snack-bar';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-or-edit-user-claims',
@@ -13,88 +12,83 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./add-or-edit-user-claims.component.css']
 })
 
-
-
 export class AddOrEditUserClaimsComponent implements OnInit {
-  packages:any;
-  userClaimsForm:FormGroup;
-  packageName:String;
-  userClaim:UserClaims;
-  action:String;
-  diseases:any;
-  covered:any;
-  userHasPackages=false;
-  constructor(private userClaimsService:UserClaimsService,private location: Location,
-    private router:Router,private _snackBar: MatSnackBar) { }
+  packages: any;
+  userClaimsForm: FormGroup;
+  packageName: String;
+  userClaim: UserClaims;
+  action: String;
+  diseases: any;
+  covered: any;
+  userHasPackages = false;
+
+  constructor(private userClaimsService: 
+    UserClaimsService, 
+    private location: Location,
+    private router: Router, 
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.userClaim = new UserClaims();
 
-    var userId =JSON.parse(localStorage.getItem('user')).id;
+    var userId = JSON.parse(localStorage.getItem('user')).id;
     this.action = this.userClaimsService.getAction();
     this.fetchUserPackages(userId);
 
-    if(this.action == 'Add'){
-      this.userClaimsForm = new FormGroup({  
-        package:new FormControl(''),
-        hospital:new FormControl(''),
-        disease:new FormControl(''),
-        location:new FormControl(''),
-        dateOfSurgery:new FormControl(''),
+    if (this.action == 'Add') {
+      this.userClaimsForm = new FormGroup({
+        package: new FormControl(''),
+        hospital: new FormControl(''),
+        disease: new FormControl(''),
+        location: new FormControl(''),
+        dateOfSurgery: new FormControl(''),
       });
     }
-    else{
+    else {
       this.userClaim = this.userClaimsService.getClaim();
-      debugger
-      this.fetchCoveredDiseases(this.userClaim.packageId);
-
-      this.userClaimsForm = new FormGroup({  
-        package:new FormControl(this.userClaim.packageName),
-        hospital:new FormControl(this.userClaim.hospital),
-        disease:new FormControl(this.userClaim.disease),
-        location:new FormControl(this.userClaim.location),
-        dateOfSurgery:new FormControl(this.userClaim.dateOfSurgery),
+      this.selectedPackage(this.userClaim.packageId, this.userClaim.packageName);
+      this.userClaimsForm = new FormGroup({
+        package: new FormControl(this.userClaim.packageName),
+        hospital: new FormControl(this.userClaim.hospital),
+        disease: new FormControl(this.userClaim.disease),
+        location: new FormControl(this.userClaim.location),
+        dateOfSurgery: new FormControl(this.userClaim.dateOfSurgery),
       });
-      
-      
     }
-    
   }
 
-  fetchUserPackages(userId){
+  fetchUserPackages(userId) {
     this.userClaimsService.getUserPackages(userId).subscribe(
-      (packages)=>{
+      (packages) => {
         this.packages = packages;
-        
-        if(this.packages.length > 0){
+        if (this.packages.length > 0) {
           this.userHasPackages = true;
         }
-      },(err)=>{
-        console.log('err in fetching packages');
+      }, (err) => {
+        this._snackBar.open('Error while fetching Packages', 'x', { duration: 3000 })
       }
     );
   }
 
-  selectedPackage(packageId,packageName){
-    this.packageName=packageName;
+  selectedPackage(packageId, packageName) {
+    this.packageName = packageName;
     this.fetchCoveredDiseases(packageId);
   }
 
-  cancel(){
+  cancel() {
     this.location.back();
   }
 
-  fetchCoveredDiseases(packageId){
-    
+  fetchCoveredDiseases(packageId) {
     this.userClaimsService.fetchCoveredDiseases(packageId).subscribe(
-      (diseases)=>{
+      (diseases) => {
         this.diseases = diseases;
-      this.covered =this.diseases.diseasesCovered;    
+        this.covered = this.diseases.diseasesCovered;
       }
     )
   }
 
-  save(packageId?){
+  save(packageId?) {
     this.userClaim.userId = JSON.parse(localStorage.getItem('user')).id;
     this.userClaim.packageId = this.userClaimsForm.value.package;
     this.userClaim.hospital = this.userClaimsForm.value.hospital;
@@ -102,35 +96,29 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     this.userClaim.location = this.userClaimsForm.value.location;
     this.userClaim.dateOfSurgery = this.userClaimsForm.value.dateOfSurgery;
     this.userClaim.packageName = this.packageName;
-   
-    
-    if(this.action == 'Add'){
-      
+    if (this.action == 'Add') {
       this.userClaimsService.addUserClaim(this.userClaim).subscribe(
-        (userClaim)=>{
+        (userClaim) => {
           this.router.navigate(['/home/myclaims']);
-          this._snackBar.open('Claim successfully Added', 'x', {
-            duration: 3000
-          });
-    
-        },(err)=>{
-          console.log('err in adding');
+          this._snackBar.open('Claim added successfully', 'x', { duration: 3000 });
+
+        }, (err) => {
+          this._snackBar.open('Error while adding Claim', 'x', { duration: 3000 })
         }
       )
     }
-    else{
+    else {
       this.userClaimsService.editUserClaim(this.userClaim).subscribe(
-        (userPackage)=>{
+        (userPackage) => {
           this.router.navigate(['/home/mypackages']);
-          this._snackBar.open('Claim successfully edited', 'x', {
+          this._snackBar.open('Claim updated successfully', 'x', {
             duration: 3000
           });
-        },(err)=>{
-          console.log('err in adding');
+        }, (err) => {
+          this._snackBar.open('Error while updating Claim', 'x', { duration: 3000 })
         }
       )
     }
-   
   }
 
   compareObjects(o1: any, o2: any): boolean {

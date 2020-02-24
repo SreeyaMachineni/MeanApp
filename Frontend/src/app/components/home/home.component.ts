@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {User} from '../../user';
+import { User } from '../../user';
 import { AuthService } from '../../auth.service';
-import {UserClaimsService} from '../../user-claims/user-claims.service';
+import { UserClaimsService } from '../../user-claims/user-claims.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -10,64 +11,51 @@ import {UserClaimsService} from '../../user-claims/user-claims.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-selectedFile:File = null;
-userClaims:any;
-user:User;
-  constructor(private authService:AuthService,private router: Router,private userClaimService:UserClaimsService) { }
+  selectedFile: File = null;
+  userClaims: any;
+  user: User;
+  constructor(private authService: AuthService, 
+    private router: Router, 
+    private userClaimService: UserClaimsService,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
     this.fetchUserClaims();
   }
-  fetchUserClaims(){
+  fetchUserClaims() {
     this.userClaimService.getUserClaims(JSON.parse(localStorage.getItem('user')).id).subscribe(
-      (claims)=>{
-        this.userClaims = claims;    
-      },(err)=>{
-        console.log('err in fetching claims');
+      (claims) => {
+        this.userClaims = claims;
+      }, (err) => {
+        this._snackBar.open('Error while fetching Claims', 'x', { duration: 3000 });
       }
     )
   }
-//   onLogout(){
-// this.authService.logout();
-// this.router.navigate(['/login']);
-// return false;
-//   }
 
-  onfileSelected(event){
-    //console.log(event);
+  onfileSelected(event) {
     this.selectedFile = event.target.files[0];
-    //console.log(this.selectedFile);
-    // const fd = new FormData();
-    
-    // // fd.append('image',this.selectedFile,this.selectedFile.name);
-    // // console.log(fd['image']);
-    // fd.set('image',this.selectedFile);
-    console.log(fd);
-    var fd={
-       image:this.selectedFile,
-       imagename:this.selectedFile.name 
+    var fd = {
+      image: this.selectedFile,
+      imagename: this.selectedFile.name
     }
-    
-    // this.authService.fileUpload(fd).subscribe(
-
-    // );
 
     this.authService.fileUpload(fd).subscribe(
-      (data)=>{
-        console.log(data['success']);
-        
-        
+      (data) => {
+        this._snackBar.open('File uploaded successfully', 'x', { duration: 3000 });
+
+
       },
-      (err)=>console.log(err)
+      (err) => this._snackBar.open('Error while uploading file', 'x', { duration: 3000 })
     );
   }
-  upload(){
+
+  upload() {
     this.authService.uploadImg().subscribe(
-      ()=>{console.log('suc')},
-      err=>console.log(err)
+      () => { this._snackBar.open('File uploaded successfully', 'x', { duration: 3000 }); 
+    },
+      err => this._snackBar.open('Error while uploading file', 'x', { duration: 3000 })
     )
   }
-
 
 }
