@@ -34,7 +34,6 @@ export class CategoryListComponent implements OnInit {
   ngOnInit() {
     this.category = new Category();
     this.categories = new Category();
-
     this.initForm('add');
     this.fetchCategories();
   }
@@ -71,6 +70,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   initForm(action) {
+    this.action = action;
     if (action == 'add') {
       this.categoryForm = new FormGroup({
         name: new FormControl(''),
@@ -119,5 +119,6 @@ export class CategoryListComponent implements OnInit {
 
   addCategory() {
     this.categoryService.setAction('add');
+    this.initForm('add');
   }
 }

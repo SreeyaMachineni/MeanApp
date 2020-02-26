@@ -11,7 +11,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Add Category</h4>
+          <h5 class="modal-title">{{action|titlecase}} Category</h5>
         </div>
         <div class="modal-body text-center">
           <form [formGroup]="categoryForm" class="row m-0" autocomplete="off">
@@ -22,7 +22,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-light" data-dismiss="modal" (click)="initForm()">Close</button>
+          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-dark" [disabled]="!categoryForm.valid" (click)="saveit(categoryForm)"
             data-dismiss="modal">Save</button>
         </div>

@@ -60,6 +60,7 @@ export class UserEditComponent implements OnInit {
       this.authService.editUserSamePhone(this.user).subscribe(
         (data)=>{
           this.router.navigate(['/profile']);
+          this._snackBar.open('User details updated successfully', 'x', { duration: 3000 })
         },
         (err)=>{
           this._snackBar.open('Error while updating User', 'x', { duration: 3000 })

@@ -8,8 +8,8 @@
         <mat-form-field>
           <mat-label>Insurance Category</mat-label>
           <mat-select required formControlName="category">
-            <mat-option *ngFor="let category of categories" [value]="category._id"
-              (click)="selectedCategory(category.name)">
+            <mat-option *ngFor="let category of categories" [value]="category.name"
+              (click)="selectedCategory(category._id)">
               {{category.name}}
             </mat-option>
           </mat-select>
@@ -17,7 +17,7 @@
         <mat-form-field>
           <mat-label>Insurance Provider</mat-label>
           <mat-select required formControlName="insurer">
-            <mat-option *ngFor="let insurer of insurers" [value]="insurer._id"
+            <mat-option *ngFor="let insurer of insurers" [value]="insurer.name"
               (click)="selectedInsurance(insurer._id,insurer.name)">
               {{insurer.name}}
             </mat-option>
@@ -26,7 +26,7 @@
         <mat-form-field>
           <mat-label>Package</mat-label>
           <mat-select required formControlName="package">
-            <mat-option *ngFor="let package of packages" [value]="package._id" (click)="selectedPackage(package.name)">
+            <mat-option *ngFor="let package of packages" [value]="package.name" (click)="selectedPackage(package._id)">
               {{package.name}}
             </mat-option>
           </mat-select>

@@ -34,6 +34,10 @@ export class AssignUsersComponent implements OnInit {
     this.getUsers();
     this.getEmployees();
     this.getUnassignedUsers();
+    this.initForm();
+  }
+
+  initForm() {
     this.assignUsersForm = new FormGroup(
       {
         firstName: new FormControl(''),
@@ -51,6 +55,7 @@ export class AssignUsersComponent implements OnInit {
       this._snackBar.open('Error while fetching Users', 'x', { duration: 3000 })
     )
   }
+
   getUsers(){
     this.authService.getUsers().subscribe(
       (users)=>{
@@ -70,6 +75,7 @@ export class AssignUsersComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
   getEmployees(){
     this.authService.getEmployees('employee').subscribe(
       (emps)=>{
@@ -87,6 +93,7 @@ export class AssignUsersComponent implements OnInit {
     this.assignUserService.assignUser(this.userList,this.emp).subscribe(
       (success)=>{
         this._snackBar.open('Users assigned successfully', 'x', { duration: 3000 })
+        this.initForm();
         this.getUsers();
       },(err)=>{
         this._snackBar.open('Error while assigning Users', 'x', { duration: 3000 })

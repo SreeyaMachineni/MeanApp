@@ -51,11 +51,12 @@ export class AuthService {
     });
   }
 
-  getProfile() {
-    this.loadToken();
+  getProfile(userId) {
+    console.log('here with user id')
+    //this.loadToken();
     // headers.append('Content-Type','application/json');
-    const headers = new HttpHeaders().set('Authorization', this.authToken);
-    return this.http.get(this.url + '/users/profile', { headers: headers });
+   // const headers = new HttpHeaders().set('Authorization', this.authToken);
+    return this.http.get(this.url + '/users/profile/'+userId);
   }
 
   loggedIn() {

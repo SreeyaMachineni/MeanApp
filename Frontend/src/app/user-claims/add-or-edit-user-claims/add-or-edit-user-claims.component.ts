@@ -20,7 +20,7 @@ export class AddOrEditUserClaimsComponent implements OnInit {
   action: String;
   diseases: any;
   covered: any;
-  userHasPackages = false;
+  packageId:any;
 
   constructor(private userClaimsService: 
     UserClaimsService, 
@@ -30,14 +30,13 @@ export class AddOrEditUserClaimsComponent implements OnInit {
 
   ngOnInit() {
     this.userClaim = new UserClaims();
-
     var userId = JSON.parse(localStorage.getItem('user')).id;
     this.action = this.userClaimsService.getAction();
     this.fetchUserPackages(userId);
 
     if (this.action == 'Add') {
       this.userClaimsForm = new FormGroup({
-        package: new FormControl(''),
+        packageName: new FormControl(''),
         hospital: new FormControl(''),
         disease: new FormControl(''),
         location: new FormControl(''),
@@ -48,7 +47,7 @@ export class AddOrEditUserClaimsComponent implements OnInit {
       this.userClaim = this.userClaimsService.getClaim();
       this.selectedPackage(this.userClaim.packageId, this.userClaim.packageName);
       this.userClaimsForm = new FormGroup({
-        package: new FormControl(this.userClaim.packageName),
+        packageName: new FormControl(this.userClaim.packageName),
         hospital: new FormControl(this.userClaim.hospital),
         disease: new FormControl(this.userClaim.disease),
         location: new FormControl(this.userClaim.location),
@@ -61,9 +60,7 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     this.userClaimsService.getUserPackages(userId).subscribe(
       (packages) => {
         this.packages = packages;
-        if (this.packages.length > 0) {
-          this.userHasPackages = true;
-        }
+        console.log(this.packages); 
       }, (err) => {
         this._snackBar.open('Error while fetching Packages', 'x', { duration: 3000 })
       }
@@ -72,6 +69,7 @@ export class AddOrEditUserClaimsComponent implements OnInit {
 
   selectedPackage(packageId, packageName) {
     this.packageName = packageName;
+    this.packageId = packageId;
     this.fetchCoveredDiseases(packageId);
   }
 
@@ -90,12 +88,12 @@ export class AddOrEditUserClaimsComponent implements OnInit {
 
   save(packageId?) {
     this.userClaim.userId = JSON.parse(localStorage.getItem('user')).id;
-    this.userClaim.packageId = this.userClaimsForm.value.package;
+    this.userClaim.packageId = this.packageId;
     this.userClaim.hospital = this.userClaimsForm.value.hospital;
     this.userClaim.disease = this.userClaimsForm.value.disease;
     this.userClaim.location = this.userClaimsForm.value.location;
     this.userClaim.dateOfSurgery = this.userClaimsForm.value.dateOfSurgery;
-    this.userClaim.packageName = this.packageName;
+    this.userClaim.packageName = this.userClaimsForm.value.packageName;
     if (this.action == 'Add') {
       this.userClaimsService.addUserClaim(this.userClaim).subscribe(
         (userClaim) => {

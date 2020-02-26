@@ -8,13 +8,12 @@ import {UserPackagesService} from '../../user-packages/user-packages.service';
 import {UserPackage} from '../../user-packages/user-packages';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
-
-
 @Component({
   selector: 'app-user-packages-list',
   templateUrl: './user-packages-list.component.html',
   styleUrls: ['./user-packages-list.component.css']
 })
+
 export class UserPackagesListComponent implements OnInit {
   userPackage:any;
   success = false;
@@ -28,7 +27,7 @@ export class UserPackagesListComponent implements OnInit {
     this.alertSuccess = content;
  }
 
-  displayedColumns: string[] = ['insurer', 'package', 'activeFrom','activeTo','actions'];
+  displayedColumns: string[] = ['insurer', 'package', 'activeFrom', 'activeTo', 'actions'];
   dataSource: MatTableDataSource<UserPackage>;
   expandedElement: UserPackage | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

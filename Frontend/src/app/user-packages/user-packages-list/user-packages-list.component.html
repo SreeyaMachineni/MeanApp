@@ -6,16 +6,6 @@
                                         aria-hidden="true"></i>Add Package</button>
                 </div>
         </div>
-        <div class="offset-md-2">
-                <div *ngIf="!success && show" class="col-10 alert alert-danger m-2 alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <span #failure>Unable to Add Package at this point of time. Please try again later.</span>
-                </div>
-                <div *ngIf="success && show" class="col-10 alert alert-success m-2 alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <span #success>Package has been added successfully.</span>
-                </div>
-        </div>
         <mat-form-field>
                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         </mat-form-field>
@@ -34,7 +24,7 @@
                                 <td mat-cell *matCellDef="let package"> {{package.activeFrom | date}} </td>
                         </ng-container>
                         <ng-container matColumnDef="activeTo">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>To</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Active To</th>
                                 <td mat-cell *matCellDef="let package"> {{package.activeTo | date}} </td>
                         </ng-container>
                         <ng-container matColumnDef="actions">

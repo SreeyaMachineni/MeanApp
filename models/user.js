@@ -91,6 +91,11 @@ module.exports.getUserById = function(userId,callback){
 }
 
 
+module.exports.getUser = function(userId,callback){
+  const query={_id:userId};
+  User.find(query,callback);
+}
+
 module.exports.editUser = function(user,userId,callback){
   const query = {_id:userId};
   User.findOne({ _id: userId }).then(usertoupdate => {

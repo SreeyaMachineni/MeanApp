@@ -28,8 +28,16 @@ export class ProfileComponent implements OnInit {
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('user'));
+   // this.user = JSON.parse(localStorage.getItem('user'));
     this.id = JSON.parse(localStorage.getItem('user')).id;
+    this.authService.getProfile(this.id).subscribe(
+      (user)=>{
+        this.user = user[0];
+        console.log(user)
+      },(err)=>{
+        console.log(err);
+      }
+    );
     this.getDocs(this.id);
     URL = URL + this.id;
     this.uploader = new FileUploader({ url: URL, itemAlias: 'photo' });
@@ -62,6 +70,7 @@ export class ProfileComponent implements OnInit {
       }
     }
   }
+
   setChangePwd() {
     this.changePwd = true;
   }

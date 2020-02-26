@@ -21,9 +21,12 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   insurers: any;
   packages: any;
   categories: any;
-  categoryName: String;
-  insuranceName: String;
-  packageName: String;
+  // categoryName: String;
+  // insuranceName: String;
+  // packageName: String;
+  categoryId: String;
+  insuranceId: String;
+  packageId: String;
 
   constructor(private router: Router, 
     private userPackageService: UserPackagesService, 
@@ -67,12 +70,12 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   save(packageId?) {
     this.userPackage.userId = JSON.parse(localStorage.getItem('user')).id;
     this.userPackage.username = JSON.parse(localStorage.getItem('user')).firstName;
-    this.userPackage.categoryId = this.userPackageForm.value.category;
-    this.userPackage.insurerId = this.userPackageForm.value.insurer;
-    this.userPackage.packageId = this.userPackageForm.value.package;
-    this.userPackage.categoryName = this.categoryName;
-    this.userPackage.insurerName = this.insuranceName;
-    this.userPackage.packageName = this.packageName;
+    this.userPackage.categoryId = this.categoryId;
+    this.userPackage.insurerId = this.insuranceId;
+    this.userPackage.packageId = this.packageId;
+    this.userPackage.categoryName = this.userPackageForm.value.category;
+    this.userPackage.insurerName = this.userPackageForm.value.insurer;
+    this.userPackage.packageName = this.userPackageForm.value.package;
     this.userPackage.activeFrom = this.userPackageForm.value.activeFrom;
     this.userPackage.activeTo = this.userPackageForm.value.activeTo;
     if (this.action == 'add') {
@@ -111,7 +114,7 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   }
 
   selectedInsurance(insId, insName?) {
-    this.insuranceName = insName;
+    this.insuranceId = insId;
     this.userPackageService.getPackagesByInsurer(insId).subscribe(
       (packages) => {
         this.packages = packages;
@@ -119,12 +122,12 @@ export class AddOrEditUserPackagesComponent implements OnInit {
     )
   }
 
-  selectedPackage(packageName) {
-    this.packageName = packageName;
+  selectedPackage(packageId) {
+    this.packageId = packageId;
   }
 
-  selectedCategory(categoryName) {
-    this.categoryName = categoryName;
+  selectedCategory(categoryId) {
+    this.categoryId = categoryId;
   }
 
   compareThem(o1, o2): boolean {
