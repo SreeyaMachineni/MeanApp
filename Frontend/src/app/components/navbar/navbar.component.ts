@@ -59,6 +59,31 @@ this.userClaim = this.userClaimService.getClaim();
     
   }
 
+//kaziranga NP,tiger reserve,WHS-
+   //pink bollworm-insect known for being pest in cotton farming only
+   //native to asia but has become invasive species in most of the cotton growing regions
+   //in parts of india pink bollworm is resistant to 1st generation transgenic Bt cotton(bollgard cotton)
+   //that expresses  a single Bt gene(Crt 1Act)
+//van dhan vikas karyakram - min of tribal affairs
+//is implemented by van dhan kendras.
+   //sunderbans are the only mangroves where there are tigers
+//methane,H2,ClO,Nox are the naturally occuring substances that are responsible for depletion of ozone gas
+   //water pollution by mercury - dropsy in fish-muscular weakness
+   //lead - dyslexia-difficulty in processing information
+   //cadmium - itai-itai-
+//BEE-bureau of energy efficiency
+//statutory body
+   //estuary - ecotone b/w fresh water and marine ecosystem
+   //highly productive and support abundant fauna
+//cryopreservation
+//storing of materials at ultra-low temperature of liquid notrogen
+//ex-situ
+//decreses metabolism
+
+
+
+
+
   getMyContacts(){
     this.contactService.getMyContacts(JSON.parse(localStorage.getItem('user')).id);
   }
@@ -72,26 +97,25 @@ this.userClaim = this.userClaimService.getClaim();
       }
     )
   }
+
+
+   
+
   addContact(){
-    
     this.contact.regarding = this.contactForm.value.regarding;
     this.contact.description = this.contactForm.value.description;
     this.contact.userrole = JSON.parse(localStorage.getItem('user')).userrole;
-    //this.contact.userId = JSON.parse(localStorage.getItem('user')).id;
     if(this.userrole == 'user'){
       this.contact.userId = JSON.parse(localStorage.getItem('user')).id;
       this.contact.userEmpId = JSON.parse(localStorage.getItem('user')).userEmpId;
     }else if(this.userrole == 'employee'){
       this.contact.userEmpId = this.contactForm.value.user;
     }else if(this.userrole == 'poc'){
-      console.log(this.contactForm.value);
-      
       this.claim = this.userClaimService.getClaim();
       this.contact.notifyOption = this.contactForm.value.notifyOption;
       this.contact.userEmpId = this.claim.userId;
+   
     }
-    
-    
     this.contactService.addContact(this.contact).subscribe((contact)=>{
       this._snackBar.open('YOur request has been submitted', 'x', {
         duration: 3000
