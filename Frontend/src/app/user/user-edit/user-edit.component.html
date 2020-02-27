@@ -36,7 +36,7 @@
 
     <div *ngIf="!verify" class="pull-right">
         <button type="submit" class="row btn btn-light mr-3" (click)="cancel()">Cancel</button>
-        <button type="submit" class="btn btn-dark " [disabled]="!userEditForm.valid"
+        <button type="submit" class="btn primary-color " [disabled]="!userEditForm.valid"
             (click)="saveit()">Save</button>
     </div>
 
@@ -44,7 +44,7 @@
         <div class="text-black pb-5 font-weight-bold" style="font-size: 25px;">Please verify your mobile number to
             proceed</div>
         <mat-form-field><input matInput placeholder="OTP" formControlName="otp" required></mat-form-field>
-        <button type="submit" class="btn btn-dark" [disabled]="!otpForm.valid" (click)="verifyUser()">Save</button>
+        <button type="submit" class="btn primary-color" [disabled]="!otpForm.valid" (click)="verifyUser()">Save</button>
     </form>
 
 </div>

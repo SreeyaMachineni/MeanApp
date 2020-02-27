@@ -2,26 +2,32 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 .mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: black !important;
+    background-color: #C30953 !important;
   }
   .mat-focused .mat-form-field-label {
-    color: black !important;
+    color: #C30953 !important;
 }
 .mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: black !important;
+  background-color: #C30953 !important;
 }
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
-  border-color: black !important;
+  border-color: #C30953 !important;
 }
 .mat-tab-group.mat-primary .mat-ink-bar{
-  background-color: black !important;
+  background-color: #C30953 !important;
 }
 .cdk-overlay-container {
   z-index:1127 !important;
   }
 
+.primary-color {
+  background-color: #C30953 !important;
+  color: white !important;
+  border: none !important;
+}
+
   /* BREADCRUMB STYLES */
-  
+
   .breadcrumb-style {
     cursor: pointer !important; 
     color:#007bff !important;

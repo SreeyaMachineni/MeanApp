@@ -16,7 +16,7 @@
         <mat-form-field><input matInput placeholder="Username" formControlName="username" required></mat-form-field>
         <mat-form-field class="pb-3" ><input matInput placeholder="Password" formControlName="password" type="password" required>
         </mat-form-field>
-        <button type="submit" class="btn btn-dark p-0 pt-1 pb-1 pl-4 pr-4" [disabled]="!loginForm.valid">Login</button>
+        <button type="submit" class="btn primary-color p-0 pt-1 pb-1 pl-4 pr-4" [disabled]="!loginForm.valid">Login</button>
         <div class="text-black pt-4">Do not have an account?
             <!-- <a routerLink="/signup" class="font-weight-bold text-black">SignUp</a> -->
             <a routerLink="/register" routerLinkActive="active">SignUp</a>

@@ -52,7 +52,7 @@
 
         <div *ngIf="!verify" class="pull-right">
                 <button type="submit" class="row btn btn-light mr-3" (click)="cancel()">Cancel</button>
-                <button type="submit" class="btn btn-dark " [disabled]="!employeeForm.valid"
+                <button type="submit" class="btn primary-color " [disabled]="!employeeForm.valid"
                         (click)="saveit(emp._id)">Save</button>
         </div>
 </div>
