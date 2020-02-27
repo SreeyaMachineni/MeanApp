@@ -8,7 +8,6 @@ const Hospital = require('../models/hospital');
 const Notify = require('../models/notification');
 
 router.post('/addUserClaim',(req,res)=>{
-    
     let userClaim = new UserClaim({
         userId:mongoose.Types.ObjectId(req.body.claim.userId),
         packageId:req.body.claim.packageId,

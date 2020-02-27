@@ -37,7 +37,6 @@ module.exports.addClaimNotification=function(userId,notifyTo,username,callback){
 }
 
 module.exports.addPackageNotification = function(userId,notifyTo,username,packageName,message,callback){
-    console.log(userId,notifyTo,username,packageName);
     let notification = new Notification({
         userId:notifyTo,
         notifyAbout:userId,

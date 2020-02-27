@@ -4,20 +4,27 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.css']
 })
+
 export class UserEditComponent implements OnInit {
   user:User;
   userEditForm:FormGroup;
   otpForm:FormGroup;
   verify = false;
-  constructor(private authService:AuthService,private router: Router,private location: Location,) { }
+
+  constructor(private authService:AuthService,
+    private router: Router,
+    private location: Location,
+    private _snackBar: MatSnackBar) { }
+
   ngOnInit() {
     this.user = this.authService.getUser();
-    console.log(this.user);
     this.userEditForm=new FormGroup({
       firstName: new FormControl(this.user.firstName),
       lastName: new FormControl(this.user.lastName),
@@ -31,9 +38,8 @@ export class UserEditComponent implements OnInit {
       otp: new FormControl(''),
     });
   }
-  saveit(){
-    console.log('savit');
-    this.user.firstName = this.userEditForm.value.firstName;
+
+  saveit(){    this.user.firstName = this.userEditForm.value.firstName;
     this.user.lastName = this.userEditForm.value.lastName;
     this.user.email = this.userEditForm.value.email;
    // this.user.phone = this.userEditForm.value.phone;
@@ -45,19 +51,19 @@ export class UserEditComponent implements OnInit {
       this.authService.sendOtp(this.user).subscribe(
         (data)=>{
           this.verify = true;
+          this._snackBar.open('User verified successfully', 'x', { duration: 3000 })
         },
-        (err)=>{console.log('unable to verify')}
+        (err)=>this._snackBar.open('Error while verifying User', 'x', { duration: 3000 })
       )
     }else{
       this.user.phone = this.userEditForm.value.phone;
       this.authService.editUserSamePhone(this.user).subscribe(
         (data)=>{
-          
-          
           this.router.navigate(['/profile']);
+          this._snackBar.open('User details updated successfully', 'x', { duration: 3000,panelClass: ['snack-success'] })
         },
         (err)=>{
-          console.log('err in editing');
+          this._snackBar.open('Error while updating User', 'x', { duration: 3000 })
         }
       )
     }
@@ -66,18 +72,22 @@ export class UserEditComponent implements OnInit {
   cancel(){
     this.location.back();
   }
+
   verifyUser(){
     this.authService.editUser(this.user,this.otpForm.value.otp).subscribe(
       (data)=>{
         this.router.navigate(['/profile']);
         if(data['success']){
+
+
+          
           this.router.navigate(['/profile']);
         }
         else{
-          console.log('err in editing user');
+          this._snackBar.open('Error while verifying User', 'x', { duration: 3000 })
         }
       },
-      (err)=>console.log(err)
+      (err)=>this._snackBar.open('Error while verifying User', 'x', { duration: 3000 })
     );
   }
 

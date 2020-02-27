@@ -19,3 +19,22 @@
 .cdk-overlay-container {
   z-index:1127 !important;
   }
+
+  /* BREADCRUMB STYLES */
+  
+  .breadcrumb-style {
+    cursor: pointer !important; 
+    color:#007bff !important;
+  }
+
+  .bg-none {
+    background: none !important;
+  }
+
+  .f-18 {
+    font-size: 18px !important;
+  }
+
+  .fw-600 {
+    font-weight: 600 !important;
+  }

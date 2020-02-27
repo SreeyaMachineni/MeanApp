@@ -3,8 +3,6 @@ const router = express.Router();
 const UserPackage = require('../models/UserPackage');
 const Notify = require('../models/notification');
 router.post('/addUserPackage',(req,res)=>{
-
-    console.log(req.body);
     let userPackage = new UserPackage({
         userId:req.body.package.userId,
         username:req.body.package.username,

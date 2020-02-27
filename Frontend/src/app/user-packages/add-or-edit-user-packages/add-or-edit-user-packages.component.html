@@ -1,15 +1,23 @@
 <div class="container pt-3">
   <div class="row">
-      <div class="col h5">{{action|titlecase}} Package</div>
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-none f-18">
+            <li class="breadcrumb-item"><a class="breadcrumb-style" (click)="cancel()">My Packages</a></li>
+            <li class="breadcrumb-item active fw-600" aria-current="page">{{action|titlecase}} Package</li>
+          </ol>
+        </nav>
+      <!-- <div class="col h5">{{action|titlecase}} Package</div> -->
   </div>
+
+  
 
   <form class="row pt-3" [formGroup]="userPackageForm" *ngIf="!verify" autocomplete="off">
       <div class="col-md-6 col-sm-7 d-flex flex-column">
         <mat-form-field>
           <mat-label>Insurance Category</mat-label>
           <mat-select required formControlName="category">
-            <mat-option *ngFor="let category of categories" [value]="category._id"
-              (click)="selectedCategory(category.name)">
+            <mat-option *ngFor="let category of categories" [value]="category.name"
+              (click)="selectedCategory(category._id)">
               {{category.name}}
             </mat-option>
           </mat-select>
@@ -17,7 +25,7 @@
         <mat-form-field>
           <mat-label>Insurance Provider</mat-label>
           <mat-select required formControlName="insurer">
-            <mat-option *ngFor="let insurer of insurers" [value]="insurer._id"
+            <mat-option *ngFor="let insurer of insurers" [value]="insurer.name"
               (click)="selectedInsurance(insurer._id,insurer.name)">
               {{insurer.name}}
             </mat-option>
@@ -26,7 +34,7 @@
         <mat-form-field>
           <mat-label>Package</mat-label>
           <mat-select required formControlName="package">
-            <mat-option *ngFor="let package of packages" [value]="package._id" (click)="selectedPackage(package.name)">
+            <mat-option *ngFor="let package of packages" [value]="package.name" (click)="selectedPackage(package._id)">
               {{package.name}}
             </mat-option>
           </mat-select>

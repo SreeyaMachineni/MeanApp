@@ -91,7 +91,13 @@ module.exports.getUserById = function(userId,callback){
 }
 
 
+module.exports.getUser = function(userId,callback){
+  const query={_id:userId};
+  User.find(query,callback);
+}
+
 module.exports.editUser = function(user,userId,callback){
+  
   const query = {_id:userId};
   User.findOne({ _id: userId }).then(usertoupdate => {
     if (usertoupdate) {
@@ -107,6 +113,7 @@ module.exports.editUser = function(user,userId,callback){
      )
     } else {
       console.log('err');
+      //throw err;
     }
   })
 }
@@ -137,7 +144,6 @@ module.exports.getUserClaims = function(userId,callback){
         }
     ])
     .exec().then((claims)=>{
-      console.log(claims);
        callback(claims);
     }).catch((err)=>{
         console.log(err);

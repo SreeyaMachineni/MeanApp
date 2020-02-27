@@ -5,11 +5,14 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-hospital-details',
   templateUrl: './hospital-details.component.html',
   styleUrls: ['./hospital-details.component.css']
 })
+
 export class HospitalDetailsComponent implements OnInit {
   displayedColumns: string[] = ['firstName', 'phone', 'email','actions'];
   dataSource: MatTableDataSource<Hospital>;
@@ -18,7 +21,10 @@ export class HospitalDetailsComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   hospital:any;
   poc:any;
-  constructor(private hospitalPocService:HospitalPocService,private router:Router) { }
+
+  constructor(private hospitalPocService:HospitalPocService,
+    private router:Router,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.hospital = this.hospitalPocService.getHospital();
@@ -28,13 +34,12 @@ export class HospitalDetailsComponent implements OnInit {
   fetchPocs(){
     this.hospitalPocService.getPocs(this.hospital._id).subscribe(
       (poc)=>{
-        this.poc = poc;
-        
+        this.poc = poc;  
         this.dataSource = new MatTableDataSource(this.poc);
         this.dataSource.paginator = this.paginator;
        this.dataSource.sort = this.sort;
       },(err)=>{
-        console.log(err);
+        this._snackBar.open('Error while fetching POCs', 'x', { duration: 3000 })
       }
     )
   }
@@ -42,7 +47,10 @@ export class HospitalDetailsComponent implements OnInit {
   deletePoc(pocId){
     this.hospitalPocService.deletePoc(pocId).subscribe(
       (deleted)=>{
+        this._snackBar.open('Error while deleting POC', 'x', { duration: 3000 })
         this.fetchPocs();
+      }, (err)=>{
+        this._snackBar.open('Error while deleting POCs', 'x', { duration: 3000 })
       }
     )
   }

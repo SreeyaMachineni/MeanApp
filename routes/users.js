@@ -63,8 +63,17 @@ router.post('/authenticate', (req, res, next) => {
   });
 });
 
-router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json({ user: req.user });
+
+
+
+
+router.get('/profile/:userId', (req, res) => {
+  User.getUser(mongoose.Types.ObjectId(req.params.userId),(err,user)=>{
+    if(err) throw err;
+    else{
+    res.json(user);
+    }
+})
 })
 
 
@@ -151,10 +160,13 @@ router.post('/register', (req, res) => {
     assignedTo: req.body.user.assignedTo
   });
 
-  User.addUser(newUser, (err, user) => {
-    if (err) {
+
+
+  User.addUser(newUser,(err,user)=>{
+    if(err){
       res.json({ success: false, msg: 'Failed to register user' });
-    } else {
+    }
+    else{
       const token = jwt.sign({ data: user }, config.secret, {
         expiresIn: 604800 // 1 week
       });
@@ -163,22 +175,14 @@ router.post('/register', (req, res) => {
         msg: 'user registered',
         token: `Bearer ${token}`,
         user: {
-          id: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          dob: user.dob,
-          email: user.email,
-          phone: user.phone,
-          address: user.address,
-          userrole: user.userrole,
-          gender:user.gender
+          id: user._id,firstName: user.firstName,lastName: user.lastName,
+          dob: user.dob, email: user.email,phone: user.phone,
+          address: user.address,userrole: user.userrole,gender:user.gender
         },
         expiresin: 604800
       });
     }
-  });
-
-  
+  }) 
 });
 
 router.post('/addEmp', (req, res) => {
@@ -200,6 +204,11 @@ router.post('/addEmp', (req, res) => {
     maritalStatus: req.body.emp.maritalStatus,
     isAssigned: true
   });
+
+
+  
+
+
 
 
   User.addUser(employee, (err, emp) => {
@@ -263,69 +272,113 @@ router.post('/editEmp/:empId', (req, res) => {
 })
 
 
-
-
-
-
-router.post('/editUser', (req, res) => {
+router.post('/editUser',(req,res)=>{
   var userId = req.body.user.id;
-  nexmo.verify.check({
-    request_id: requestId,
-    code: req.body.otp
-  }, (err, result) => {
-    if (err) throw err;
-    if (result['status'] == 0) {
-      // const query = {_id:userId};
-   
-      // User.findOne({ _id: userId }).then(user => {
-      //   if (user) {
-      //     User.update({ _id: userId }, { $set: {
-      //       firstName : req.body.user.firstName,
-      //            lastName : req.body.user.lastName,
-      //              dob : req.body.user.dob,
-      //             gender : req.body.user.gender,
-      //             phone : req.body.user.phone,
-      //              email : req.body.user.email,
-      //              address : req.body.user.address
-      //        } }, (err, ass) => {
-      //       (err) => { res.json({ success: false, msg: 'fail' }); },
-      //         (ass) => { res.json({ success: true, msg: 'success' }); }
-      //     })
-      //   } else {
-      //     console.log('err');
-      //   }
-      // })
-      User.editUser(req.body.user,userId,(user,err)=>{
-        (user) => { res.json({ success: false, msg: 'fail' }); },
-        (err)=>{
-          res.json({ success: true, msg: 'success' });
-        }
-      })
+  User.editUser(req.body.user,userId,(err,user)=>{
+    if(err){
+        res.json({success: false, msg:'Failed to update'});
     }
-  });
+    else{
+      res.json({success:true,msg:'Successfully updated'});
+    }
+  })
+
+//   User.editUser(req.body.user,userId,(err,user)=>{
+//     if(err){
+//         res.json({success: false, msg:'Failed to update user profile'});
+//     }
+//     else{
+//       res.json({success:true,msg:'User Profile updated successfully'});
+//     }
+//   })
+
+
+
+  Category.editCategory(req.params.categoryId,req.body.category,(err,category)=>{
+      (err)=>{res.json({success:false,msg:'failed to update'})},
+      (category)=>{res.json({success:true,msg:'updated category'})}
+  })
 })
 
 
+
+
+
+
+
+// router.post('/editUser', (req, res) => {
+//   var userId = req.body.user.id;
+
+//   User.editUser(req.body.user,userId,(err,user)=>{
+//     if(err){
+//         res.json({success: false, msg:'Failed to update user profile'});
+//     }
+//     else{
+//       res.json({success:true,msg:'User Profile updated successfully'});
+//     }
+//   })
+
+//   nexmo.verify.check({
+//     request_id: requestId,
+//     code: req.body.otp
+//   }, (err, result) => {
+//     if (err) throw err;
+//     if (result['status'] == 0) {
+//       // const query = {_id:userId};
+   
+//       // User.findOne({ _id: userId }).then(user => {
+//       //   if (user) {
+//       //     User.update({ _id: userId }, { $set: {
+//       //       firstName : req.body.user.firstName,
+//       //            lastName : req.body.user.lastName,
+//       //              dob : req.body.user.dob,
+//       //             gender : req.body.user.gender,
+//       //             phone : req.body.user.phone,
+//       //              email : req.body.user.email,
+//       //              address : req.body.user.address
+//       //        } }, (err, ass) => {
+//       //       (err) => { res.json({ success: false, msg: 'fail' }); },
+//       //         (ass) => { res.json({ success: true, msg: 'success' }); }
+//       //     })
+//       //   } else {
+//       //     console.log('err');
+//       //   }
+//       // })
+
+     
+
+//       // User.editUser(req.body.user,userId,(err,user)=>{
+//       //   if(err){
+//       //       res.json({success: false, msg:'Failed to update user profile'});
+//       //   }
+//       //   else{
+//       //     res.json({success:true,msg:'User Profile updated successfully'});
+//       //   }
+//       // })
+
+
+
+//     }
+//   });
+// })
+
+
 router.post('/editUserSamePhone',(req,res)=>{
-  
-  var userId = req.body.user.id;
-  User.editUser(req.body.user,userId,(user,err)=>{
-    (user) => {
-      
-       res.json({ success: true, msg: 'success' }); 
-      },
-    (err)=>{
-      res.json({ success: false, msg: 'fail' });
+  var userId = req.body.user._id;
+
+  User.editUser(req.body.user,userId,(err,user)=>{
+    if(err){
+        res.json({success: false, msg:'Failed to update user'});
+    }
+    else{
+      res.json({success:true,msg:'Successfully updated user'});
     }
   })
-  // User.editUser(req.body.user,userId).then((user,err)=>{
-  //   (user)=>{
-  //     res.json({success:true,msg:'success'});
-  //   },
-  //   (err)=>{
-  //     res.json({success:false,msg:'fail'});
-  //   }
-  // })
+
+
+
+
+
 })
 
 
@@ -372,8 +425,10 @@ router.post('/assign', (req, res) => {
     User.findOne({ _id: empId }).then(emp => {
       if (emp) {
         User.updateOne({ firstName: userName }, { $set: { assignedTo: emp.firstName, isAssigned: true, userEmpId: empId } }, (err, ass) => {
-          (err) => { res.json({ success: false, msg: 'fail' }); },
-            (ass) => { res.json({ success: true, msg: 'success' }); }
+          if(err){res.json({ success: false, msg: 'fail' });}
+          else{
+            res.json({ success: true, msg: 'success' });
+          }
         })
       } else {
         console.log('err');

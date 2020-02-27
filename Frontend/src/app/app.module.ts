@@ -76,7 +76,7 @@ const appRoutes: Routes = [
       { path: 'addOrEditEmp', component: AddOrEditEmployeeComponent, pathMatch: 'full' },
       { path: 'hospitals', component: HospitalsComponent },
       { path: 'addOrEditHospital', component: AddOrEditHospitalsComponent },
-      { path: 'insCategories', component: CategoryListComponent },
+      { path: 'insCategories', component: CategoryListComponent ,},
       { path: 'insurers', component: InsurerListComponent },
       { path: 'packages', component: PackagesComponent },
       { path: 'addOrEditInsurer', component: AddOrEditInsurerComponent, pathMatch: 'full' },

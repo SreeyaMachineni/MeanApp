@@ -110,6 +110,8 @@ router.post('/editPackage/:packageId',(req,res)=>{
                   console.log('err');
                 }
               });
+    
+
               Insurer.findOne({_id:categoryId}).then(category=>{
                 if(category){
                     categoryName = category.name;
