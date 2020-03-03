@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UserPackage } from '../../user-packages/user-packages';
 import { UserPackagesService } from '../../user-packages/user-packages.service';
 import { Package } from '../../package/package';
+import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -15,6 +16,7 @@ export class ViewUserPackageComponent implements OnInit {
   userPackage: UserPackage;
   package: any;
   constructor(private router: Router, 
+    private location: Location,
     private userPackageService: UserPackagesService,
     private _snackBar: MatSnackBar) { }
 
@@ -31,6 +33,10 @@ export class ViewUserPackageComponent implements OnInit {
         this._snackBar.open('Error while fetching Packages', 'x', { duration: 3000 })
       }
     )
+  }
+
+  cancel() {
+    this.location.back();
   }
 
 }

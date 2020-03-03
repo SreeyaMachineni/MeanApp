@@ -18,24 +18,25 @@ export class UserPackagesListComponent implements OnInit {
   userPackage:any;
   success = false;
   show = false;
-  // successAlert;
-  // @ViewChild('success',{static:false}) alertSuccess: ElementRef;
-  // @ViewChild('failure',{static:false}) alertFailure: ElementRef;
+  currentDate:any;
   private alertSuccess: ElementRef;
 
  @ViewChild('alertSuccess',{static:false}) set content(content: ElementRef) {
     this.alertSuccess = content;
  }
 
-  displayedColumns: string[] = ['insurer', 'package', 'activeFrom', 'activeTo', 'actions'];
+  displayedColumns: string[] = ['package', 'insurer', 'category', 'validThrough', 'actions'];
   dataSource: MatTableDataSource<UserPackage>;
   expandedElement: UserPackage | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   
-  constructor(private router:Router,private userPackageService:UserPackagesService,private _snackBar: MatSnackBar) { }
+  constructor(private router:Router,
+    private userPackageService:UserPackagesService,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.currentDate = new Date().toISOString();
     this.userPackage = new UserPackage();
     this.fetchUserPackages();
   }
@@ -48,9 +49,13 @@ export class UserPackagesListComponent implements OnInit {
     this.userPackageService.fetchUserPackages(userId).subscribe(
       (userPackage)=>{
         this.userPackage = userPackage;
+        console.log(new Date(this.userPackage[2].activeTo));
+        console.log(this.currentDate)
+        console.log(new Date(this.userPackage[2].activeTo) < this.currentDate)
+        
         this.dataSource = new MatTableDataSource(this.userPackage);
         this.dataSource.paginator = this.paginator;
-       this.dataSource.sort = this.sort;
+        this.dataSource.sort = this.sort;
        },
       (err)=>this._snackBar.open('Error while fetching Packages', 'x', { duration: 3000 })   
     );

@@ -1,43 +1,65 @@
 <div class="container pt-3">
-        <div class="row">
-                <div class="col h5">My Packages</div>
-                <div class="col font-weight-bold text-right">
-                        <button type="button" class="btn primary-color" (click)="addUserPackage()"><i class="fa fa-plus pr-1"
-                                        aria-hidden="true"></i></button>
-                </div>
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-none breadcrumb-style">
+                <li class="breadcrumb-item active" aria-current="page">My Packages </li>
+            </ol>
+        </nav>
+        <div class="col font-weight-bold text-right">
+            <i class="fa fa-plus fa-icon pr-1" (click)="addUserPackage()" aria-hidden="true"></i>
         </div>
-        <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
-        <div class="mat-elevation-z8">
-                <table mat-table [dataSource]="dataSource" matSort>
-                        <ng-container matColumnDef="insurer">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Insurance Company </th>
-                                <td mat-cell *matCellDef="let package"> {{package.insurerName}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="package">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Package </th>
-                                <td mat-cell *matCellDef="let package"> {{package.packageName}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="activeFrom">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Active From</th>
-                                <td mat-cell *matCellDef="let package"> {{package.activeFrom | date}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="activeTo">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Active To</th>
-                                <td mat-cell *matCellDef="let package"> {{package.activeTo | date}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="actions">
-                                <th mat-header-cell *matHeaderCellDef> Actions </th>
-                                <td mat-cell *matCellDef="let package" (click)="$event.stopPropagation()">
-                                        <i class="fa fa-pencil pr-3" (click)="editPackage(package,package._id)"></i>
-                                        <i class="fa fa-trash-o" (click)="deletePackage(package._id)"></i>
-                                </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let package; columns: displayedColumns;" (click)="getRecord(package)">
-                        </tr>
-                </table>
-                <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
-        </div>
+    </div>
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="package">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Package </th>
+                <td mat-cell *matCellDef="let package"> {{package.packageName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="insurer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Insurance Company </th>
+                <td mat-cell *matCellDef="let package"> {{package.insurerName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+                <td mat-cell *matCellDef="let package"> {{package.categoryName}} </td>
+            </ng-container>
+            <!-- <ng-container matColumnDef="activeFrom">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Active From</th>
+                <td mat-cell *matCellDef="let package"> {{package.activeFrom | date}} </td>
+            </ng-container> -->
+            <!-- <ng-container matColumnDef="activeTo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Active To</th>
+                <td mat-cell *matCellDef="let package"> {{package.activeTo | date}} </td>
+            </ng-container> -->
+            <ng-container matColumnDef="validThrough">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Valid Through</th>
+                <td mat-cell *matCellDef="let package">
+                    <span *ngIf="currentDate <= package.activeTo"> {{package.activeFrom | date}} to {{package.activeTo | date}} </span>
+                    <span *ngIf="currentDate > package.activeTo" class="status-bad"> Expired on {{package.activeTo | date}}  </span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let package" (click)="$event.stopPropagation()">
+                    <!-- <i class="fa fa-pencil pr-3" (click)="editPackage(package,package._id)"></i>
+                    <i class="fa fa-trash-o" (click)="deletePackage(package._id)"></i> -->
+                    <span *ngIf="currentDate > package.activeTo; else enabled" class="icon-disabled">
+                        <i class="fa fa-pencil pr-3 "></i>
+                        <i class="fa fa-trash-o "></i>
+                    </span>
+                    <ng-template #enabled>
+                        <i class="fa fa-pencil pr-3 " (click)="editPackage(package,package._id)"></i>
+                        <i class="fa fa-trash-o " (click)="deletePackage(package._id) "></i>
+                    </ng-template>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let package; columns: displayedColumns;" (click)="getRecord(package)">
+            </tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+    </div>
 </div>

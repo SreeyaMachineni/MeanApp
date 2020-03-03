@@ -1,20 +1,7 @@
-table {
-    width: 100%;
-  }
-  
-  .mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
-  
-  td, th {
-    width: 25%;
-  }
-
-  i.fa {
+i.fa {
     display: none;
-  }
-  
-  td:hover > i.fa {
+}
+
+td:hover>i.fa {
     display: inline-block;
-  }
+}

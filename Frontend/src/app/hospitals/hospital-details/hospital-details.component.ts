@@ -4,6 +4,7 @@ import {Hospital} from '../../hospital';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -14,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 
 export class HospitalDetailsComponent implements OnInit {
-  displayedColumns: string[] = ['firstName', 'phone', 'email','actions'];
+  displayedColumns: string[] = ['firstName', 'phone', 'email', 'address', 'actions'];
   dataSource: MatTableDataSource<Hospital>;
   expandedElement: Hospital | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -24,6 +25,7 @@ export class HospitalDetailsComponent implements OnInit {
 
   constructor(private hospitalPocService:HospitalPocService,
     private router:Router,
+    private location: Location,
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -66,4 +68,9 @@ export class HospitalDetailsComponent implements OnInit {
     this.router.navigate(['/home/addOrEditHospitalPoc']);
   }
  
+  
+  cancel(){
+    this.location.back();
+  }
+
 }

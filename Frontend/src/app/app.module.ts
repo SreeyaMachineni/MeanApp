@@ -10,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule, MatToolbarModule, MatSidenav, MatSidenavModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule, MatToolbarModule, MatSidenav, MatSidenavModule, MatGridListModule } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { AppComponent } from './app.component';
@@ -63,7 +63,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ContactHistoryComponent } from './contact/contact-history/contact-history.component';
 import { NotificationDirective } from './notification.directive';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-
+import {MatCardModule} from '@angular/material/card';
 
 const appRoutes: Routes = [
   // {path:'',component:LoginComponent},
@@ -158,9 +158,9 @@ const appRoutes: Routes = [
     DoctorVisitModule,
     ContactModule,
     MatRadioModule,
-
+    MatGridListModule,
     MatSnackBarModule,
-
+    MatCardModule,
     MatToolbarModule,
     MatSidenavModule
 

@@ -142,6 +142,14 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  profile() {
+    this.router.navigate(['/profile']);
+  }
+
+  changePassword() {
+    
+  }
+
   onLogout() {
     this.authService.logout();
     this.authService.setLoggedIn(false);

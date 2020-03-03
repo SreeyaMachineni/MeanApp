@@ -1,29 +1,34 @@
 <app-navbar></app-navbar>
 
 <div *ngIf="user" class="container pt-3">
-  <div class="row">
-    <div class="col h5">Personal Details</div>
-    <div class="col font-weight-bold text-right">
-      <i class="fa fa-pencil" (click)="editUser(user)"></i>
-    </div>
-  </div>
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-none breadcrumb-style">
+                <li class="breadcrumb-item active" aria-current="page">Profile </li>
+            </ol>
+        </nav>
+        <div class="col font-weight-bold text-right">
+            <i class="fa fa-pencil fa-icon pr-1" (click)="editUser(user)" aria-hidden="true"></i>
+        </div>
 
-  <form class="row pt-5" autocomplete="off">
-    <div class="col-md-6 col-sm-7 d-flex flex-column">
-      <mat-form-field><input matInput placeholder="First Name" value={{user.firstName}} readonly></mat-form-field>
-      <mat-form-field><input matInput placeholder="Last Name" value={{user.lastName}} readonly></mat-form-field>
-      <mat-form-field><input matInput placeholder="Email" value={{user.email}} readonly></mat-form-field>
-      <mat-form-field><input matInput placeholder="Phone Number" value={{user.phone}} readonly></mat-form-field>
     </div>
-    <div class="col-md-6 col-sm-7 d-flex flex-column">
-      <mat-form-field><input matInput placeholder="Date of Birth" value={{user.dob|date}} readonly></mat-form-field>
-      <mat-form-field><input matInput placeholder="Gender" value={{user.gender}} readonly></mat-form-field>
-      <mat-form-field><input matInput placeholder="Address" value={{user.address}} readonly></mat-form-field>
-    </div>
-</form>
 
-  <!-- CHANGE PASSWORD -->
-  <!-- <div class="text-primary" (click)="setChangePwd()">Change Password</div>
+    <form class="row" autocomplete="off">
+        <div class="col-md-6 col-sm-7 d-flex flex-column">
+            <mat-form-field><input matInput placeholder="First Name" value={{user.firstName}} readonly></mat-form-field>
+            <mat-form-field><input matInput placeholder="Last Name" value={{user.lastName}} readonly></mat-form-field>
+            <mat-form-field><input matInput placeholder="Email" value={{user.email}} readonly></mat-form-field>
+            <mat-form-field><input matInput placeholder="Phone Number" value={{user.phone}} readonly></mat-form-field>
+        </div>
+        <div class="col-md-6 col-sm-7 d-flex flex-column">
+            <mat-form-field><input matInput placeholder="Date of Birth" value={{user.dob|date}} readonly></mat-form-field>
+            <mat-form-field><input matInput placeholder="Gender" value={{user.gender}} readonly></mat-form-field>
+            <mat-form-field><input matInput placeholder="Address" value={{user.address}} readonly></mat-form-field>
+        </div>
+    </form>
+
+    <!-- CHANGE PASSWORD -->
+    <!-- <div class="text-primary" (click)="setChangePwd()">Change Password</div>
   <div *ngIf="changePwd">
     <form [formGroup]="passwordForm" class="col-md-6 col-sm-6 d-flex flex-column" autocomplete="off">
       <mat-form-field><input matInput placeholder="Current Password" formControlName="currentPwd" required>
@@ -31,33 +36,32 @@
       <mat-form-field><input matInput placeholder="New Password" formControlName="changedPwd" required></mat-form-field>
     </form>
     <div class="col-md-6 col-sm-6">
-      <button type="submit" class="btn btn-light" (click)="cancel()">Cancel</button>
+      <button type="submit" class="btn btn-light cancel-btn" (click)="cancel()">Cancel</button>
       <button type="submit" class="btn primary-color pull-right" [disabled]="!passwordForm.valid"
         (click)="saveit()">Save</button>
     </div>
   </div><br> -->
 
-  <!-- UPLOAD FILE -->
-  <div class="container" style="border-style:dashed; border-color: #eff5f5;">
-    <div class="row m-0 p-3">
-      <div class="col-md-4 col-sm-6" *ngFor="let doc of docs">
-        <div class="thumbnail1">
-          <a href="{{doc.path}}">
-            <img src="{{doc.path}}" alt="Lights" style="width: 100%;">
-            <div class="caption">
-              <p>{{doc.name}}</p>
+    <!-- UPLOAD FILE -->
+    <div class="container" style="border-style:dashed; border-color: #eff5f5;">
+        <div class="row m-0 p-3">
+            <div class="col-md-4 col-sm-6" *ngFor="let doc of docs">
+                <div class="thumbnail1">
+                    <a href="{{doc.path}}">
+                        <img src="{{doc.path}}" alt="Lights" style="width: 100%;">
+                        <div class="caption">
+                            <p>{{doc.name}}</p>
+                        </div>
+                    </a>
+                </div>
             </div>
-          </a>
         </div>
-      </div>
-    </div>
-    <div class="col m-0 text-center pb-4">
-      <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
-      <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()"
-        [disabled]="!uploader.getNotUploadedItems().length">
+        <div class="col m-0 text-center pb-4">
+            <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+            <button type="button" class="btn primary-color" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
         Upload Your File
       </button>
+        </div>
     </div>
-  </div>
 
-</div> 
+</div>

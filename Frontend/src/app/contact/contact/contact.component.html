@@ -10,12 +10,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <h4 class="modal-title">Contact Us</h4> -->
-                <div class="col h5">Contact Us</div>
+                <div class="col popup-heading">Contact Us</div>
             </div>
-            <div class="modal-body text-center">
-                <form [formGroup]="contactForm" class="offset-2 col-md-8 col-sm-8 d-flex flex-column p-3 "
-                    autocomplete="off">
+            <div class="modal-body">
+                <form [formGroup]="contactForm" class="col-lg-12 col-md-12 col-sm-12 d-flex flex-column p-3" autocomplete="off">
                     <mat-form-field *ngIf="userrole == 'employee'">
                         <mat-label>Users</mat-label>
                         <mat-select required formControlName="user">
@@ -32,10 +30,8 @@
                             <mat-option value="Docs">Docs</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field> <textarea matInput placeholder="Leave a comment" required
-                            formControlName="description"></textarea></mat-form-field>
-                    <mat-radio-group class="text-left" aria-labelledby="example-radio-group-label"
-                        class="example-radio-group" formControlName="notifyOption" *ngIf="userrole=='poc'">
+                    <mat-form-field> <textarea matInput placeholder="Leave a comment" required formControlName="description"></textarea></mat-form-field>
+                    <mat-radio-group class="text-left" aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="notifyOption" *ngIf="userrole=='poc'">
                         <mat-radio-button class="example-radio-button" *ngFor="let opt of options" [value]="opt">
                             {{opt}}
                         </mat-radio-button>
@@ -43,9 +39,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn primary-color float-left" [disabled]="!contactForm.valid"
-                    (click)="addContact()">Submit</button>
+                <button type="button" class="btn btn-light cancel-btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn primary-color float-left" [disabled]="!contactForm.valid" (click)="addContact()">Submit</button>
             </div>
         </div>
     </div>

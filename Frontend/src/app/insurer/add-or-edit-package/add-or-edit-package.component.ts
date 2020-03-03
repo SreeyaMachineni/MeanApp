@@ -144,6 +144,10 @@ export class AddOrEditPackageComponent implements OnInit {
     this.location.back();
   }
 
+  backToInsurers() {
+    this.router.navigate(['/home/insurers']); 
+  }
+
   selectedCategory(categoryName) {
     this.categoryName = categoryName;
   }

@@ -6,6 +6,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {Insurer} from '../insurer';
+import { Location } from '@angular/common';
 import {InsurerService} from '../insurer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -26,6 +27,7 @@ export class PackagesComponent implements OnInit {
   
   constructor(private router:Router,
     private packageService:PackageService,
+    private location: Location, 
     private insurerService:InsurerService,
     private _snackBar: MatSnackBar) { }
 
@@ -79,6 +81,10 @@ export class PackagesComponent implements OnInit {
     this.packageService.setAction('edit');
     this.packageService.setPackage(packge);
     this.router.navigate(['/home/addOrEditPackage']);
+  }
+
+  cancel() {
+    this.location.back();
   }
 
 }

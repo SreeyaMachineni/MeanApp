@@ -1,46 +1,130 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .mat-form-field.mat-focused .mat-form-field-ripple {
     background-color: #C30953 !important;
-  }
-  .mat-focused .mat-form-field-label {
+}
+
+.mat-focused .mat-form-field-label {
     color: #C30953 !important;
 }
+
 .mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: #C30953 !important;
+    background-color: #C30953 !important;
 }
-.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
-  border-color: #C30953 !important;
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #C30953 !important;
 }
-.mat-tab-group.mat-primary .mat-ink-bar{
-  background-color: #C30953 !important;
+
+.mat-tab-group.mat-primary .mat-ink-bar {
+    background-color: #C30953 !important;
 }
+
 .cdk-overlay-container {
-  z-index:1127 !important;
-  }
+    z-index: 1127 !important;
+}
 
 .primary-color {
-  background-color: #C30953 !important;
-  color: white !important;
-  border: none !important;
+    background-color: #C30953 !important;
+    color: white !important;
+    border: none !important;
+    padding: 5px 15px 5px 15px !important;
 }
 
-  /* BREADCRUMB STYLES */
+.cancel-btn {
+    padding: 5px 15px 5px 15px !important;
+}
 
-  .breadcrumb-style {
-    cursor: pointer !important; 
-    color:#007bff !important;
-  }
 
-  .bg-none {
+/* TABLES */
+
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+
+/* td,
+th {
+    width: 25%;
+} */
+
+
+/* BREADCRUMB STYLES */
+
+.breadcrumb-back {
+    cursor: pointer !important;
+    color: #C30953 !important;
+}
+
+.bg-none {
     background: none !important;
-  }
+}
 
-  .f-18 {
+.breadcrumb-style {
     font-size: 18px !important;
-  }
-
-  .fw-600 {
     font-weight: 600 !important;
-  }
+}
+
+.fa-icon {
+    font-size: 15px !important;
+    color: #C30953 !important;
+    cursor: pointer !important;
+    margin-top: 15px !important;
+}
+
+.popup-heading {
+    color: #6c757d !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+}
+
+
+/* STATUS */
+
+.status-good {
+    color: green;
+}
+
+.status-warn {
+    color: orange;
+}
+
+.status-bad {
+    color: red;
+}
+
+.card-good {
+    background-color: #2CD482;
+}
+
+.card-warn {
+    background-color: #5FCAE0;
+}
+
+.card-bad {
+    background-color: #E24332;
+}
+
+.icon-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+.icon-enabled :hover {
+    color: #C30953;
+}
+
+
+/* MODAL  */
+
+.modal-border {
+    border: 0 !important;
+    border-bottom: 3px #C30953 !important;
+}

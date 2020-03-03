@@ -14,12 +14,9 @@ import {ContactComponent} from '../contact/contact/contact.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
-
-
 @NgModule({
   declarations: [
-    AddOrEditUserClaimsComponent, UserClaimsListComponent, ClaimDetailsComponent,ContactComponent
-  ],
+    AddOrEditUserClaimsComponent, UserClaimsListComponent, ClaimDetailsComponent,ContactComponent ],
   imports: [
     CommonModule,
     MatSelectModule,

@@ -1,12 +1,14 @@
 <div class="container pt-3">
     <div class="row">
-        <div class="col h5">{{action|titlecase}} Insurer</div>
-        <div class="col font-weight-bold text-right">
-            <i class="fa fa-reply" (click)="cancel()"></i>
-        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-none breadcrumb-style">
+                <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="cancel()">Insurers</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{action|titlecase}} </li>
+            </ol>
+        </nav>
     </div>
 
-    <form class="row pt-4" [formGroup]="insurerForm" autocomplete="off">
+    <form class="row" [formGroup]="insurerForm" autocomplete="off">
         <div class="col-md-6 col-sm-7 d-flex flex-column">
             <mat-form-field><input matInput placeholder="Insurer Name" formControlName="name" required></mat-form-field>
             <mat-form-field><input matInput placeholder="Location/City" formControlName="location" required>
@@ -22,8 +24,7 @@
                 <div *ngFor="let poc of insurerForm.controls.pointOfContact.controls;let i = index">
                     <div>
                         <span>Point of contact {{i+1}}</span>
-                        <span *ngIf="insurerForm.controls.pointOfContact.controls.length > 1" (click)="removePoC(i)"
-                            class="float-right">
+                        <span *ngIf="insurerForm.controls.pointOfContact.controls.length > 1" (click)="removePoC(i)" class="float-right">
 
                             <i class="fa fa-trash-o"></i>
                         </span>
@@ -38,14 +39,13 @@
                 </div>
             </div>
             <div class="p-2">
-                <button class="row btn btn-light float-right" (click)="addPoC()">Add another point of Contact</button>
+                <button class="row btn btn-light cancel-btn float-right" (click)="addPoC()">Add another point of Contact</button>
             </div>
         </div>
     </form>
 
     <div *ngIf="!verify" class="pull-right">
-        <button type="submit" class="row btn btn-light mr-3" (click)="cancel()">Cancel</button>
-        <button type="submit" class="btn primary-color " [disabled]="!insurerForm.valid"
-            (click)="save(insurerForm,insurer._id)">Save</button>
+        <button type="submit" class="row btn btn-light cancel-btn mr-3" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn primary-color " [disabled]="!insurerForm.valid" (click)="save(insurerForm,insurer._id)">Save</button>
     </div>
 </div>

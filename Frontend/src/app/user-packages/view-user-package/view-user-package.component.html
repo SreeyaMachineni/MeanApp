@@ -1,47 +1,31 @@
-<!-- <div class="container pt-5">
-    
-    <div class="text-center font-weight-bold">Package Details</div>
-    <div class="row pt-5">
-        <div class="col-6 text-right font-weight-bold">Package Name</div>
-        <div class="col-5 text-left">{{package.name}}</div>
-    </div>
-    <div class="row pt-3">
-        <div class="col-6 text-right font-weight-bold">Insurer</div>
-        <div class="col-5 text-left">{{package.insProvider}}</div>
-    </div>
-    <div class="row pt-3">
-        <div class="col-6 text-right font-weight-bold">Category</div>
-        <div class="col-5 text-left">{{package.insCategory}}</div>
-    </div>
-    <div class="row pt-3">
-        <div class="col-6 text-right font-weight-bold">Maximum Number of People Covered</div>
-        <div class="col-5 text-left">{{package.maxNoOfMembersCovered}}</div>
-    </div>
-    <div class="row pt-3">
-        <div class="col-6 text-right font-weight-bold">Premium</div>
-        <div class="col-5 text-left">{{package.premiumAmnt}}</div>
-    </div>
-    <div class="row pt-3">
-        <div class="col-6 text-right font-weight-bold">Documents Needed to claim</div>
-        <div class="col-5 text-left">{{package.requiredDocs}}</div>
-    </div>
-</div> -->
-
-
-
-
 <div class="container pt-3">
-  <div class="row">
-    <div class="col h5">Package Details</div>
-  </div>
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-none breadcrumb-style">
+                <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="cancel()">My Packages</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Package Details of {{package.name}} </li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row mt-3">
+        <div class="col-lg-2 h6">Insurer: </div>
+        <div class="col-lg-2">{{package.insProvider}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-2 h6">Category: </div>
+        <div class="col-lg-2">{{package.insCategory}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-2 h6">Max People Covered: </div>
+        <div class="col-lg-2">{{package.maxNoOfMembersCovered}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-2 h6">Premium: </div>
+        <div class="col-lg-2">{{package.premiumAmnt}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-2 h6">Required Docs: </div>
+        <div class="col-lg-2">{{package.requiredDocs}}</div>
+    </div>
 
-  <div class="row">
-    <div class="col-lg-2 h6">Package Name: </div>
-    <div class="col-lg-2">{{package.name}}</div>
-  </div>
-  <div class="row">
-    <div class="col-lg-2 h6">Package Name: </div>
-    <div class="col-lg-2">{{package.name}}</div>
-  </div>
-
-</div> 
+</div>

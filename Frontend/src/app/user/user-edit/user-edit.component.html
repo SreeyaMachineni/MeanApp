@@ -1,12 +1,14 @@
 <div class="container pt-3">
     <div class="row">
-        <div class="col h5">Edit Details</div>
-        <div class="col font-weight-bold text-right">
-            <i class="fa fa-reply" (click)="cancel()"></i>
-        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-none breadcrumb-style">
+                <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="cancel()">Profile</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit </li>
+            </ol>
+        </nav>
     </div>
 
-    <form class="row pt-5" [formGroup]="userEditForm" *ngIf="!verify" autocomplete="off" (ngSubmit)="saveit()">
+    <form class="row" [formGroup]="userEditForm" *ngIf="!verify" autocomplete="off" (ngSubmit)="saveit()">
         <div class="col-md-6 col-sm-7 d-flex flex-column">
             <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required>
             </mat-form-field>
@@ -35,14 +37,13 @@
     </form>
 
     <div *ngIf="!verify" class="pull-right">
-        <button type="submit" class="row btn btn-light mr-3" (click)="cancel()">Cancel</button>
-        <button type="submit" class="btn primary-color " [disabled]="!userEditForm.valid"
-            (click)="saveit()">Save</button>
+        <button type="submit" class="row btn btn-light cancel-btn mr-3" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn primary-color " [disabled]="!userEditForm.valid" (click)="saveit()">Save</button>
     </div>
 
     <form [formGroup]="otpForm" *ngIf="verify" class="offset-4 col-md-3 col-sm-7 d-flex flex-column pt-5" autocomplete="off" (ngSubmit)="verifyUser()">
-        <div class="text-black pb-5 font-weight-bold" style="font-size: 25px;">Please verify your mobile number to
-            proceed</div>
+        <div class="text-black pb-5 font-weight-bold" style="font-size: 25px;">Please verify your mobile number to proceed
+        </div>
         <mat-form-field><input matInput placeholder="OTP" formControlName="otp" required></mat-form-field>
         <button type="submit" class="btn primary-color" [disabled]="!otpForm.valid" (click)="verifyUser()">Save</button>
     </form>

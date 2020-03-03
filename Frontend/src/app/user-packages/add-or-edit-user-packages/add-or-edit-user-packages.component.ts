@@ -6,9 +6,6 @@ import { UserPackagesService } from '../../user-packages/user-packages.service';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-
-
-
 @Component({
   selector: 'app-add-or-edit-user-packages',
   templateUrl: './add-or-edit-user-packages.component.html',

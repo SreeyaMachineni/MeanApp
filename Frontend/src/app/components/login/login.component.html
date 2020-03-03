@@ -1,8 +1,8 @@
 <div class="container">
 
     <div class="Left d-flex flex-column justify-content-center align-items-center">
-        <div class="text-black pb-2 font-weight-bold text-white" style="font-size: 35px;">Something</div>
-        <div class=" text-white">some tag goes here</div>
+        <div class="pb-2 text-white" style="font-size: 35px;">Something</div>
+        <div class=" text-white">Some tag goes here</div>
     </div>
     
     <form [formGroup]="loginForm" class="Right d-flex flex-column  justify-content-center align-items-center"
@@ -12,7 +12,7 @@
         <div *ngIf="invalid" class="alert alert-danger m-2">
             Invalid Credentials.Please check your Username and Password.
         </div>
-        <div class="pb-5 font-weight-bold" style="font-size: 30px;">Login</div>
+        <div class="pb-5" style="font-size: 30px; color: #C30953;">Login</div>
         <mat-form-field><input matInput placeholder="Username" formControlName="username" required></mat-form-field>
         <mat-form-field class="pb-3" ><input matInput placeholder="Password" formControlName="password" type="password" required>
         </mat-form-field>

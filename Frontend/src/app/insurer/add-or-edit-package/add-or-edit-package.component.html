@@ -1,57 +1,56 @@
 <div class="container pt-3">
-  <div class="row">
-    <div class="col h5">{{action|titlecase}} Package</div>
-    <div class="col font-weight-bold text-right">
-      <i class="fa fa-reply" (click)="cancel()"></i>
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-none breadcrumb-style">
+                <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="backToInsurers()">Insurers</a> </li>
+                <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="cancel()">Packages provided by {{insurers.name}}</a> </li>
+                <li class="breadcrumb-item active" aria-current="page">{{action|titlecase}} </li>
+            </ol>
+        </nav>
     </div>
-  </div>
 
-  <form class="row pt-4" [formGroup]="packageForm" autocomplete="off">
-    <div class="col-md-6 col-sm-7 d-flex flex-column">
-      <mat-form-field><input matInput placeholder="Package Name" formControlName="name" required></mat-form-field>
-      <mat-form-field>
-        <mat-label>Insurance Category</mat-label>
-        <mat-select required formControlName="insCategory">
-          <mat-option *ngFor="let category of categories" [value]="category._id"
-            (click)="selectedCategory(category.name)">
-            {{category.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field><input matInput placeholder="Max Sum Assured" formControlName="maxSumAssured" required>
-      </mat-form-field>
-      <mat-form-field><input matInput placeholder="Max Sum Assured" formControlName="minSumAssured" required>
-      </mat-form-field>
-      <mat-form-field><input matInput placeholder="Premium Ammount" formControlName="premiumAmnt" required>
-      </mat-form-field>
-      <mat-form-field><input matInput placeholder="Diseases Covered" formControlName="diseasesCovered" required>
-      </mat-form-field>
-      <mat-form-field><input matInput placeholder="Max Members Covererd" formControlName="maxNoOfMembersCovered"
-          required></mat-form-field>
-    </div>
-    <div class="col-md-6 col-sm-7 d-flex flex-column">
-      <mat-form-field><input matInput placeholder="Max Maturity" formControlName="maxMaturity" required>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Network Hospitals</mat-label>
-        <mat-select formControlName="networkHospitals" multiple required>
-          <mat-option *ngFor="let hospital of hospitals" [value]="hospital.name">{{hospital.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field><input matInput placeholder="Coverage Waiting Period"
-          formControlName="diseaseCoverageWaitingPeriod" required></mat-form-field>
-      <mat-form-field><input matInput placeholder="Waiting Period" formControlName="waitingPeriod" required>
-      </mat-form-field>
-      <mat-form-field><input matInput placeholder="Required Documents" formControlName="requiredDocs" required>
-      </mat-form-field>
-      <mat-form-field><input matInput placeholder="Diseases Not Covered" formControlName="diseasesUnCovered" required>
-      </mat-form-field>
-    </div>
-  </form>
+    <form class="row pt-4" [formGroup]="packageForm" autocomplete="off">
+        <div class="col-md-6 col-sm-7 d-flex flex-column">
+            <mat-form-field><input matInput placeholder="Package Name" formControlName="name" required></mat-form-field>
+            <mat-form-field>
+                <mat-label>Insurance Category</mat-label>
+                <mat-select required formControlName="insCategory">
+                    <mat-option *ngFor="let category of categories" [value]="category._id" (click)="selectedCategory(category.name)">
+                        {{category.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Max Sum Assured" formControlName="maxSumAssured" required>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Max Sum Assured" formControlName="minSumAssured" required>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Premium Ammount" formControlName="premiumAmnt" required>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Diseases Covered" formControlName="diseasesCovered" required>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Max Members Covererd" formControlName="maxNoOfMembersCovered" required></mat-form-field>
+        </div>
+        <div class="col-md-6 col-sm-7 d-flex flex-column">
+            <mat-form-field><input matInput placeholder="Max Maturity" formControlName="maxMaturity" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Network Hospitals</mat-label>
+                <mat-select formControlName="networkHospitals" multiple required>
+                    <mat-option *ngFor="let hospital of hospitals" [value]="hospital.name">{{hospital.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Coverage Waiting Period" formControlName="diseaseCoverageWaitingPeriod" required></mat-form-field>
+            <mat-form-field><input matInput placeholder="Waiting Period" formControlName="waitingPeriod" required>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Required Documents" formControlName="requiredDocs" required>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Diseases Not Covered" formControlName="diseasesUnCovered" required>
+            </mat-form-field>
+        </div>
+    </form>
 
-  <div *ngIf="!verify" class="pull-right">
-    <button type="submit" class="row btn btn-light mr-3" (click)="cancel()">Cancel</button>
-    <button type="submit" class="btn primary-color " [disabled]="!packageForm.valid"
-      (click)="saveit(packge._id)">Save</button>
-  </div>
+    <div *ngIf="!verify" class="pull-right">
+        <button type="submit" class="row btn btn-light cancel-btn mr-3" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn primary-color " [disabled]="!packageForm.valid" (click)="saveit(packge._id)">Save</button>
+    </div>
 </div>

@@ -11,7 +11,7 @@ export class StatusCodeDirective implements OnInit{
   ngOnInit() {
     switch(this.status){
       case 'Pending':
-      this.el.nativeElement.style.color = 'blue';
+      this.el.nativeElement.style.color = 'orange';
       break;
       case 'Accepted':
       this.el.nativeElement.style.color = 'green';

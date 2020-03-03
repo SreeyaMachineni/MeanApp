@@ -26,9 +26,10 @@ export class AddOrEditHospitalPoCComponent implements OnInit {
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    debugger
+    this.action = this.hospitalPocService.getAction();
     this.fetchHospitals();
     // this.poc = new HospitalPoc();
-    this.action = this.hospitalPocService.getAction();
     this.pocForm = new FormGroup({
       firstName: new FormControl(''),
       lastName: new FormControl(''),
@@ -75,6 +76,10 @@ export class AddOrEditHospitalPoCComponent implements OnInit {
   }
   cancel() {
     this.returnLocation.back();
+  }
+
+  backToHospitals() {
+    this.router.navigate(['/home/hospitals']);
   }
 
   selectedHospital(hospitalName) {

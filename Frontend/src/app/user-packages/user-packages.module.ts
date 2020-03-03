@@ -10,6 +10,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ViewUserPackageComponent } from './view-user-package/view-user-package.component';
+
 @NgModule({
   declarations: [AddOrEditUserPackagesComponent, UserPackagesListComponent, ViewUserPackageComponent],
   imports: [

@@ -1,45 +1,46 @@
 <div class="container pt-3">
-        <div class="row">
-                <div class="col h5">{{action|titlecase}} Claim</div>
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-none breadcrumb-style">
+                <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="cancel()">My Claims</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{action|titlecase}} </li>
+            </ol>
+        </nav>
+    </div>
+    <form class="row pt-3" [formGroup]="userClaimsForm" *ngIf="!verify" autocomplete="off">
+        <div class="col-md-6 col-sm-7 d-flex flex-column">
+            <mat-form-field>
+                <mat-label>Package</mat-label>
+                <mat-select required formControlName="packageName">
+                    <mat-option *ngFor="let package of packages" [value]="package.packageName" (click)="selectedPackage(package.packageId,package.packageName)">
+                        {{package.packageName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Hospital" formControlName="hospital" required>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="Location" formControlName="location" required>
+            </mat-form-field>
+
+            <!-- <mat-form-field><input matInput placeholder="Disease" formControlName="disease" required></mat-form-field> -->
+            <mat-form-field>
+                <mat-label>Disease</mat-label>
+                <mat-select required formControlName="disease">
+                    <mat-option *ngFor="let disease of covered" [value]="disease">
+                        {{disease}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput [matDatepicker]="dateOfSurgery" placeholder="Date of Surgery" formControlName="dateOfSurgery">
+                <mat-datepicker-toggle matSuffix [for]="dateOfSurgery"></mat-datepicker-toggle>
+                <mat-datepicker #dateOfSurgery></mat-datepicker>
+            </mat-form-field>
         </div>
+    </form>
 
-        <form class="row pt-3" [formGroup]="userClaimsForm" *ngIf="!verify" autocomplete="off">
-                <div class="col-md-6 col-sm-7 d-flex flex-column">
-                        <mat-form-field>
-                                <mat-label>Package</mat-label>
-                                <mat-select required formControlName="packageName">
-                                        <mat-option *ngFor="let package of packages" [value]="package.packageName"
-                                                (click)="selectedPackage(package.packageId,package.packageName)">
-                                                {{package.packageName}}
-                                        </mat-option>
-                                </mat-select>
-                        </mat-form-field>
-                        <mat-form-field><input matInput placeholder="Hospital" formControlName="hospital" required>
-                        </mat-form-field>
-                        <mat-form-field><input matInput placeholder="Location" formControlName="location" required>
-                        </mat-form-field>
-
-                        <!-- <mat-form-field><input matInput placeholder="Disease" formControlName="disease" required></mat-form-field> -->
-                        <mat-form-field>
-                                <mat-label>Disease</mat-label>
-                                <mat-select required formControlName="disease">
-                                        <mat-option *ngFor="let disease of covered" [value]="disease">
-                                                {{disease}}
-                                        </mat-option>
-                                </mat-select>
-                        </mat-form-field>
-                        <mat-form-field class="example-full-width">
-                                <input matInput [matDatepicker]="dateOfSurgery" placeholder="Date of Surgery"
-                                        formControlName="dateOfSurgery">
-                                <mat-datepicker-toggle matSuffix [for]="dateOfSurgery"></mat-datepicker-toggle>
-                                <mat-datepicker #dateOfSurgery></mat-datepicker>
-                        </mat-form-field>
-                </div>
-        </form>
-
-        <div *ngIf="!verify" class="col-md-6 col-sm-7 pull-right">
-                <button type="submit" class="row btn btn-light mr-3" (click)="cancel()">Cancel</button>
-                <button type="submit" class="btn primary-color " [disabled]="!userClaimsForm.valid"
-                        (click)="save(userClaim._id)">Save</button>
-        </div>
+    <div *ngIf="!verify" class="col-md-6 col-sm-7 pull-right">
+        <button type="submit" class="row btn btn-light cancel-btn mr-3" (click)="cancel()">Cancel</button>
+        <button type="submit" class="btn primary-color " [disabled]="!userClaimsForm.valid" (click)="save(userClaim._id)">Save</button>
+    </div>
 </div>
