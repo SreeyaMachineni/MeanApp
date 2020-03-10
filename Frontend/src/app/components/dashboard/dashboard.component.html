@@ -1,12 +1,37 @@
 <!-- <div class="h5 m-3"> {{greeting}} {{user.firstName|titlecase}}! Welcome to your dashboard..</div> -->
 
 <!-- IF LOGGED IN AS USER -->
-<div class="row m-3" *ngIf="user.userrole == 'user'">
-    <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border">
-        <div class="modal-header">
-            <div class="popup-heading"> Active Claims</div>
+<div class="row m-0" *ngIf="user.userrole == 'user'">
+    <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
+        <div class="modal-header modal-dashboard" style="background-color: #ffffb3;">
+            <div class="popup-heading"> Current Packages</div>
+            <a *ngIf="userHasClaims" class="pull-right" routerLink="/home/mypackages" routerLinkActive="active">View All</a>
         </div>
-        <div class="modal-body Content">
+        <div class="modal-body Content" style="border: 1px solid #ffffb3;">
+            <div *ngFor="let package of userPackage">
+                <div class="row" *ngIf="userHasPackages">
+                    <div class="col-8 text-left h6">{{package.packageName}}</div>
+                </div>
+                <div class="row" *ngIf="userHasClaims">
+                    <div class="col-8 text-left">
+                        <div>Insurer: {{package.insurerName}}</div>
+                        <div>Active From: {{package.activeFrom | date}}</div>
+                        <div class="pb-4">Active To: {{package.activeTo | date}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0" *ngIf="!userHasPackages">
+                <div class="m-1">You do not have any Packages added.<br> <a style="cursor: pointer;" class="h6" (click)="addPackage()">Click here</a> to add a package</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
+        <div class="modal-header modal-dashboard" style="background-color: #9efa9e;">
+            <div class="popup-heading"> Active Claims</div>
+            <a *ngIf="userHasClaims" class="pull-right" routerLink="/home/myclaims">View All</a>
+        </div>
+        <div class="modal-body Content" style="border: 1px solid #9efa9e;">
             <div *ngFor="let claim of userClaims">
                 <div class="row" *ngIf="userHasClaims">
                     <div class="col-8 text-left h6">{{claim.packageName}}</div>
@@ -21,40 +46,30 @@
                 </div>
             </div>
             <div class="row m-0" *ngIf="!userHasClaims">
-                <div class="m-1">You donot have any active claims.<br>Please go to <b>My Claims</b> to add a package</div>
+                <div class="m-1">You do not have any active claims.<br> <a style="cursor: pointer;" class="h6" (click)="addClaim()">Click here</a> to add a new claim</div>
             </div>
         </div>
     </div>
 
-    <!-- <div class="col-lg-4 col-md-6 col-sm-12 FixedHeightContainer m-3 modal-content">
-        <div class="modal-header">
-            <div class="popup-heading"> Current Packages</div>
-        </div>
-        <div class="modal-body Content">
-            <div *ngFor="let package of userPackage">
-                <div class="row" *ngIf="userHasPackages">
-                    <div class="col-12 text-left h5">{{package.packageName}}</div>
-                </div>
-                <div class="row" *ngIf="userHasPackages">
-                    <div class="col-12 text-left">
-                        <div style="font-size: 16px">Insurer: {{package.insurerName}}</div>
-                        <div style="font-size: 16px">Active From: {{package.activeFrom | date}}</div>
-                        <div class="pb-4" style="font-size: 16px">Active To: {{package.activeTo | date}} </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0" *ngIf="!userHasPackages">
-                <div class="m-1">You donot have any Packages added.<br>Please go to <b>My Packages</b> to add a package
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border">
-        <div class="modal-header">
+    <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
+        <div class="modal-header modal-dashboard " style="background-color: #9ee3fa;">
             <div class="popup-heading">Notifications</div>
         </div>
-        <div class="modal-body Content">
+        <div class="modal-body Content" style="border: 1px solid #9ee3fa;">
+            <div class="mb-2" style="cursor: pointer;" *ngFor="let notification of notifications" (click)="notificationDetails(notification)" appNotification [verified]="notification.verified">
+                {{notification.comments}}
+            </div>
+            <div class="row m-0" *ngIf="!userHasNotifications">
+                <div class="mt-1"> No new notifications</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
+        <div class="modal-header modal-dashboard" style="background-color: #fcc7b6;">
+            <div class="popup-heading">Notifications</div>
+        </div>
+        <div class="modal-body Content" style="border: 1px solid #fcc7b6;">
             <div class="mb-2" *ngFor="let notification of notifications" (click)="notificationDetails(notification)" appNotification [verified]="notification.verified">
                 {{notification.comments}}
             </div>
@@ -65,68 +80,39 @@
     </div>
 </div>
 
-<!-- <hr class="border-primary m-3 "> -->
-
 <!-- IF LOGGED IN AS EMPLOYEE -->
 <div class="row m-0" *ngIf="user.userrole == 'employee'">
-    <div class="col-lg-4 col-md-6 col-sm-12 FixedHeightContainer m-3 modal-content modal-border">
-        <div class="modal-header">
-            <div class="popup-heading">Pending Claims</div>
-        </div>
-        <div class="modal-body Content">
-            <div *ngFor="let claim of userClaims" (click)="userDetails(claim)">
-                <div class="row">
-                    <div class="col-6 text-left h5">{{claim.claims.packageName}}</div>
-                    <div class="col-6 text-right h5" appStatusCode [status]="claim.claims.status" (click)="$event.stopPropagation();setClaim(claim);">{{claim.claims.status}}</div>
-                    <!-- (click)="setClaim(claim);$event.stopPropagation();" -->
-                </div>
-                <div class="row">
-                    <div class="col-6 text-left">
-                        <div style="font-size: 16px">User : {{claim.firstName}}</div>
-                        <div style="font-size: 16px">Phone : {{claim.phone}}</div>
-                        <div style="font-size: 16px">Date of Surgery : {{claim.claims.dateOfSurgery | date}}</div>
-                        <div style="font-size: 16px">Purpose : {{claim.claims.disease}}</div>
-                        <div class="pb-4" style="font-size: 16px">Hospital : {{claim.claims.hospital}}</div>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="row m-0" *ngIf="!userHasClaims">
-        <div class="m-1">You do not have any pending claims.</div>
-      </div> -->
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-12 FixedHeightContainer m-3 modal-content modal-border">
-        <div class="modal-header">
+    <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
+        <div class="modal-header modal-dashboard " style="background-color: #9ee3fa;">
             <div class="popup-heading">Notifications</div>
         </div>
-        <div class="modal-body Content">
-            <div class="mb-2" *ngFor="let notification of notifications" (click)="notificationDetails(notification)" appNotification [verified]="notification.verified">
+        <div class="modal-body Content" style="border: 1px solid #9ee3fa;">
+            <div class="mb-2" style="cursor: pointer;" *ngFor="let notification of notifications" (click)="notificationDetails(notification)" appNotification [verified]="notification.verified">
                 {{notification.comments}}
             </div>
-            <!-- <div class="row m-0" *ngIf="!userHasnotifications">
-        <div class="mt-1"> No new notifications</div>
-      </div> -->
+            <div class="row m-0" *ngIf="!userHasNotifications">
+                <div class="mt-1"> No new notifications</div>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- IF LOGGED IN AS POC -->
 <div class="row m-0" *ngIf="user.userrole == 'poc'">
-    <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer m-3 modal-content modal-border">
-        <div class="modal-header">
-            <div class="popup-heading">Pending Claims</div>
+    <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
+        <div class="modal-header modal-dashboard" style="background-color: #9efa9e;">
+            <div class="popup-heading"> Pending Claims</div>
         </div>
-        <div class="modal-body Content">
-            <div *ngFor="let claim of userClaims" (click)="claimDetails(claim)">
-                <div class="row">
-                    <div class="col-6 text-left h5">{{claim.packageName}}</div>
-                    <div class="col-6 text-right h5" appStatusCode [status]="claim.status" (click)="$event.stopPropagation();setClaim(claim);">{{claim.status}}</div>
+        <div class="modal-body Content " style="border: 1px solid #9efa9e;">
+            <div *ngFor="let claim of userClaims " (click)="claimDetails(claim) ">
+                <div class="row ">
+                    <div class="col-6 text-left h5 ">{{claim.packageName}}</div>
+                    <div class="col-6 text-right h5 " appStatusCode [status]="claim.status " (click)="$event.stopPropagation();setClaim(claim); ">{{claim.status}}</div>
                 </div>
-                <div class="row">
-                    <div class="col-6 text-left">
-                        <div style="font-size: 16px">Date of Surgery : {{claim.dateOfSurgery | date}}</div>
-                        <div style="font-size: 16px">Purpose : {{claim.disease}}</div>
+                <div class="row ">
+                    <div class="col-6 text-left ">
+                        <div style="font-size: 16px ">Date of Surgery : {{claim.dateOfSurgery | date}}</div>
+                        <div style="font-size: 16px ">Purpose : {{claim.disease}}</div>
                     </div>
                 </div>
             </div>

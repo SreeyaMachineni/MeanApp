@@ -132,7 +132,8 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   }
 
   cancel() {
-    this.location.back();
+    // this.location.back();
+    this.router.navigate(['/home/mypackages']);
   }
 
   compareObjects(o1: any, o2: any): boolean {

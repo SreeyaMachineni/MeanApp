@@ -48,11 +48,7 @@ export class UserPackagesListComponent implements OnInit {
     var userId =JSON.parse(localStorage.getItem('user')).id;
     this.userPackageService.fetchUserPackages(userId).subscribe(
       (userPackage)=>{
-        this.userPackage = userPackage;
-        console.log(new Date(this.userPackage[2].activeTo));
-        console.log(this.currentDate)
-        console.log(new Date(this.userPackage[2].activeTo) < this.currentDate)
-        
+        this.userPackage = userPackage;        
         this.dataSource = new MatTableDataSource(this.userPackage);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -87,14 +83,14 @@ export class UserPackagesListComponent implements OnInit {
     )
   }
 
-  editPackage(packge,packageId){
+  editPackage(pkg,packageId){
     this.userPackageService.setAction('edit');
-    this.userPackageService.setUserPackage(packge);
+    this.userPackageService.setUserPackage(pkg);
     this.router.navigate(['/home/addOrEditUserPackage']);
   }
 
-  getRecord(packge){
-    this.userPackageService.setUserPackage(packge);
+  getRecord(pkg){
+    this.userPackageService.setUserPackage(pkg);
     this.router.navigate(['/home/viewUserPackage'])
   }
 

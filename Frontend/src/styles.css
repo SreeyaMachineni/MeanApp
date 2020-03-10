@@ -120,11 +120,3 @@ th {
 .icon-enabled :hover {
     color: #C30953;
 }
-
-
-/* MODAL  */
-
-.modal-border {
-    border: 0 !important;
-    border-bottom: 3px #C30953 !important;
-}

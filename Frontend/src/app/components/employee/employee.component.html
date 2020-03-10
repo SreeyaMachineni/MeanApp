@@ -28,7 +28,7 @@
                 <td mat-cell *matCellDef="let emp"> {{emp.email}} </td>
             </ng-container>
             <ng-container matColumnDef="dob">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Birht </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Birth </th>
                 <td mat-cell *matCellDef="let emp" [style.color]="emp.dob"> {{emp.dob | date}} </td>
             </ng-container>
             <ng-container matColumnDef="gender">

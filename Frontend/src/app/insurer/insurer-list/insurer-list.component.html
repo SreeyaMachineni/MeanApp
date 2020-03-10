@@ -34,12 +34,13 @@
                 <th mat-header-cell *matHeaderCellDef> Actions </th>
                 <td mat-cell *matCellDef="let insurer" (click)="$event.stopPropagation()">
                     <i class="fa fa-pencil pr-3" (click)="editInsurer(insurer,insurer._id)"></i>
-                    <i class="fa fa-trash-o" (click)="deleteInsurer(insurer._id)"></i>
+                    <i class="fa fa-trash-o pr-3" (click)="deleteInsurer(insurer._id)"></i>
+                    <i class="fa fa-medkit" (click)="getRecord(insurer)" title="View Packages"></i>
                 </td>
 
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let insurer; columns: displayedColumns;" (click)="getRecord(insurer)">
+            <tr mat-row *matRowDef="let insurer; columns: displayedColumns;">
             </tr>
         </table>
         <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>

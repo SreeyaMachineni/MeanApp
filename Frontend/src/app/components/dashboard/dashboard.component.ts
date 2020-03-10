@@ -27,25 +27,27 @@ export class DashboardComponent implements OnInit {
   show = true;
   currentHours: any;
   greeting: any;
+  currentDate:any;
 
   constructor(private router: Router, private userClaimService: UserClaimsService,
     private empUserService: EmployeeUsersService, 
     private authService: AuthService, 
-    private userPackages: UserPackagesService,
+    private userPackagesService: UserPackagesService,
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
-    this.currentHours = new Date().getHours();
-    if (this.currentHours < 12) {
-      this.greeting = 'Good Morning ';
-    }
-    else if (this.currentHours < 4) {
-      this.greeting = 'Good Afternoon ';
-    }
-    else {
-      this.greeting = 'Good Evening ';
-    }
+    this.currentDate = new Date().toISOString();
+    // this.currentHours = new Date().getHours();
+    // if (this.currentHours < 12) {
+    //   this.greeting = 'Good Morning ';
+    // }
+    // else if (this.currentHours < 4) {
+    //   this.greeting = 'Good Afternoon ';
+    // }
+    // else {
+    //   this.greeting = 'Good Evening ';
+    // }
 
     this.getNotification(this.user['id']);
     this.fetchUserPackages();
@@ -73,9 +75,11 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchUserClaims() {
+    let pendingStatus = ['Pending', 'Docs Required'];
     this.userClaimService.getUserClaims(JSON.parse(localStorage.getItem('user')).id).subscribe(
       (claims) => {
         this.userClaims = claims;
+        this.userClaims = this.userClaims.filter(f=> f.status === 'Pending' || f.status === 'Docs Required');
         if (this.userClaims.length > 0) {
           this.userHasClaims = true;
         }
@@ -87,9 +91,10 @@ export class DashboardComponent implements OnInit {
 
   fetchUserPackages() {
     var userId = JSON.parse(localStorage.getItem('user')).id;
-    this.userPackages.fetchUserPackages(userId).subscribe(
+    this.userPackagesService.fetchUserPackages(userId).subscribe(
       (userPackage) => {
         this.userPackage = userPackage;
+        this.userPackage = this.userPackage.filter(f=> f.activeTo >= this.currentDate);
         if (this.userPackage.length > 0) {
           this.userHasPackages = true;
         }
@@ -173,5 +178,15 @@ export class DashboardComponent implements OnInit {
   claimDetails(claim) {
     this.userClaimService.setClaim(claim);
     this.router.navigate(['/home/claimDetails']);
+  }
+
+  addClaim(){
+    this.userClaimService.setAction('Add');
+    this.router.navigate(['/home/addUserClaim']);
+  }
+
+  addPackage(){
+    this.userPackagesService.setAction('add');
+    this.router.navigate(['/home/addOrEditUserPackage']);
   }
 }

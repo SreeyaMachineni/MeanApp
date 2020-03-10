@@ -35,7 +35,7 @@
                 <td mat-cell *matCellDef="let package"> {{package.activeTo | date}} </td>
             </ng-container> -->
             <ng-container matColumnDef="validThrough">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Valid Through</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Validity</th>
                 <td mat-cell *matCellDef="let package">
                     <span *ngIf="currentDate <= package.activeTo"> {{package.activeFrom | date}} to {{package.activeTo | date}} </span>
                     <span *ngIf="currentDate > package.activeTo" class="status-bad"> Expired on {{package.activeTo | date}}  </span>
@@ -48,17 +48,17 @@
                     <i class="fa fa-trash-o" (click)="deletePackage(package._id)"></i> -->
                     <span *ngIf="currentDate > package.activeTo; else enabled" class="icon-disabled">
                         <i class="fa fa-pencil pr-3 "></i>
-                        <i class="fa fa-trash-o "></i>
+                        <i class="fa fa-trash-o pr-3 "></i>
                     </span>
                     <ng-template #enabled>
                         <i class="fa fa-pencil pr-3 " (click)="editPackage(package,package._id)"></i>
-                        <i class="fa fa-trash-o " (click)="deletePackage(package._id) "></i>
+                        <i class="fa fa-trash-o pr-3" (click)="deletePackage(package._id) "></i>
                     </ng-template>
+                    <i class="fa fa-eye" (click)="getRecord(package) "></i>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let package; columns: displayedColumns;" (click)="getRecord(package)">
-            </tr>
+            <tr mat-row *matRowDef="let package; columns: displayedColumns;"></tr>
         </table>
         <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
     </div>

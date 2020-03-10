@@ -73,7 +73,8 @@ export class AddOrEditUserClaimsComponent implements OnInit {
   }
 
   cancel() {
-    this.location.back();
+    // this.location.back();
+    this.router.navigate(['/home/myclaims']);
   }
 
   fetchCoveredDiseases(packageId) {

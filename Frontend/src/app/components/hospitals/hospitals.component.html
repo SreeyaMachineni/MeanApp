@@ -9,10 +9,11 @@
             <i class="fa fa-plus fa-icon pr-1" (click)="addHospital()" aria-hidden="true"></i>
         </div> -->
         <div class="col font-weight-bold text-right">
+            <i class="fa fa-plus fa-icon pr-1" (click)="addHospital()" aria-hidden="true"></i>
             <!-- <button type="button" class="btn primary-color m-2" (click)="addHospPoC()">
         <i class="fa fa-plus pr-1" aria-hidden="true"></i>Add Point of Contact</button> -->
-            <button type="button" class="btn primary-color" (click)="addHospital()">
-        <i class="fa fa-plus pr-1" aria-hidden="true"></i>Add Hospital</button>
+            <!-- <button type="button" class="btn primary-color" (click)="addHospital()">
+        <i class="fa fa-plus pr-1" aria-hidden="true"></i>Add Hospital</button> -->
         </div>
     </div>
 
@@ -33,6 +34,10 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
                 <td mat-cell *matCellDef="let hosp"> {{hosp.location}} </td>
             </ng-container>
+            <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Complete Address </th>
+                <td mat-cell *matCellDef="let hosp"> {{hosp.address}} </td>
+            </ng-container>
             <!-- <ng-container matColumnDef="pointOfContact">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Point of Contact </th>
         <td mat-cell *matCellDef="let hosp" [style.color]="hosp.pointOfContact[0].name"> 
@@ -43,7 +48,8 @@
                 <th mat-header-cell *matHeaderCellDef> Actions </th>
                 <td mat-cell *matCellDef="let hosp" (click)="$event.stopPropagation()">
                     <i class="fa fa-pencil pr-3" (click)="editHosp(hosp,hosp._id)"></i>
-                    <i class="fa fa-trash-o" (click)="deleteHosp(hosp._id)"></i>
+                    <i class="fa fa-trash-o pr-3" (click)="deleteHosp(hosp._id)"></i>
+                    <i class="fa fa-list-ul" (click)="getRecord(hosp)" title="POC Details"></i>
                 </td>
                 <!-- <mat-cell *matCellDef="let row">
                         <i class="fa fa-pencil"></i>
@@ -51,7 +57,7 @@
                 </mat-cell> -->
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let hosp; columns: displayedColumns;" (click)="getRecord(hosp)">
+            <tr mat-row *matRowDef="let hosp; columns: displayedColumns;">
             </tr>
         </table>
         <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>

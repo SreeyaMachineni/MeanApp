@@ -15,6 +15,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 export class UserClaimsListComponent implements OnInit {
   userClaims:any;
+  claim: UserClaims;
   displayedColumns: string[] = ['packageName', 'hospital', 'address', 'disease', 'dateOfSurgery', 'status', 'actions'];
   dataSource: MatTableDataSource<UserClaims>;
   expandedElement: UserClaims | null;
@@ -72,4 +73,9 @@ export class UserClaimsListComponent implements OnInit {
     this.userClaimsService.setClaim(userClaims);
     this.router.navigate(['/home/addUserClaim']);
   }
+  
+  setClaim(claim, e) {
+    this.claim = claim;
+  }
+  
 }
