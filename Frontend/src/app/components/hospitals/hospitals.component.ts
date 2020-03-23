@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class HospitalsComponent implements OnInit {
   hosp: any;
+  deleteHospitalId: any;
   displayedColumns: string[] = ['name', 'specialization', 'location', 'address', 'actions'];
   dataSource: MatTableDataSource<Hospital>;
   expandedElement: Hospital | null;
@@ -86,6 +87,10 @@ export class HospitalsComponent implements OnInit {
   getRecord(hosp) {
     this.hospitalPocService.setHospital(hosp);
     this.router.navigate(['/home/hospitalDetails']);
+  }
+
+  setDeleteHospitalId(hospId, e) {
+    this.deleteHospitalId = hospId;
   }
 
 }

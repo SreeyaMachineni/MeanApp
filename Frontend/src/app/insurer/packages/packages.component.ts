@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class PackagesComponent implements OnInit {
   packge:any;
+  deletePackageId: any;
   insurer:Insurer;
   displayedColumns: string[] = ['name','insProvider', 'insCategory', 'premiumAmnt','maxSumAssured','actions'];
   dataSource: MatTableDataSource<Package>;
@@ -86,5 +87,10 @@ export class PackagesComponent implements OnInit {
   cancel() {
     this.location.back();
   }
+
+  setDeletePackageId(packageId, e) {
+    this.deletePackageId = packageId;
+  }
+
 
 }

@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class CategoryListComponent implements OnInit {
   category: any;
+  deleteCategoryId: any;
   categories: any;
   action: String;
   categoryForm: FormGroup;
@@ -37,6 +38,7 @@ export class CategoryListComponent implements OnInit {
     this.initForm('add');
     this.fetchCategories();
   }
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -44,6 +46,7 @@ export class CategoryListComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
   saveit(categoryForm, categoryId) {
     this.action = this.categoryService.action;
     this.categories.name = this.categoryForm.value.name;
@@ -85,7 +88,6 @@ export class CategoryListComponent implements OnInit {
       });
 
     }
-
   }
 
   fetchCategories() {
@@ -121,4 +123,10 @@ export class CategoryListComponent implements OnInit {
     this.categoryService.setAction('add');
     this.initForm('add');
   }
+
+  setDeleteCategoryId(categoryId, e) {
+    this.deleteCategoryId = categoryId;
+  }
+
+
 }

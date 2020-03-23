@@ -22,6 +22,7 @@ export class HospitalDetailsComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   hospital:any;
   poc:any;
+  deletePocId; any;
 
   constructor(private hospitalPocService:HospitalPocService,
     private router:Router,
@@ -71,6 +72,10 @@ export class HospitalDetailsComponent implements OnInit {
   
   cancel(){
     this.location.back();
+  }
+
+  setDeletePocId(pocId, e) {
+    this.deletePocId = pocId;
   }
 
 }

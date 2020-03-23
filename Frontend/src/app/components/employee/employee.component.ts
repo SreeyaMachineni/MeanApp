@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class EmployeeComponent implements OnInit {
   emp: any;
+  deleteEmpId: any;
   displayedColumns: string[] = ['firstName', 'phone', 'email', 'dob', 'gender', 'actions'];
   dataSource: MatTableDataSource<User>;
   expandedElement: User | null;
@@ -55,11 +56,8 @@ export class EmployeeComponent implements OnInit {
         if (success['success']) {
           this.fetchemp();
           this.router.navigate(['/home/employees']);
-          this._snackBar.open('Employee successfully deleted', 'x', {
-            duration: 3000
-          });
+          this._snackBar.open('Employee successfully deleted', 'x', { duration: 3000 });
         }
-
       },
       (err) => {
         this._snackBar.open('Error while deleting Employee', 'x', { duration: 3000 });
@@ -76,6 +74,10 @@ export class EmployeeComponent implements OnInit {
     this.authService.setAction('edit');
     this.authService.setUser(emp);
     this.router.navigate(['/home/addOrEditEmp']);
+  }
+
+  setDeleteEmp(empId, e) {
+    this.deleteEmpId = empId;
   }
 
 }

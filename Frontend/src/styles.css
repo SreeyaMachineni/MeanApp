@@ -120,3 +120,7 @@ th {
 .icon-enabled :hover {
     color: #C30953;
 }
+
+body {
+    padding-top: 3.5rem;
+}

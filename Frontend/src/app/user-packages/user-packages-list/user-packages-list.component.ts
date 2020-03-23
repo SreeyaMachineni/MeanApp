@@ -19,6 +19,7 @@ export class UserPackagesListComponent implements OnInit {
   success = false;
   show = false;
   currentDate:any;
+  deletePackageId: any;
   private alertSuccess: ElementRef;
 
  @ViewChild('alertSuccess',{static:false}) set content(content: ElementRef) {
@@ -92,6 +93,10 @@ export class UserPackagesListComponent implements OnInit {
   getRecord(pkg){
     this.userPackageService.setUserPackage(pkg);
     this.router.navigate(['/home/viewUserPackage'])
+  }
+
+  setDeletePackage(packageId, e) {
+    this.deletePackageId = packageId;
   }
 
 }

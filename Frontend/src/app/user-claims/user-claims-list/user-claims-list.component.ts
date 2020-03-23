@@ -16,6 +16,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class UserClaimsListComponent implements OnInit {
   userClaims:any;
   claim: UserClaims;
+  deleteClaimId: any;
   displayedColumns: string[] = ['packageName', 'hospital', 'address', 'disease', 'dateOfSurgery', 'status', 'actions'];
   dataSource: MatTableDataSource<UserClaims>;
   expandedElement: UserClaims | null;
@@ -42,7 +43,7 @@ export class UserClaimsListComponent implements OnInit {
         this.userClaims = claims;
         this.dataSource = new MatTableDataSource(this.userClaims);
         this.dataSource.paginator = this.paginator;
-       //this.dataSource.sort = this.sort;
+       this.dataSource.sort = this.sort;
       },(err)=>{
         this._snackBar.open('Error while fetching Claims', 'x', { duration: 3000 })     
       }
@@ -76,6 +77,10 @@ export class UserClaimsListComponent implements OnInit {
   
   setClaim(claim, e) {
     this.claim = claim;
+  }
+
+  setDeleteClaim(claimId, e) {
+    this.deleteClaimId = claimId;
   }
   
 }
