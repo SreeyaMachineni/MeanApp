@@ -4,9 +4,8 @@
         <div class="pb-2 text-white" style="font-size: 35px;">Something</div>
         <div class=" text-white">Some tag goes here</div>
     </div>
-    
-    <form [formGroup]="loginForm" class="Right d-flex flex-column  justify-content-center align-items-center"
-        autocomplete="off" (ngSubmit)="loginSubmit()">
+
+    <form [formGroup]="loginForm" class="Right d-flex flex-column  justify-content-center align-items-center" autocomplete="off" (ngSubmit)="loginSubmit()">
         <div class="text-black pb-2 font-weight-bold for-mob" style="font-size: 35px;">Something</div>
         <div class="text-black pb-5 font-weight-bold for-mob" style="font-size: 15px;">Some tag goes here</div>
         <div *ngIf="invalid" class="alert alert-danger m-2">
@@ -14,11 +13,10 @@
         </div>
         <div class="pb-5" style="font-size: 30px; color: #C30953;">Login</div>
         <mat-form-field><input matInput placeholder="Username" formControlName="username" required></mat-form-field>
-        <mat-form-field class="pb-3" ><input matInput placeholder="Password" formControlName="password" type="password" required>
+        <mat-form-field class="pb-3"><input matInput placeholder="Password" formControlName="password" type="password" required>
         </mat-form-field>
         <button type="submit" class="btn primary-color p-0 pt-1 pb-1 pl-4 pr-4" [disabled]="!loginForm.valid">Login</button>
         <div class="text-black pt-4">Do not have an account?
-            <!-- <a routerLink="/signup" class="font-weight-bold text-black">SignUp</a> -->
             <a routerLink="/register" routerLinkActive="active">SignUp</a>
         </div>
     </form>

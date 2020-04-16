@@ -7,7 +7,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-none breadcrumb-style">
                 <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="backToHospitals()">Hospitals</a></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="cancel()">POC Details of {{hospitalName}}</a></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="cancel()"> {{currentHospital.name}}'s Point of Contacts</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{action|titlecase}} </li>
             </ol>
         </nav>
@@ -15,20 +15,21 @@
 
     <form class="row pt-4" [formGroup]="pocForm" autocomplete="off">
         <div class="col-md-6 col-sm-7 d-flex flex-column">
-            <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required></mat-form-field>
+            <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required autofocus></mat-form-field>
             <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required></mat-form-field>
             <mat-form-field><input matInput placeholder="Email" formControlName="email" required></mat-form-field>
             <mat-form-field><input matInput placeholder="Phone Number" formControlName="phone" required></mat-form-field>
         </div>
         <div class="col-md-6 col-sm-7 d-flex flex-column">
-            <mat-form-field>
+            <!-- <mat-form-field>
                 <mat-label>Hospital</mat-label>
                 <mat-select required formControlName="hospitalName">
                     <mat-option *ngFor="let hospital of hospitals" [value]="hospital._id" (click)="selectedHospital(hospital.name)">
                         {{hospital.name}}
                     </mat-option>
                 </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
+            <mat-form-field><input matInput placeholder="Hospital" formControlName="hospitalName" readonly></mat-form-field>
             <mat-form-field>
                 <mat-label>Gender</mat-label>
                 <mat-select required formControlName="gender">

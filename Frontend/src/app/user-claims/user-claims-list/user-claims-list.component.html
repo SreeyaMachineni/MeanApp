@@ -9,62 +9,68 @@
             <i class="fa fa-plus fa-icon pr-1" (click)="addClaim()" aria-hidden="true"></i>
         </div>
     </div>
-    <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-    <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort>
-            <ng-container matColumnDef="packageName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Package </th>
-                <td mat-cell *matCellDef="let userClaims"> {{userClaims.packageName}} </td>
-            </ng-container>
-            <ng-container matColumnDef="hospital">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Hospital </th>
-                <td mat-cell *matCellDef="let userClaims"> {{userClaims.hospital}} </td>
-            </ng-container>
-            <ng-container matColumnDef="address">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Address </th>
-                <td mat-cell *matCellDef="let userClaims"> {{userClaims.location}} </td>
-            </ng-container>
-            <ng-container matColumnDef="disease">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Purpose </th>
-                <td mat-cell *matCellDef="let userClaims"> {{userClaims.disease}} </td>
-            </ng-container>
-            <ng-container matColumnDef="dateOfSurgery">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Date of Surgery </th>
-                <td mat-cell *matCellDef="let userClaims"> {{userClaims.dateOfSurgery|date}} </td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
-                <td mat-cell *matCellDef="let userClaims" [ngClass]="{'status-good': userClaims.status == 'Accepted', 
+
+    <ng-container *ngIf="dataSource.data.length > 0">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="dateOfSurgery" matSortDirection="desc" matSortDisableClear>
+                <ng-container matColumnDef="packageName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Package </th>
+                    <td mat-cell *matCellDef="let userClaims"> {{userClaims.packageName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="hospital">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Hospital </th>
+                    <td mat-cell *matCellDef="let userClaims"> {{userClaims.hospital}} </td>
+                </ng-container>
+                <ng-container matColumnDef="address">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Address </th>
+                    <td mat-cell *matCellDef="let userClaims"> {{userClaims.location}} </td>
+                </ng-container>
+                <ng-container matColumnDef="disease">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Purpose </th>
+                    <td mat-cell *matCellDef="let userClaims"> {{userClaims.disease}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dateOfSurgery">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Date of Surgery </th>
+                    <td mat-cell *matCellDef="let userClaims"> {{userClaims.dateOfSurgery|date}} </td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                    <td mat-cell *matCellDef="let userClaims" [ngClass]="{'status-good': userClaims.status == 'Accepted', 
                                 'status-warn': userClaims.status == 'Pending' || userClaims.status == 'Docs Required',
                                 'status-bad' : userClaims.status == 'Rejected'}">
-                    <a style="cursor:pointer;" data-toggle="modal" data-target="#statusDetails" (click)="setClaim(userClaims)">{{userClaims.status}}</a>
-                </td>
-                <!-- <td mat-cell *matCellDef="let userClaims">
+                        <a style="cursor:pointer;" data-toggle="modal" data-target="#statusDetails" (click)="setClaim(userClaims)">{{userClaims.status}}</a>
+                    </td>
+                    <!-- <td mat-cell *matCellDef="let userClaims">
                     <div appStatusCode [status]="userClaims.status">{{userClaims.status}} </div>
                 </td> -->
-                <!-- <td mat-cell *matCellDef="let userClaims"> {{userClaims.status}} </td> -->
-            </ng-container>
-            <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef> Actions </th>
-                <td mat-cell *matCellDef="let userClaims">
-                    <span *ngIf="userClaims.status == 'Accepted' || userClaims.status == 'Rejected'; else enabled" class="icon-disabled">
+                    <!-- <td mat-cell *matCellDef="let userClaims"> {{userClaims.status}} </td> -->
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let userClaims">
+                        <span *ngIf="userClaims.status == 'Accepted' || userClaims.status == 'Rejected'; else enabled" class="icon-disabled">
                         <i class="fa fa-pencil pr-3 "></i>
                         <i class="fa fa-trash-o "></i>
                     </span>
-                    <ng-template #enabled>
-                        <i class="fa fa-pencil pr-3 " (click)="editClaim(userClaims,userClaims._id) "></i>
-                        <i class="fa fa-trash-o " data-toggle="modal" data-target="#confirmDelete" (click)="setDeleteClaim(userClaims._id)"></i>
-                    </ng-template>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
-            <tr mat-row *matRowDef="let userClaims; columns: displayedColumns; ">
-            </tr>
-        </table>
-        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100] "></mat-paginator>
-    </div>
+                        <ng-template #enabled>
+                            <i class="fa fa-pencil pr-3 " (click)="editClaim(userClaims,userClaims._id) "></i>
+                            <i class="fa fa-trash-o " data-toggle="modal" data-target="#confirmDelete" (click)="setDeleteClaim(userClaims._id)"></i>
+                        </ng-template>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+                <tr mat-row *matRowDef="let userClaims; columns: displayedColumns; ">
+                </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 25, 50, 100] "></mat-paginator>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="dataSource.data.length <= 0">
+        Sorry, no data found. <a class="clickHere" (click)="addClaim()">Click here</a> to add.
+    </ng-container>
 </div>
 
 <div *ngIf="claim" class="modal fade" id="statusDetails" #status role="dialog">
@@ -94,9 +100,9 @@
 
 <div *ngIf="deleteClaimId" class="modal fade" id="confirmDelete" #status role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content modal-confirmDelete">
             <div class="modal-header">
-                <div class="col popup-heading">Delete</div>
+                <div class="col popup-heading">Confirm Delete</div>
             </div>
             <div class="modal-body">
                 <div class="col-lg-12 col-md-12 col-sm-12 d-flex flex-column">

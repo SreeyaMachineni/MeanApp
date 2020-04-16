@@ -124,3 +124,47 @@ th {
 body {
     padding-top: 3.5rem;
 }
+
+
+/* #confirmDelete {
+    position: absolute;
+    top: 50% !important;
+    transform: translate(0, -50%) !important;
+    -ms-transform: translate(0, -50%) !important;
+    -webkit-transform: translate(0, -50%) !important;
+    margin: auto 5%;
+    width: 90%;
+    height: 50%;
+} */
+
+.modal {
+    text-align: center;
+    padding: 0!important;
+}
+
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.modal-confirmDelete {
+    width: 130% !important;
+    right: 15% !important;
+}
+
+.clickHere {
+    color: #C30953 !important;
+    cursor: pointer;
+}
+
+.clickHere:hover {
+    text-decoration: underline !important;
+}

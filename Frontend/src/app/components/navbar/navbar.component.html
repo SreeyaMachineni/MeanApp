@@ -77,7 +77,19 @@
                 </ng-template>
             </li>
         </ul>
-        <form class="form-inline my-2 my-md-0">
+        <form class="form-inline">
+            <ul class="navbar-nav mr-auto">
+                <a (click)="profile()">
+                    <span class='menu_text mt-2'>Profile</span>
+                    <span class='menu_icon mr-3'><i class="fa fa-user fa-lg" style="cursor:pointer" aria-hidden="true" title="Profile"></i></span>
+                </a>
+                <a (click)="onLogout()">
+                    <span class='menu_text mt-3'>Logout</span>
+                    <span class='menu_icon'><i class="fa fa-sign-out fa-lg" style="cursor:pointer" aria-hidden="true" title="Logout"></i></span>
+                </a>
+            </ul>
+        </form>
+        <!-- <form class="form-inline my-2 my-md-0">
             <div class="dropdown">
                 <i class="fa fa-user dropdown-toggle" aria-hidden="true" data-toggle="dropdown"></i>&nbsp;
                 <div class="dropdown-menu dropdown-menu-right">
@@ -86,13 +98,13 @@
                     <a class="dropdown-item" (click)="onLogout()">Sign Out</a>
                 </div>
             </div>
-        </form>
+        </form> -->
     </div>
 </nav>
 
 <div class="modal" id="contactModal" role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content modal-contactUs">
             <div class="modal-header">
                 <div class="col popup-heading">Contact Us</div>
             </div>

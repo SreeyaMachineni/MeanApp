@@ -26,7 +26,7 @@ export class UserPackagesListComponent implements OnInit {
     this.alertSuccess = content;
  }
 
-  displayedColumns: string[] = ['package', 'insurer', 'category', 'validThrough', 'actions'];
+  displayedColumns: string[] = ['package', 'insurer', 'category', 'activeFrom', 'activeTo', 'status', 'actions'];
   dataSource: MatTableDataSource<UserPackage>;
   expandedElement: UserPackage | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

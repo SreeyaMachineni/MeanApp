@@ -10,7 +10,7 @@
 
     <form class="row" [formGroup]="userEditForm" *ngIf="!verify" autocomplete="off" (ngSubmit)="saveit()">
         <div class="col-md-6 col-sm-7 d-flex flex-column">
-            <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required>
+            <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required autofocus>
             </mat-form-field>
             <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required>
             </mat-form-field>

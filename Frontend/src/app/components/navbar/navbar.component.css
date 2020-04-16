@@ -1,0 +1,22 @@
+@media only screen and (min-width:769px) {
+    .menu_text {
+        display: none;
+    }
+    .menu_icon {
+        display: block;
+    }
+}
+
+@media only screen and (max-width:768px) {
+    .menu_text {
+        display: block;
+    }
+    .menu_icon {
+        display: none;
+    }
+}
+
+.modal-contactUs {
+    width: 170% !important;
+    right: 35% !important;
+}

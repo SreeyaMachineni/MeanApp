@@ -31,6 +31,7 @@ export class HospitalDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.hospital = this.hospitalPocService.getHospital();
+    this.hospitalPocService.setHospital(this.hospital);
     this.fetchPocs();
   }
 
@@ -50,10 +51,10 @@ export class HospitalDetailsComponent implements OnInit {
   deletePoc(pocId){
     this.hospitalPocService.deletePoc(pocId).subscribe(
       (deleted)=>{
-        this._snackBar.open('Error while deleting POC', 'x', { duration: 3000 })
+        this._snackBar.open('PoC deleted successfully', 'x', { duration: 3000 })
         this.fetchPocs();
       }, (err)=>{
-        this._snackBar.open('Error while deleting POCs', 'x', { duration: 3000 })
+        this._snackBar.open('Error while deleting PoCs', 'x', { duration: 3000 })
       }
     )
   }
@@ -69,7 +70,6 @@ export class HospitalDetailsComponent implements OnInit {
     this.router.navigate(['/home/addOrEditHospitalPoc']);
   }
  
-  
   cancel(){
     this.location.back();
   }

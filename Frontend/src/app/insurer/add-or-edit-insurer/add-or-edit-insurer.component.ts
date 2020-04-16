@@ -10,6 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   templateUrl: './add-or-edit-insurer.component.html',
   styleUrls: ['./add-or-edit-insurer.component.css']
 })
+
 export class AddOrEditInsurerComponent implements OnInit {
   insurerForm:FormGroup;
   insurer:any;
@@ -57,8 +58,8 @@ export class AddOrEditInsurerComponent implements OnInit {
         phone:[this.insurer.pointOfContact[0].phone,Validators.required]
       });
     }
-    
   }
+
   loadpocs(){
     for(let i=1; i<this.insurer.pointOfContact.length; i++){
       const control = <FormArray>this.insurerForm.controls['pointOfContact'];
@@ -70,14 +71,17 @@ export class AddOrEditInsurerComponent implements OnInit {
       );
   }
   }
+
   addPoC(){
     const control = <FormArray>this.insurerForm.controls['pointOfContact'];
     control.push(this.initPoC('add'));
   }
+
   removePoC(i:number){
     const control = <FormArray>this.insurerForm.controls['pointOfContact'];
     control.removeAt(i);
   }
+
   save(insurerForm,insurerid?){
     this.insurer.name=this.insurerForm.value.name;
     this.insurer.location=this.insurerForm.value.location;
@@ -99,11 +103,9 @@ export class AddOrEditInsurerComponent implements OnInit {
       }},
         err=>this._snackBar.open('Error while updating Insurer', 'x', { duration: 3000 })
       )
-
-
     }
-    
   }
+  
   cancel(){
     this.location.back();
   }

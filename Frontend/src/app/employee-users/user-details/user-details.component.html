@@ -11,92 +11,102 @@
     <mat-tab-group>
         <mat-tab label="Packages">
             <div class="container p-1">
-                <mat-form-field>
-                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-                </mat-form-field>
-                <div class="mat-elevation-z8">
-                    <table mat-table [dataSource]="dataSource" matSort>
-                        <ng-container matColumnDef="categoryName">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Category
-                            </th>
-                            <td mat-cell *matCellDef="let userPackage">
-                                {{userPackage.categoryName}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="insurerName">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Insurer
-                            </th>
-                            <td mat-cell *matCellDef="let userPackage">
-                                {{userPackage.insurerName}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="packageName">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Package
-                            </th>
-                            <td mat-cell *matCellDef="let userPackage">
-                                {{userPackage.packageName}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="activeFrom">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Active From
-                            </th>
-                            <td mat-cell *matCellDef="let userPackage">
-                                {{userPackage.activeFrom | date}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="activeTo">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>To</th>
-                            <td mat-cell *matCellDef="let userPackage">
-                                {{userPackage.activeTo | date}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="actions">
-                            <th mat-header-cell *matHeaderCellDef> Actions </th>
-                            <td mat-cell *matCellDef="let package" (click)="$event.stopPropagation()">
-                                <i class="fa fa-pencil pr-3"></i> /td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let package; columns: displayedColumns;" (click)="getRecord(package)"></tr>
-                    </table>
-                    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
-                </div>
+                <ng-container *ngIf="dataSource.data.length > 0">
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                    </mat-form-field>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" matSort>
+                            <ng-container matColumnDef="categoryName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Category
+                                </th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    {{userPackage.categoryName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="insurerName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Insurer
+                                </th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    {{userPackage.insurerName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="packageName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Package
+                                </th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    {{userPackage.packageName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="activeFrom">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Active From
+                                </th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    {{userPackage.activeFrom | date}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="activeTo">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Active To</th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    {{userPackage.activeTo | date}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                <td mat-cell *matCellDef="let package" (click)="$event.stopPropagation()">
+                                    <i class="fa fa-pencil pr-3"></i> /td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let package; columns: displayedColumns;" (click)="getRecord(package)"></tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="dataSource.data.length <= 0">
+                    Sorry, no data found.
+                </ng-container>
             </div>
         </mat-tab>
 
         <mat-tab label="Claims">
             <div class="container p-1">
-                <mat-form-field>
-                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-                </mat-form-field>
-                <div class="mat-elevation-z8">
-                    <table mat-table [dataSource]="dataSourceForClaims">
-                        <ng-container matColumnDef="packageName">
-                            <th mat-header-cell *matHeaderCellDef> Package </th>
-                            <td mat-cell *matCellDef="let userClaims">
-                                {{userClaims.packageName}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="hospital">
-                            <th mat-header-cell *matHeaderCellDef>Hospital </th>
-                            <td mat-cell *matCellDef="let userClaims">
-                                {{userClaims.hospital}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="location">
-                            <th mat-header-cell *matHeaderCellDef>Location </th>
-                            <td mat-cell *matCellDef="let userClaims">
-                                {{userClaims.location}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="disease">
-                            <th mat-header-cell *matHeaderCellDef>Purpose</th>
-                            <td mat-cell *matCellDef="let userClaims">
-                                {{userClaims.disease}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="dateOfSurgery">
-                            <th mat-header-cell *matHeaderCellDef>Surgery Date</th>
-                            <td mat-cell *matCellDef="let userClaims">
-                                {{userClaims.dateOfSurgery | date}} </td>
-                        </ng-container>
+                <ng-container *ngIf="dataSourceForClaims.data.length > 0">
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                    </mat-form-field>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSourceForClaims">
+                            <ng-container matColumnDef="packageName">
+                                <th mat-header-cell *matHeaderCellDef> Package </th>
+                                <td mat-cell *matCellDef="let userClaims">
+                                    {{userClaims.packageName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="hospital">
+                                <th mat-header-cell *matHeaderCellDef>Hospital </th>
+                                <td mat-cell *matCellDef="let userClaims">
+                                    {{userClaims.hospital}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="location">
+                                <th mat-header-cell *matHeaderCellDef>Location </th>
+                                <td mat-cell *matCellDef="let userClaims">
+                                    {{userClaims.location}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="disease">
+                                <th mat-header-cell *matHeaderCellDef>Purpose</th>
+                                <td mat-cell *matCellDef="let userClaims">
+                                    {{userClaims.disease}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="dateOfSurgery">
+                                <th mat-header-cell *matHeaderCellDef>Surgery Date</th>
+                                <td mat-cell *matCellDef="let userClaims">
+                                    {{userClaims.dateOfSurgery | date}} </td>
+                            </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="claimColumns"></tr>
-                        <tr mat-row *matRowDef="let userClaims; columns: claimColumns;" (click)="getRecord(userClaims)" data-toggle="modal" data-target="#claimDetails">
-                        </tr>
-                    </table>
-                    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
-                </div>
+                            <tr mat-header-row *matHeaderRowDef="claimColumns"></tr>
+                            <tr mat-row *matRowDef="let userClaims; columns: claimColumns;" (click)="getRecord(userClaims)" data-toggle="modal" data-target="#claimDetails">
+                            </tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="dataSourceForClaims.data.length <= 0">
+                    Sorry, no data found.
+                </ng-container>
             </div>
         </mat-tab>
 

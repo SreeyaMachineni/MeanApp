@@ -10,7 +10,7 @@
 
     <form class="row" [formGroup]="insurerForm" autocomplete="off">
         <div class="col-md-6 col-sm-7 d-flex flex-column">
-            <mat-form-field><input matInput placeholder="Insurer Name" formControlName="name" required></mat-form-field>
+            <mat-form-field><input matInput placeholder="Insurer Name" formControlName="name" required autofocus></mat-form-field>
             <mat-form-field><input matInput placeholder="Location/City" formControlName="location" required>
             </mat-form-field>
         </div>
@@ -22,10 +22,9 @@
         <div class="col-md-6 col-sm-7 d-flex flex-column">
             <div formArrayName="pointOfContact">
                 <div *ngFor="let poc of insurerForm.controls.pointOfContact.controls;let i = index">
-                    <div>
-                        <span>Point of contact {{i+1}}</span>
+                    <div class="mt-2">
+                        <span class="font-weight-bold">Point of Contact {{i+1}}</span>
                         <span *ngIf="insurerForm.controls.pointOfContact.controls.length > 1" (click)="removePoC(i)" class="float-right">
-
                             <i class="fa fa-trash-o"></i>
                         </span>
                         <hr>
@@ -39,7 +38,7 @@
                 </div>
             </div>
             <div class="p-2">
-                <button class="row btn btn-light cancel-btn float-right" (click)="addPoC()">Add another point of Contact</button>
+                <a class="breadcrumb-back font-weight-bold pull-right" (click)="addPoC()">Add another PoC</a>
             </div>
         </div>
     </form>

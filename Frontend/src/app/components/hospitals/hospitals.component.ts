@@ -42,6 +42,7 @@ export class HospitalsComponent implements OnInit {
       (hosp) => {
         this.hosp = hosp;
         this.dataSource = new MatTableDataSource(this.hosp);
+        console.log(this.dataSource);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },

@@ -25,6 +25,7 @@ constructor(private http: HttpClient) { }
    return  this.http.get(this.url+'/hospital/getHosp');
   }
   addPoC(poc){
+    console.log(poc);
     return this.http.post(this.url+'/hospitalPoc/addPoc',{poc:poc},{
       headers:new HttpHeaders(
        { 'Content-Type':'application/json'}

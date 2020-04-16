@@ -10,7 +10,7 @@
 
     <form class="row pt-4" [formGroup]="hospForm" autocomplete="off">
         <div class="col-md-6 col-sm-7 d-flex flex-column">
-            <mat-form-field><input matInput placeholder="Hospital Name" formControlName="name" required></mat-form-field>
+            <mat-form-field><input matInput placeholder="Hospital Name" formControlName="name" required autofocus></mat-form-field>
             <mat-form-field><input matInput placeholder="Specialization" formControlName="specialization" required></mat-form-field>
         </div>
         <div class="col-md-6 col-sm-7 d-flex flex-column">
@@ -21,11 +21,11 @@
         <div class="col-md-6 col-sm-7 d-flex flex-column">
             <div formArrayName="pointOfContact">
                 <div *ngFor="let poc of hospForm.controls.pointOfContact.controls;let i = index">
-                    <div>
-                        <span>Point of contact {{i+1}}</span>
+                    <div class="mt-2">
+                        <span class="font-weight-bold">Point of Contact {{i+1}}</span>
                         <span *ngIf="hospForm.controls.pointOfContact.controls.length > 1" (click)="removePoC(i)" class="float-right">
-                                                        <i class="fa fa-trash-o"></i>
-                                                </span>
+                            <i class="fa fa-trash-o"></i>
+                        </span>
                         <hr>
                     </div>
                     <div [formGroupName]="i" class="d-flex flex-column">
@@ -35,13 +35,13 @@
                 </div>
             </div>
             <div>
-                <button class="row btn btn-light cancel-btn float-right" (click)="addPoC()">Add another point of Contact</button>
+                <a class="breadcrumb-back font-weight-bold pull-right" (click)="addPoC()">Add another PoC</a>
             </div>
         </div>
     </form>
 
     <div *ngIf="!verify" class="pull-right">
         <button type="submit" class="row btn btn-light cancel-btn mr-3" (click)="cancel()">Cancel</button>
-        <button type="submit" class="btn primary-color " [disabled]="!hospForm.valid" (click)="save(hospForm,hosp._id)">Save</button>
+        <button type="submit" class="btn primary-color" [disabled]="!hospForm.valid" (click)="save(hospForm,hosp._id)">Save</button>
     </div>
 </div>

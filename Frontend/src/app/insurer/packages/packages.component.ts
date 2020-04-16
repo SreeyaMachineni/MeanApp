@@ -69,7 +69,7 @@ export class PackagesComponent implements OnInit {
         if(success['success']){
          // this.fetchPackages();
           this._snackBar.open('Package deleted successfully', 'x', { duration: 3000 })
-          this.router.navigate(['/home/insurers']);
+          this.router.navigate(['/home/packages']);
         }
       },
       (err)=>{

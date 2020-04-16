@@ -22,25 +22,24 @@
         </div>
         <div class="col-md-6 col-sm-7 d-flex flex-column">
             <mat-form-field><input matInput placeholder="Date of Birth" value={{user.dob|date}} readonly></mat-form-field>
-            <mat-form-field><input matInput placeholder="Gender" value={{user.gender}} readonly></mat-form-field>
+            <mat-form-field><input matInput placeholder="Gender" value={{user.gender|titlecase}} readonly></mat-form-field>
             <mat-form-field><input matInput placeholder="Address" value={{user.address}} readonly></mat-form-field>
         </div>
     </form>
 
     <!-- CHANGE PASSWORD -->
-    <!-- <div class="text-primary" (click)="setChangePwd()">Change Password</div>
-  <div *ngIf="changePwd">
-    <form [formGroup]="passwordForm" class="col-md-6 col-sm-6 d-flex flex-column" autocomplete="off">
-      <mat-form-field><input matInput placeholder="Current Password" formControlName="currentPwd" required>
-      </mat-form-field>
-      <mat-form-field><input matInput placeholder="New Password" formControlName="changedPwd" required></mat-form-field>
-    </form>
-    <div class="col-md-6 col-sm-6">
-      <button type="submit" class="btn btn-light cancel-btn" (click)="cancel()">Cancel</button>
-      <button type="submit" class="btn primary-color pull-right" [disabled]="!passwordForm.valid"
-        (click)="saveit()">Save</button>
-    </div>
-  </div><br> -->
+    <div class="text-primary mt-2 mb-2" (click)="setChangePwd()">Change Password</div>
+    <div *ngIf="changePwd">
+        <form [formGroup]="passwordForm" class="row col-md-6 col-sm-7 d-flex flex-column">
+            <mat-form-field><input matInput placeholder="Current Password" formControlName="currentPwd" required autofocus>
+            </mat-form-field>
+            <mat-form-field><input matInput placeholder="New Password" formControlName="changedPwd" required></mat-form-field>
+        </form>
+        <div class="col-md-6 col-sm-7">
+            <button type="submit" class="row btn btn-light cancel-btn" (click)="cancel()">Cancel</button>
+            <button type="submit" class="btn primary-color pull-right" [disabled]="!passwordForm.valid" (click)="saveit()">Save</button>
+        </div>
+    </div><br>
 
     <!-- UPLOAD FILE -->
     <div class="container" style="border-style:dashed; border-color: #eff5f5;">
