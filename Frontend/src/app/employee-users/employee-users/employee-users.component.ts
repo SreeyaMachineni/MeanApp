@@ -15,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class EmployeeUsersComponent implements OnInit {
   user:any;
-  displayedColumns: string[] = ['firstName', 'phone', 'email', 'actions'];
+  displayedColumns: string[] = ['firstName', 'phone', 'email', 'address', 'actions'];
   dataSource: MatTableDataSource<User>;
   expandedElement: User | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

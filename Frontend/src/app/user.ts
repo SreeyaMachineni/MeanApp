@@ -16,3 +16,9 @@ export class User {
     assignedTo:String
     userEmpId:String
 }
+
+export class Notification {
+    category: String
+    comments: String
+    verified: Boolean
+}

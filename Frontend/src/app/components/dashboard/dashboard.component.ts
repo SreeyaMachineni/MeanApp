@@ -124,6 +124,9 @@ export class DashboardComponent implements OnInit {
   }
 
   setClaim(claim, e) {
+    if (!claim.comments || claim.comments == ' ') {
+      claim.comments = 'No comments available'
+    }
     this.claim = claim;
   }
 

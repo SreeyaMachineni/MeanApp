@@ -8,7 +8,8 @@ import { EmployeeUsersService } from '../../employee-users/employee-users.servic
 import { ContactService } from '../../contact/contact.service';
 import { UserClaimsService } from '../../user-claims/user-claims.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { MatTableDataSource } from '@angular/material/table';
+import { Notification } from './../../user';
 
 @Component({
   selector: 'app-navbar',
@@ -16,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  category: any;
   empUser: any;
   user: User;
   menu: any;
@@ -30,7 +32,11 @@ export class NavbarComponent implements OnInit {
   claim: any;
   userContacts: any;
   userClaim: any;
+  userHasNotifications = false;
   options: string[] = [' Notify only the Employee', 'Notify user and Employee'];
+  displayedColumns: string[] = ['comments', 'actions'];
+  dataSource: MatTableDataSource<Notification>;
+  expandedElement: Notification | null;
 
   constructor(private authService: AuthService, 
     private router: Router,
@@ -69,8 +75,6 @@ export class NavbarComponent implements OnInit {
     this.contactService.getMyContacts(JSON.parse(localStorage.getItem('user')).id);
   }
 
- 
-
   fetchEmpUsers(empId) {
     this.contactService.fetchEmpUsers(empId).subscribe(
       (users) => {
@@ -90,15 +94,15 @@ export class NavbarComponent implements OnInit {
     if (this.userrole == 'user') {
       this.contact.userId = JSON.parse(localStorage.getItem('user')).id;
       this.contact.userEmpId = JSON.parse(localStorage.getItem('user')).userEmpId;
+      this.cancelContactForm();
     } else if (this.userrole == 'employee') {
       this.contact.userEmpId = this.contactForm.value.user;
+      this.cancelContactForm();
     } else if (this.userrole == 'poc') {
       this.claim = this.userClaimService.getClaim();
       this.contact.notifyOption = this.contactForm.value.notifyOption;
       this.contact.userEmpId = this.claim.userId;
-   
     }
-
     this.contactService.addContact(this.contact).subscribe((contact) => {
       this._snackBar.open('Request submitted successfully', 'x', { duration: 3000 });
     })
@@ -118,11 +122,15 @@ export class NavbarComponent implements OnInit {
     this.authService.getNotifications(userId).subscribe(
       (notifications) => {
         this.notifications = notifications;
-        this.noOfNotifications = this.notifications.length;
+        this.notifications = this.notifications.filter(f=> !f.verified);
+        this.dataSource = new MatTableDataSource(this.notifications);
+        if (this.notifications.length > 0) {
+          this.userHasNotifications = true;
+        }
       }
     )
   }
-
+  
   getNumOfUsersToAssign() {
     this.authService.getNumOfUsersToAssign().subscribe(
       (count) => {
@@ -150,6 +158,14 @@ export class NavbarComponent implements OnInit {
     
   }
 
+  cancelContactForm() {
+    this.contactForm = new FormGroup({
+      user: new FormControl(''),
+      regarding: new FormControl(''),
+      description: new FormControl('')
+    });
+  }
+
   onLogout() {
     this.authService.logout();
     this.authService.setLoggedIn(false);
@@ -158,35 +174,52 @@ export class NavbarComponent implements OnInit {
   }
 
   notificationDetails(notification) {
-
+    debugger
     if (notification.category == 'claim' || notification.category == 'package') {
-      this.authService.getUserById(notification.notifyAbout).subscribe(
-        (user) => {
-          this.empUserService.setUser(user);
-          this.router.navigate(['/home/userDetails']);
-          this.authService.updateNotification(notification._id).subscribe(
-            (updated) => {
-              this._snackBar.open('Notification updated successfully', 'x', { duration: 3000 });
-            },
-            (err) => {
-              this._snackBar.open('Error while fetching Notifications', 'x', { duration: 3000 })
-            }
-          )
-        },
-
-        (err) => { this._snackBar.open('Error while fetching Notifications', 'x', { duration: 3000 }) }
-      )
+      if (this.user.userrole == 'employee') {
+        this.authService.getUserById(notification.notifyAbout).subscribe(
+          (user) => {
+            this.empUserService.setUser(user);
+            this.router.navigate(['/home/userDetails']);
+            this.authService.updateNotification(notification._id).subscribe(
+              (updated) => {
+                this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000 });
+              },
+              (err) => {
+                this._snackBar.open('Error while updating Notification', 'x', { duration: 3000 });
+              }
+            )
+          },
+          (err) => this._snackBar.open('Error while fetching Notifications', 'x', { duration: 3000 })
+        )
+      } else if (this.user.userrole == 'user') {
+        this.authService.updateNotification(notification._id).subscribe(
+          (updated) => {
+            this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000 });
+          },
+          (err) => {
+            this._snackBar.open('Error while updating Notification', 'x', { duration: 3000 });
+          }
+        )
+        if (notification.category == 'claim') {
+          this.router.navigate(['/home/myclaims']);
+        }
+        if (notification.category == 'package') {
+          this.router.navigate(['/home/mypackages']);
+        }
+      }
     }
     else if (notification.category == 'docs') {
       this.router.navigate(['/profile']);
       this.authService.updateNotification(notification._id).subscribe(
         (updated) => {
-          this._snackBar.open('Notification updated successfully', 'x', { duration: 3000 });
+          this._snackBar.open('Notification updated succeessfully', 'x', { duration: 3000 });
         },
         (err) => {
-          this._snackBar.open('Error while fetching Notifications', 'x', { duration: 3000 })
+          this._snackBar.open('Error while fetching Notifications', 'x', { duration: 3000 });
         }
       )
     }
   }
+
 }

@@ -35,7 +35,14 @@
             <div *ngFor="let claim of userClaims">
                 <div class="row" *ngIf="userHasClaims">
                     <div class="col-8 text-left h6">{{claim.packageName}}</div>
-                    <div class="col-4 text-right h6" appStatusCode [status]="claim.status" data-toggle="modal" data-target="#statusDetails" (click)="setClaim(claim)">{{claim.status}}</div>
+                    <!-- <div class="col-4 text-right h6" appStatusCode [status]="claim.status" data-toggle="modal" data-target="#statusDetails" (click)="setClaim(claim)">{{claim.status}}</div> -->
+                    <div class='col-4 text-right h6' style="cursor: pointer;" appStatusCode [status]="claim.status" data-toggle="dropdown">{{claim.status}}</div>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-tooltip">
+                        <div class="pr-2 pl-2">
+                            <span *ngIf="claim.comments && claim.comments != ' '">{{claim.comments}}</span>
+                            <span *ngIf="!claim.comments || claim.comments == ' '">No comments available</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="row" *ngIf="userHasClaims">
                     <div class="col-8 text-left">
@@ -122,7 +129,7 @@
 
 <div *ngIf="claim" class="modal fade" id="statusDetails" #status role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 600px;">
             <div class="modal-header">
                 <div class="col popup-heading">Status Details</div>
             </div>

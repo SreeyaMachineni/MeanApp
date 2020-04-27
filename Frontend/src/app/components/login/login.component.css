@@ -4,42 +4,59 @@
     top: 0;
     bottom: 0;
     width: 30%;
-  background-color: #C30953;
-  font-size:20px;
+    background-color: #C30953;
+    font-size: 20px;
+}
 
+.Top {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 77%;
+    background-color: #C30953;
+    text-align: center;
 }
-.hdr{
-  height:30px;
-  background-color: #C30953;
-}
+
 .Right {
     position: absolute;
     /* left: 80%; */
     top: 0;
     bottom: 0;
-    right: 0; 
-    width:70%;
-  background-color:white;
+    right: 0;
+    width: 70%;
+    background-color: white;
 }
+
+\ .hdr {
+    height: 30px;
+    background-color: #C30953;
+}
+
 .mat-form-field-ripple {
     background-color: #027D7C !important;
 }
+
 mat-form-field {
     width: 30% !important;
-  }
- @media only screen and (max-width: 700px) {
-  .Left {
-    display: none !important;
-  }
-  .Right{
-    width:100% !important;
-  }
-  mat-form-field {
-    width: 50% !important;
-  }
 }
+
+@media only screen and (max-width: 700px) {
+    .Left {
+        display: none !important;
+    }
+    .Right {
+        width: 100% !important;
+    }
+    .Top {
+        width: 100% !important;
+    }
+    mat-form-field {
+        width: 60% !important;
+    }
+}
+
 @media only screen and (min-width: 700px) {
-  .for-mob{
-    display: none !important;
-  }
+    .for-mob {
+        display: none !important;
+    }
 }

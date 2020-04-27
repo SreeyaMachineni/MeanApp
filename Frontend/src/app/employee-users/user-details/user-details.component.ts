@@ -18,13 +18,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UserDetailsComponent implements OnInit {
   user: any;
   claimDetails: any;
+  currentDate:any;
   userPackage: any;
   userClaims: any;
   docs: any;
   statusForm: FormGroup;
   userdocsApprove: FormGroup;
   userdocsReject: FormGroup;
-  displayedColumns: string[] = ['categoryName', 'insurerName', 'packageName', 'activeFrom', 'activeTo'];
+  displayedColumns: string[] = ['categoryName', 'insurerName', 'packageName', 'activeFrom', 'activeTo', 'status'];
   claimColumns: string[] = ['packageName', 'hospital', 'location', 'dateOfSurgery', 'disease'];
   dataSourceForClaims: MatTableDataSource<UserClaims>;
   dataSource: MatTableDataSource<UserPackage>;
@@ -37,6 +38,7 @@ export class UserDetailsComponent implements OnInit {
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.currentDate = new Date().toISOString();
     this.user = this.empUserService.getUser();
     this.getUserPackages(this.user._id);
     this.getUserDocs(this.user._id);

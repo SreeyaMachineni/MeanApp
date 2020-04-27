@@ -79,11 +79,13 @@ export class AddOrEditPackageComponent implements OnInit {
         diseasesCovered: new FormControl(this.package.diseasesCovered),
         diseasesUnCovered: new FormControl(this.package.diseasesUnCovered)
       });
+      this.categoryId = this.package.insCategoryId;  
     }
     
   }
 
   saveit(packageId) {
+    debugger
     var requiredDocs = [];
     var diseasesCovered = [];
     var diseasesUncovered = [];
@@ -103,7 +105,7 @@ export class AddOrEditPackageComponent implements OnInit {
     } else {
       diseasesUncovered.push(this.packageForm.value.diseasesUnCovered.toString());
     }
-    debugger
+
     this.package.name = this.packageForm.value.name;
     this.package.insProvider = this.insurers.name;
     this.package.insProviderId = this.insurers._id;

@@ -108,7 +108,7 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     else {
       this.userClaimsService.editUserClaim(this.userClaim).subscribe(
         (userPackage) => {
-          this.router.navigate(['/home/mypackages']);
+          this.router.navigate(['/home/myclaims']);
           this._snackBar.open('Claim updated successfully', 'x', {
             duration: 3000
           });

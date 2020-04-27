@@ -3,7 +3,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-none breadcrumb-style">
                 <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="cancel()">My Users</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Details of {{user.firstName|titlecase}} </li>
+                <li class="breadcrumb-item active" aria-current="page">Details of {{user.firstName|titlecase}} {{user.lastName|titlecase}}</li>
             </ol>
         </nav>
     </div>
@@ -45,6 +45,13 @@
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Active To</th>
                                 <td mat-cell *matCellDef="let userPackage">
                                     {{userPackage.activeTo | date}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    <span *ngIf="currentDate <= userPackage.activeTo" class="status-good"> Active </span>
+                                    <span *ngIf="currentDate > userPackage.activeTo" class="status-bad"> Expired </span>
+                                </td>
                             </ng-container>
                             <ng-container matColumnDef="actions">
                                 <th mat-header-cell *matHeaderCellDef> Actions </th>

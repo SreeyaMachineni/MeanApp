@@ -62,24 +62,42 @@ router.get('/deletePoc/:pocId', (req, res) => {
 })
 
 router.post('/editPoc', (req, res) => {
-    var pocId = req.body.pocId;
-    User.findById(mongoose.Types.ObjectId(req.body.pocId), (err, poc) => {
-        if (!poc) {
-            res.json({ success: false, msg: 'unable to load doc' });
+    var pocId = mongoose.Types.ObjectId(req.body.pocId);
+    // User.findById(mongoose.Types.ObjectId(req.body.pocId), (err, poc) => {
+    //     if (!poc) {
+    //         throw err;
+    //         res.json({ success: false, msg: 'unable to load doc' });
+    //     } else {
+    //         User.updateOne({ _id: pocId }, {
+    //             $set: {
+    //                 firstName: req.body.poc.firstName,
+    //                 lastName: req.body.poc.lastName,
+    //                 gender: req.body.poc.gender,
+    //                 phone: req.body.poc.phone,
+    //                 email: req.body.poc.email,
+    //                 address: req.body.poc.address
+    //             }
+    //         }, (err, ass) => {
+    //             (err) => {throw err; res.json({ success: false, msg: 'fail' }); },
+    //             (ass) => { res.json({ success: true, msg: 'success' }); }
+    //         })
+    //     }
+    // })
+
+
+    User.findOne({ _id: pocId }).then(poc => {
+        if (poc) {
+          User.updateOne({ _id: pocId }, 
+            {$set: { firstName: req.body.poc.firstName,lastName: req.body.poc.lastName,
+                gender: req.body.poc.gender,phone: req.body.poc.phone,
+                email: req.body.poc.email,address: req.body.poc.address
+            }}, (err, poc) => {
+            if(err){ res.json({ success: false, msg: 'fail' });}
+            else{ res.json({ success: true, msg: 'success' });
+            }
+          })
         } else {
-            User.update({ _id: pocId }, {
-                $set: {
-                    firstName: req.body.poc.firstName,
-                    lastName: req.body.poc.lastName,
-                    gender: req.body.poc.gender,
-                    phone: req.body.poc.phone,
-                    email: req.body.poc.email,
-                    address: req.body.poc.address
-                }
-            }, (err, ass) => {
-                (err) => { res.json({ success: false, msg: 'fail' }); },
-                (ass) => { res.json({ success: true, msg: 'success' }); }
-            })
+          console.log('err');
         }
     })
 })

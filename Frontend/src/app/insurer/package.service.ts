@@ -30,6 +30,8 @@ deletePackage(packageId){
   return this.http.get(this.url+'/package/deletepackage/'+packageId);
 }
 editPackage(packageId,packge,notify){
+  console.log('before posting');
+  console.log(packge);
   return this.http.post(this.url+'/package/editpackage/'+packageId,{package:packge},{
     headers:new HttpHeaders({'Content-Type':'application/json'})
   });

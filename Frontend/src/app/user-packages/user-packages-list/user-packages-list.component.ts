@@ -91,6 +91,7 @@ export class UserPackagesListComponent implements OnInit {
   }
 
   getRecord(pkg){
+    
     this.userPackageService.setUserPackage(pkg);
     this.router.navigate(['/home/viewUserPackage'])
   }

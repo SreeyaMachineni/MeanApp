@@ -78,6 +78,7 @@ router.post('/editUserPackage/:packageId',(req,res)=>{
         })
     },
     err=>{
+        throw err;
         res.json({success: false, msg:'Update failed'});
     }
     );  
@@ -89,6 +90,7 @@ router.get('/getUserPackageList',(req,res)=>
 UserPackage.getUserPackageList((err,userPackages)=>{
         if(err) throw err
         else {
+            
             res.json(userPackages)
         }
     })
