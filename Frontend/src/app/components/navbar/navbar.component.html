@@ -84,16 +84,14 @@
                         <span class='menu_text mt-2 mb-2' data-toggle="dropdown">Notifications</span>
                         <span class='menu_icon mr-3' data-toggle="dropdown"><i class="fa fa-bell fa-lg" style="cursor:pointer" aria-hidden="true" title="Notifications"></i></span>
                         <div class="dropdown-menu dropdown-menu-right notifications mat-elevation-z8">
-                            <!-- <div class="mb-2" style="cursor: pointer; " *ngFor="let notification of notifications" (click)="notificationDetails(notification)" appNotification [verified]="notification.verified"> -->
-                            <!-- <div class="mb-2" style="cursor: pointer; columns: grey;" *ngFor="let notification of notifications" (click)="notificationDetails(notification)">
-                                {{notification.comments}}
-                                <i class="fa fa-times fa-xs pull-right" style="cursor:pointer" aria-hidden="true"></i>
-                            </div> -->
                             <ng-container *ngIf="dataSource.data.length > 0">
                                 <table mat-table [dataSource]="dataSource">
                                     <ng-container matColumnDef="comments">
                                         <td mat-cell *matCellDef="let notifications" (click)="notificationDetails(notifications)" class="notificationDetail">
-                                            {{notifications.comments}} </td>
+                                            {{notifications.comments}}
+                                            <br>
+                                            <span class="pull-right" style="font-size: smaller; color: lightgray;"> - {{ notifications.createDate|date }}</span>
+                                        </td>
                                     </ng-container>
                                     <ng-container matColumnDef="actions">
                                         <th mat-header-cell *matHeaderCellDef> Actions </th>
