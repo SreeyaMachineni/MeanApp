@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { Observable, of } from "rxjs";
-import { map, catchError } from "rxjs/operators";
+import { Observable, of,Subject } from "rxjs";
+import { map, catchError } from "rxjs/operators"; 
 import { User } from './user';
 import { Hospital } from './hospital';
 import * as environment from 'src/environments/environment';
+
 // import {tokenNotExpired} from '@auth0/angular-jwt';
 
 @Injectable({
@@ -20,7 +21,20 @@ export class AuthService {
   hosp: Hospital;
   action: String
   isLoggedIn: any;
+
+  private subject = new Subject<any>();
+
+
   constructor(private http: HttpClient) { }
+
+
+  setNoOfUsersToAssign(val) {
+    this.subject.next(val);
+  }
+
+  getNoOfUsersToAssign():Observable<any>{
+    return this.subject.asObservable();
+  }
 
   createUser(otp: String): Observable<User> {
     return this.http.post<User>(this.url + '/users/register', { user: this.user, otp: otp }, {

@@ -51,7 +51,7 @@
                     </div>
                 </ng-template>
                 <ng-template [ngSwitchCase]="10">
-                    <span class="nav-link active" routerLink="{{menuItem.path}}" matBadge="{{NoOfUsersToAssign}}" matBadgeOverlap="true" matBadgeColor="accent">{{menuItem.menuName}}</span>
+                    <span class="nav-link active" routerLink="{{menuItem.path}}" matBadge="{{noOfUsersToAssign}}" matBadgeOverlap="true" matBadgeColor="accent" [matBadgeHidden]="noOfUsersToAssign<1">{{menuItem.menuName}}</span>
                 </ng-template>
                 <ng-template [ngSwitchCase]="12">
                     <span class="nav-item dropdown">
@@ -82,7 +82,10 @@
                 <form>
                     <div class="dropdown">
                         <span class='menu_text mt-2 mb-2' data-toggle="dropdown">Notifications</span>
-                        <span class='menu_icon mr-3' data-toggle="dropdown"><i class="fa fa-bell fa-lg" style="cursor:pointer" aria-hidden="true" title="Notifications"></i></span>
+                        <span class='menu_icon mr-3' data-toggle="dropdown" matBadge="{{noOfNotifications}}" matBadgeOverlap="true" matBadgeColor="accent" [matBadgeHidden]="noOfNotifications<1">
+                            <i class="fa fa-bell fa-lg" style="cursor:pointer" aria-hidden="true" title="Notifications"></i>
+                        </span>
+
                         <div class="dropdown-menu dropdown-menu-right notifications mat-elevation-z8">
                             <ng-container *ngIf="dataSource.data.length > 0">
                                 <table mat-table [dataSource]="dataSource">
@@ -96,7 +99,7 @@
                                     <ng-container matColumnDef="actions">
                                         <th mat-header-cell *matHeaderCellDef> Actions </th>
                                         <td mat-cell *matCellDef="let notifications">
-                                            <i class="fa fa-times fa-sm" (click)="notificationDetails(notifications)"></i>
+                                            <i class="fa fa-times fa-sm" (click)="closeNotification(notifications)"></i>
                                         </td>
                                     </ng-container>
                                     <tr mat-row *matRowDef="let emp; columns: displayedColumns;">
@@ -104,10 +107,10 @@
                                 </table>
                             </ng-container>
                             <ng-container *ngIf="dataSource.data.length <= 0">
-                                <span class="ml-2">No new notifications</span>
+                                <div class="ml-2 mt-2">No new notifications</div>
                                 <hr>
                             </ng-container>
-                            <a class="pull-right mr-3 mt-2" style="cursor: pointer;">View All</a>
+                            <a class="pull-right mr-4 mt-2" style="cursor: pointer;">View All</a>
                         </div>
                     </div>
                 </form>

@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-none breadcrumb-style">
+                <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="cancel()">My Packages</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Package Details of {{package.name}} </li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Insurer: </div>
+        <div class="col-lg-3 h6">{{package.insProvider}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Category: </div>
+        <div class="col-lg-3 h6">{{package.insCategory}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Network Hospitals: </div>
+        <div class="col-lg-3 h6">{{package.networkHospitals}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Diseases Covered: </div>
+        <div class="col-lg-3 h6">{{package.diseasesCovered}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Diseases Uncovered: </div>
+        <div class="col-lg-3 h6">{{package.diseasesUnCovered}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Required Docs: </div>
+        <div class="col-lg-3 h6">{{package.requiredDocs}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Maximum Sum Assured: </div>
+        <div class="col-lg-3 h6"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{package.maxSumAssured}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Minimum Sum Assured: </div>
+        <div class="col-lg-3 h6"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{package.minSumAssured}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Premium: </div>
+        <div class="col-lg-3 h6"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{package.premiumAmnt}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Max People Covered: </div>
+        <div class="col-lg-3 h6">{{package.maxNoOfMembersCovered}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Maximum Maturity: </div>
+        <div class="col-lg-3 h6">{{package.maxMaturity}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-3">Waiting Period </div>
+        <div class="col-lg-3 h6">{{package.waitingPeriod}}</div>
+    </div>
+</div>

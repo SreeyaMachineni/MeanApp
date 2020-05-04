@@ -182,7 +182,6 @@ body {
 }
 
 .cardHeading {
-    background-color: #C30953;
     padding: 5px 10px 5px 10px;
     border-radius: 4px;
     color: white;
@@ -202,11 +201,47 @@ body {
     border-left: 3px solid #C30953;
 }
 
+.cardHoverPackages:hover {
+    /* background-color: #f2f2f2; */
+    box-shadow: 2px 2px 3px 3px lightgray;
+    border-left: 3px solid #0a94c2;
+}
+
+.cardHoverClaims:hover {
+    /* background-color: #f2f2f2; */
+    box-shadow: 2px 2px 3px 3px lightgray;
+    border-left: 3px solid #09aa09;
+}
+
 .lbl-view-text {
-    font-size: 11px;
+    font-size: 12px;
     text-transform: uppercase;
 }
 
 .lbl-view-value {
-    font-size: 14px;
+    font-size: 15px;
+}
+
+
+/* SNACK BAR COLORS */
+
+.snackbar-success {
+    background-color: #449D44;
+}
+
+.snackbar-error {
+    background-color: #C9302C;
+}
+
+.snackbar-warn {
+    background-color: #EC971F;
+}
+
+.add-btn {
+    color: #C30953;
+    margin-top: 10px;
+}
+
+.add-btn:hover {
+    color: #C30953;
 }

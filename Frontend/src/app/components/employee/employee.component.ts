@@ -39,7 +39,7 @@ export class EmployeeComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      (err) => this._snackBar.open('Error while fetching Employees', 'x', { duration: 3000 })
+      (err) => this._snackBar.open('Error while fetching Employees', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
     );
   }
 
@@ -56,11 +56,11 @@ export class EmployeeComponent implements OnInit {
         if (success['success']) {
           this.fetchemp();
           this.router.navigate(['/home/employees']);
-          this._snackBar.open('Employee successfully deleted', 'x', { duration: 3000 });
+          this._snackBar.open('Employee successfully deleted', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
         }
       },
       (err) => {
-        this._snackBar.open('Error while deleting Employee', 'x', { duration: 3000 });
+        this._snackBar.open('Error while deleting Employee', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
       }
     )
   }

@@ -86,11 +86,11 @@ export class AddOrEditEmployeeComponent implements OnInit {
         (data) => {
           if (data['success']) {
             this.router.navigate(['/home/employees']);
-            this._snackBar.open('Employee added successfully', 'x', { duration: 3000 });
+            this._snackBar.open('Employee added successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
           }
         },
         err =>
-          this._snackBar.open('Error while adding Employee ', 'x', { duration: 3000 })
+          this._snackBar.open('Error while adding Employee ', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
       )
     }
     else {
@@ -98,11 +98,11 @@ export class AddOrEditEmployeeComponent implements OnInit {
         (data) => {
           if (data['success']) {
             this.router.navigate(['/home/employees']);
-            this._snackBar.open('Employee updated successfully', 'x', { duration: 3000 });
+            this._snackBar.open('Employee updated successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
           }
         },
         err =>
-          this._snackBar.open('Error while updating Employee ', 'x', { duration: 3000 })
+          this._snackBar.open('Error while updating Employee ', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
       );
     }
 

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../user';
 import { AuthService } from '../../auth.service';
-import { UserClaimsService } from '../../user-claims/user-claims.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserClaimsService } from '../user-claims/user-claims.service';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
       (claims) => {
         this.userClaims = claims;
       }, (err) => {
-        this._snackBar.open('Error while fetching Claims', 'x', { duration: 3000 });
+        this._snackBar.open('Error while fetching Claims', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
       }
     )
   }
@@ -42,19 +42,19 @@ export class HomeComponent implements OnInit {
 
     this.authService.fileUpload(fd).subscribe(
       (data) => {
-        this._snackBar.open('File uploaded successfully', 'x', { duration: 3000 });
+        this._snackBar.open('File uploaded successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
 
 
       },
-      (err) => this._snackBar.open('Error while uploading file', 'x', { duration: 3000 })
+      (err) => this._snackBar.open('Error while uploading file', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
     );
   }
 
   upload() {
     this.authService.uploadImg().subscribe(
-      () => { this._snackBar.open('File uploaded successfully', 'x', { duration: 3000 }); 
+      () => { this._snackBar.open('File uploaded successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] }); 
     },
-      err => this._snackBar.open('Error while uploading file', 'x', { duration: 3000 })
+      err => this._snackBar.open('Error while uploading file', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
     )
   }
 

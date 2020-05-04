@@ -54,10 +54,10 @@ export class RegisterComponent implements OnInit {
     // change it when editing the user values
     this.authService.sendOtp(this.signedUpUser).subscribe(
       (data) => {
-        this._snackBar.open('OTP verified successfully', 'x', { duration: 3000 })
+        this._snackBar.open('OTP verified successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] })
         this.router.navigate(['/verify']);
       },
-      err => this._snackBar.open('Error while verifying OTP', 'x', { duration: 3000 })
+      err => this._snackBar.open('Error while verifying OTP', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
     )
   }
 

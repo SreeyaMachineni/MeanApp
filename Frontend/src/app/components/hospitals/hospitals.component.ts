@@ -5,8 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Hospital, PointOfContact } from '../../hospital';
 import { AuthService } from '../../auth.service';
-import { HospitalPocService } from '../../hospitals/hospital-poc.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HospitalPocService } from './hospital-poc.service';
 
 @Component({
   selector: 'app-hospitals',
@@ -42,11 +42,10 @@ export class HospitalsComponent implements OnInit {
       (hosp) => {
         this.hosp = hosp;
         this.dataSource = new MatTableDataSource(this.hosp);
-        console.log(this.dataSource);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      (err) => this._snackBar.open('Error while fetching Hospitals', 'x', { duration: 3000 })
+      (err) => this._snackBar.open('Error while fetching Hospitals', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
     );
   }
 
@@ -62,14 +61,14 @@ export class HospitalsComponent implements OnInit {
     this.authService.deleteHosp(hospid).subscribe(
       (success) => {
         if (success['success']) {
-          this._snackBar.open('Hospital deleted successfully', 'x', { duration: 3000 });
+          this._snackBar.open('Hospital deleted successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
           this.fetchHosp();
           this.router.navigate(['/home/hospitals']);
         }
 
       },
       (err) => {
-        this._snackBar.open('Error while deleting Hospital', 'x', { duration: 3000 });
+        this._snackBar.open('Error while deleting Hospital', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
       }
     )
   }

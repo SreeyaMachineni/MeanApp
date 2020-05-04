@@ -4,12 +4,13 @@ import { Menu } from '../../menu';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { Validators, FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
-import { EmployeeUsersService } from '../../employee-users/employee-users.service';
-import { ContactService } from '../../contact/contact.service';
-import { UserClaimsService } from '../../user-claims/user-claims.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Notification } from './../../user';
+import { Subscription } from 'rxjs';
+import { EmployeeUsersService } from '../employee-users/employee-users.service';
+import { ContactService } from '../contact/contact.service';
+import { UserClaimsService } from '../user-claims/user-claims.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,7 +22,6 @@ export class NavbarComponent implements OnInit {
   empUser: any;
   user: User;
   menu: any;
-  NoOfUsersToAssign: any;
   NoOfPkgsToVisit: any;
   notifications: any;
   noOfNotifications: any;
@@ -33,17 +33,29 @@ export class NavbarComponent implements OnInit {
   userContacts: any;
   userClaim: any;
   userHasNotifications = false;
-  options: string[] = [' Notify only the Employee', 'Notify user and Employee'];
+  options: string[] = [' Notify Employee', 'Notify Employee and User'];
   displayedColumns: string[] = ['comments', 'actions'];
   dataSource: MatTableDataSource<Notification>;
   expandedElement: Notification | null;
-
+  noOfUsersToAssign:any;
+  
   constructor(private authService: AuthService, 
     private router: Router,
     private empUserService: EmployeeUsersService, 
     private contactService: ContactService, 
     private userClaimService: UserClaimsService, 
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar) {
+
+      this.authService.getNoOfUsersToAssign().subscribe(noOfUsers => {
+        if(noOfUsers){
+          this.noOfUsersToAssign = noOfUsers;
+        }else{
+          this.noOfUsersToAssign = 0;
+        }
+        
+      })
+
+     }
   
     ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
@@ -71,6 +83,8 @@ export class NavbarComponent implements OnInit {
 
   }
 
+
+
   getMyContacts() {
     this.contactService.getMyContacts(JSON.parse(localStorage.getItem('user')).id);
   }
@@ -81,7 +95,7 @@ export class NavbarComponent implements OnInit {
         this.users = users;
       },
       (err) => {
-        this._snackBar.open('Error while fetching Users', 'x', { duration: 3000 });
+        this._snackBar.open('Error while fetching Users', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
       }
     )
   }
@@ -104,7 +118,7 @@ export class NavbarComponent implements OnInit {
       this.contact.userEmpId = this.claim.userId;
     }
     this.contactService.addContact(this.contact).subscribe((contact) => {
-      this._snackBar.open('Request submitted successfully', 'x', { duration: 3000 });
+      this._snackBar.open('Request submitted successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
     })
   }
 
@@ -112,8 +126,9 @@ export class NavbarComponent implements OnInit {
     this.authService.getNumOfPkgsToVisit(assignedTo).subscribe(
       (count) => {
         this.NoOfPkgsToVisit = count;
+        
       }, (err) => {
-        this._snackBar.open('All packages visited', 'x', { duration: 3000 });
+        this._snackBar.open('All packages visited', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
       }
     )
   }
@@ -126,6 +141,7 @@ export class NavbarComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.notifications);
         if (this.notifications.length > 0) {
           this.userHasNotifications = true;
+          this.noOfNotifications = this.notifications.length;
         }
       }
     )
@@ -134,9 +150,10 @@ export class NavbarComponent implements OnInit {
   getNumOfUsersToAssign() {
     this.authService.getNumOfUsersToAssign().subscribe(
       (count) => {
-        this.NoOfUsersToAssign = count;
+        this.noOfUsersToAssign = count;
+        this.authService.setNoOfUsersToAssign(this.noOfUsersToAssign);
       }, (err) => {
-        this._snackBar.open('All users assigned', 'x', { duration: 3000 });
+        this._snackBar.open('All users assigned', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
       }
     )
   }
@@ -146,7 +163,7 @@ export class NavbarComponent implements OnInit {
       (data) => {
       this.menu = data;
       },
-      (err) => { this._snackBar.open('Error while fetching Menus', 'x', { duration: 3000 }); }
+      (err) => { this._snackBar.open('Error while fetching Menus', 'x', { duration: 3000, panelClass: ['snackbar-error'] }); }
     );
   }
 
@@ -173,8 +190,28 @@ export class NavbarComponent implements OnInit {
     return false;
   }
 
+
+  closeNotification(notification){
+    if(this.noOfNotifications >=1){
+      this.noOfNotifications -= 1;
+    }
+    this.authService.updateNotification(notification._id).subscribe(
+      (updated) => {
+        this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
+        this.getNotification(this.user['id']); 
+      },
+      (err) => {
+        this._snackBar.open('Error while updating Notification', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
+      }
+    )
+
+  }
+
   notificationDetails(notification) {
-    debugger
+    if(this.noOfNotifications >=1){
+      this.noOfNotifications -= 1;
+    }
+    
     if (notification.category == 'claim' || notification.category == 'package') {
       if (this.user.userrole == 'employee') {
         this.authService.getUserById(notification.notifyAbout).subscribe(
@@ -183,22 +220,24 @@ export class NavbarComponent implements OnInit {
             this.router.navigate(['/home/userDetails']);
             this.authService.updateNotification(notification._id).subscribe(
               (updated) => {
-                this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000 });
+                this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
+                this.getNotification(this.user['id']);
               },
               (err) => {
-                this._snackBar.open('Error while updating Notification', 'x', { duration: 3000 });
+                this._snackBar.open('Error while updating Notification', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
               }
             )
           },
-          (err) => this._snackBar.open('Error while fetching Notifications', 'x', { duration: 3000 })
+          (err) => this._snackBar.open('Error while fetching Notifications', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
         )
       } else if (this.user.userrole == 'user') {
         this.authService.updateNotification(notification._id).subscribe(
           (updated) => {
-            this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000 });
+            // this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
+            this.getNotification(this.user['id']);
           },
           (err) => {
-            this._snackBar.open('Error while updating Notification', 'x', { duration: 3000 });
+            this._snackBar.open('Error while updating Notification', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
           }
         )
         if (notification.category == 'claim') {
@@ -213,10 +252,11 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['/profile']);
       this.authService.updateNotification(notification._id).subscribe(
         (updated) => {
-          this._snackBar.open('Notification updated succeessfully', 'x', { duration: 3000 });
+          // this._snackBar.open('Notification updated succeessfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
+          this.getNotification(this.user['id']);
         },
         (err) => {
-          this._snackBar.open('Error while fetching Notifications', 'x', { duration: 3000 });
+          this._snackBar.open('Error while updating Notification', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
         }
       )
     }

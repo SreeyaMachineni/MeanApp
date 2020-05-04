@@ -34,7 +34,6 @@ export class ProfileComponent implements OnInit {
       (user)=>{
         this.user = user[0];
       },(err)=>{
-        console.log(err);
       }
     );
     this.getDocs(this.id);
@@ -50,7 +49,7 @@ export class ProfileComponent implements OnInit {
   getDocs(id) {
     this.authService.getDocs(this.id).subscribe(
       (docs) => { this.docs = docs; },
-      (err) => { this._snackBar.open('Error while fetching documents', 'x', { duration: 3000 }); }
+      (err) => { this._snackBar.open('Error while fetching documents', 'x', { duration: 3000, panelClass: ['snackbar-error'] }); }
     )
   }
 
@@ -84,10 +83,10 @@ export class ProfileComponent implements OnInit {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
         this.router.navigate(['/profile']);
-        this._snackBar.open('Password updated successfully', 'x', { duration: 3000 })
+        this._snackBar.open('Password updated successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] })
       },
       (err) => {
-        this._snackBar.open('Error while updating Password', 'x', { duration: 3000 })
+        this._snackBar.open('Error while updating Password', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
       }
     )
   }

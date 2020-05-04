@@ -94,19 +94,19 @@ export class AddOrEditHospitalsComponent implements OnInit {
         this.authService.addHospital(this.hosp).subscribe(
           (data)=>{
             if(data['success']){ this.router.navigate(['/home/hospitals']);
-            this._snackBar.open('Hospital added successfully', 'x', { duration: 3000 });
+            this._snackBar.open('Hospital added successfully', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
           }    
           },
           err=>
-          this._snackBar.open('Error while adding Hospital', 'x', { duration: 3000 })
+          this._snackBar.open('Error while adding Hospital', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
         )
     }
     else{
         this.authService.editHosp(this.hosp,hospid).subscribe(
           (data)=>{if(data['success']){ this.router.navigate(['/home/hospitals']);
-          this._snackBar.open('Hospital updated successfully', 'x', { duration: 3000 });
+          this._snackBar.open('Hospital updated successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
         }},
-          err=>{this._snackBar.open('Error while updating Hospital', 'x', { duration: 3000 })}
+          err=>{this._snackBar.open('Error while updating Hospital', 'x', { duration: 3000, panelClass: ['snackbar-error'] })}
         )
     }  
   }

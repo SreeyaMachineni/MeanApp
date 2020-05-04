@@ -1,19 +1,19 @@
 <!-- <div class="h5 m-3"> {{greeting}} {{user.firstName|titlecase}}! Welcome to your dashboard..</div> -->
 
-<!-- IF LOGGED IN AS USER -->
+<!-- USER PACKAGES -->
 <div class="row m-0" *ngIf="user.userrole == 'user'">
     <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
-        <div class="modal-header modal-dashboard" style="background-color: #ffffb3;">
+        <div class="modal-header modal-dashboard" style="background-color: #9ee3fa;">
             <div class="popup-heading"> Current Packages</div>
-            <a *ngIf="userHasClaims" class="pull-right" routerLink="/home/mypackages" routerLinkActive="active">View All</a>
+            <a *ngIf="userHasClaims" class="pull-right mt-1" style="font-size: small; color: #C30953" routerLink="/home/mypackages" routerLinkActive="active">View All</a>
         </div>
-        <div class="modal-body Content" style="border: 1px solid #ffffb3;">
+        <div class="modal-body Content" style="border: 1px solid #9ee3fa;">
             <div class="mb-2" style="cursor: pointer;" *ngFor="let package of userPackage">
-                <mat-card class="cardHover">
+                <mat-card class="cardHoverPackages">
                     <div class="row" *ngIf="userHasPackages">
                         <div class="row col text-left">
                             <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
-                                <span class="cardHeading"> {{package.packageName}}</span>
+                                <span class="cardHeading" style="background-color: #0a94c2;"> {{package.insurerName}} - {{package.packageName}}</span>
                             </div>
                             <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
                                 <span class="cardStatus"> Status - 
@@ -26,8 +26,8 @@
                     <div class="row" *ngIf="userHasClaims">
                         <div class="row col text-left">
                             <div class="col-lg-3 col-sm-3 col-xs-3 mt-3">
-                                <div class="lbl-view-text"> Insurance Provider </div>
-                                <div class="lbl-view-value"> {{package.insurerName}} </div>
+                                <div class="lbl-view-text"> Category </div>
+                                <div class="lbl-view-value"> {{package.categoryName}} </div>
                             </div>
                             <div class="col-lg-3 col-sm-3 col-xs-3 mt-3">
                                 <div class="lbl-view-text"> Active From </div>
@@ -40,7 +40,6 @@
                         </div>
                     </div>
                 </mat-card>
-                <!-- <hr> -->
             </div>
             <div class="row m-0" *ngIf="!userHasPackages">
                 <div class="m-1">You do not have any Packages added.<br> <a style="cursor: pointer;" class="h6" (click)="addPackage()">Click here</a> to add a package</div>
@@ -48,49 +47,54 @@
         </div>
     </div>
 
+    <!-- USER CLAIMS -->
     <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
         <div class="modal-header modal-dashboard" style="background-color: #9efa9e;">
             <div class="popup-heading"> Active Claims</div>
-            <a *ngIf="userHasClaims" class="pull-right" routerLink="/home/myclaims">View All</a>
+            <a *ngIf="userHasClaims" class="pull-right mt-1" style="font-size: small; color: #C30953" routerLink="/home/myclaims">View All</a>
         </div>
         <div class="modal-body Content" style="border: 1px solid #9efa9e;">
-            <div *ngFor="let claim of userClaims">
-                <div class="row" *ngIf="userHasClaims">
-                    <div class="row col text-left">
-                        <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
-                            <span class="cardHeading"> {{claim.packageName}}</span>
-                        </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
-                            <!-- <span class="cardStatus"> Status - {{ claim.status }}</span> -->
-                            <div class='cardStatus' appStatusCode [status]="claim.status" data-toggle="dropdown">Status - {{claim.status}} &nbsp;
-                                <i class="fa fa-info-circle"></i>
+            <div class="mb-2" style="cursor: pointer;" *ngFor="let claim of userClaims">
+                <mat-card class="cardHoverClaims">
+                    <div class="row" *ngIf="userHasClaims">
+                        <div class="row col text-left">
+                            <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
+                                <span class="cardHeading" style="background-color: #09aa09;"> {{claim.insurerName}} - {{claim.packageName}}</span>
                             </div>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-tooltip">
-                                <div class="pr-2 pl-2">
-                                    <span *ngIf="claim.comments && claim.comments != ' '">{{claim.comments}}</span>
-                                    <span *ngIf="!claim.comments || claim.comments == ' '">No comments available</span>
+                            <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
+                                <div class='cardStatus' appStatusCode [status]="claim.status" data-toggle="dropdown">Status - {{claim.status}} &nbsp;
+                                    <i class="fa fa-info-circle"></i>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-tooltip">
+                                    <div class="pr-2 pl-2">
+                                        <span *ngIf="claim.comments && claim.comments != ' '">{{claim.comments}}</span>
+                                        <span *ngIf="!claim.comments || claim.comments == ' '">No comments available</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row" *ngIf="userHasClaims">
-                    <div class="row col text-left">
-                        <div class="col-lg-3 col-sm-3 col-xs-3 mt-3">
-                            <div class="lbl-view-text"> Date of Surgery </div>
-                            <div class="lbl-view-value"> {{claim.dateOfSurgery | date}} </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-xs-3 mt-3">
-                            <div class="lbl-view-text"> Purpose </div>
-                            <div class="lbl-view-value"> {{claim.disease}} </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-xs-3 mt-3">
-                            <div class="lbl-view-text"> Hospital </div>
-                            <div class="lbl-view-value"> {{claim.hospital}} </div>
+                    <div class="row" *ngIf="userHasClaims">
+                        <div class="row col text-left">
+                            <div class="col-lg-3 col-sm-3 col-xs-3 mt-3">
+                                <div class="lbl-view-text"> Category </div>
+                                <div class="lbl-view-value"> {{claim.categoryName}} </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-3 col-xs-3 mt-3">
+                                <div class="lbl-view-text"> Date of Surgery </div>
+                                <div class="lbl-view-value"> {{claim.dateOfSurgery | date}} </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-3 col-xs-3 mt-3">
+                                <div class="lbl-view-text"> Purpose </div>
+                                <div class="lbl-view-value"> {{claim.disease}} </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-3 col-xs-3 mt-3">
+                                <div class="lbl-view-text"> Hospital </div>
+                                <div class="lbl-view-value"> {{claim.hospital}} </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <hr>
+                </mat-card>
             </div>
             <div class="row m-0" *ngIf="!userHasClaims">
                 <div class="m-1">You do not have any active claims.<br> <a style="cursor: pointer;" class="h6" (click)="addClaim()">Click here</a> to add a new claim</div>
@@ -98,11 +102,12 @@
         </div>
     </div>
 
-    <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
-        <div class="modal-header modal-dashboard" style="background-color: #9ee3fa;">
+    <!-- USER NOTIFICATIONS -->
+    <!-- <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
+        <div class="modal-header modal-dashboard" style="background-color: #ffffb3;">
             <div class="popup-heading">Notifications</div>
         </div>
-        <div class="modal-body Content" style="border: 1px solid #9ee3fa;">
+        <div class="modal-body Content" style="border: 1px solid #ffffb3;">
             <div *ngFor="let notification of notifications">
                 <div (click)="notificationDetails(notification)" appNotification [verified]="notification.verified">
                     {{notification.comments}}
@@ -130,19 +135,20 @@
                 <div class="mt-1"> No new notifications</div>
             </div>
         </div>
-    </div>
-
+    </div> -->
 </div>
 
-<!-- IF LOGGED IN AS EMPLOYEE -->
+<!-- EMPLOYEE NOTIFICATIONS -->
 <div class="row m-0" *ngIf="user.userrole == 'employee'">
     <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
-        <div class="modal-header modal-dashboard " style="background-color: #9ee3fa;">
+        <div class="modal-header modal-dashboard " style="background-color: #fcc7b6;">
             <div class="popup-heading">Notifications</div>
         </div>
-        <div class="modal-body Content" style="border: 1px solid #9ee3fa;">
+        <div class="modal-body Content" style="border: 1px solid #fcc7b6;">
             <div class="mb-2" style="cursor: pointer;" *ngFor="let notification of notifications" (click)="notificationDetails(notification)" appNotification [verified]="notification.verified">
-                {{notification.comments}}
+                <mat-card class="cardHover">{{notification.comments}}
+                    <div class="pull-right" style="font-size: smaller; color: lightgray;"> - {{ notification.createDate|date }}</div>
+                </mat-card>
             </div>
             <div class="row m-0" *ngIf="!userHasNotifications">
                 <div class="mt-1"> No new notifications</div>
@@ -151,24 +157,51 @@
     </div>
 </div>
 
-<!-- IF LOGGED IN AS POC -->
+<!-- POC NOTIFICATIONS -->
 <div class="row m-0" *ngIf="user.userrole == 'poc'">
     <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
-        <div class="modal-header modal-dashboard" style="background-color: #9efa9e;">
+        <div class="modal-header modal-dashboard" style="background-color: #fcc7b6;">
             <div class="popup-heading"> Pending Claims</div>
+            <!-- <a *ngIf="userHasClaims" class="pull-right mt-1" style="font-size: small; color: #C30953" routerLink="/home/myclaims">View All</a> -->
         </div>
-        <div class="modal-body Content " style="border: 1px solid #9efa9e;">
-            <div *ngFor="let claim of userClaims " (click)="claimDetails(claim) ">
-                <div class="row ">
-                    <div class="col-6 text-left h5 ">{{claim.packageName}}</div>
-                    <div class="col-6 text-right h5 " appStatusCode [status]="claim.status " (click)="$event.stopPropagation();setClaim(claim); ">{{claim.status}}</div>
-                </div>
-                <div class="row ">
-                    <div class="col-6 text-left ">
-                        <div style="font-size: 16px ">Date of Surgery : {{claim.dateOfSurgery | date}}</div>
-                        <div style="font-size: 16px ">Purpose : {{claim.disease}}</div>
+        <div class="modal-body Content" style="border: 1px solid #fcc7b6;">
+            <div class="mb-2" style="cursor: pointer;" *ngFor="let claim of userClaims" (click)="claimDetails(claim)">
+                <mat-card class="cardHover">
+                    <div class="row">
+                        <div class="row col text-left">
+                            <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
+                                <span class="cardHeading" style="background-color: #C30953;"> {{claim.packageName}}</span>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
+                                <div class='cardStatus' appStatusCode [status]="claim.status" data-toggle="dropdown">Status - {{claim.status}} &nbsp;
+                                    <i class="fa fa-info-circle"></i>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-tooltip">
+                                    <div class="pr-2 pl-2">
+                                        <span *ngIf="claim.comments && claim.comments != ' '">{{claim.comments}}</span>
+                                        <span *ngIf="!claim.comments || claim.comments == ' '">No comments available</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="row col text-left">
+                            <div class="col-lg-4 col-sm-4 col-xs-4 mt-3">
+                                <div class="lbl-view-text"> Date of Surgery </div>
+                                <div class="lbl-view-value"> {{claim.dateOfSurgery | date}} </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-xs-4 mt-3">
+                                <div class="lbl-view-text"> Purpose </div>
+                                <div class="lbl-view-value"> {{claim.disease}} </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-xs-4 mt-3">
+                                <div class="lbl-view-text"> Hospital </div>
+                                <div class="lbl-view-value"> {{claim.hospital}} </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
             </div>
         </div>
     </div>

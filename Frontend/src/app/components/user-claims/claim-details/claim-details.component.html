@@ -1,0 +1,24 @@
+<app-contact></app-contact>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-lg-2">Package Name: </div>
+        <div class="col-lg-2 h6">{{claim.packageName}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-2">Purpose: </div>
+        <div class="col-lg-2 h6">{{claim.disease}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-2">Hospital: </div>
+        <div class="col-lg-2 h6">{{claim.hospital}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-2">Location: </div>
+        <div class="col-lg-2 h6">{{claim.location}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg-2">Date of Surgery: </div>
+        <div class="col-lg-2 h6">{{claim.dateOfSurgery|date}}</div>
+    </div>
+</div>

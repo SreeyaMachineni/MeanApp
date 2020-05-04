@@ -27,43 +27,43 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AddOrEditEmployeeComponent } from './components/add-or-edit-employee/add-or-edit-employee.component';
 import { HospitalsComponent } from './components/hospitals/hospitals.component';
 import { AddOrEditHospitalsComponent } from './components/add-or-edit-hospitals/add-or-edit-hospitals.component';
-import { CategoryModule } from './category/category.module';
-import { DoctorVisitModule } from './doctor-visit/doctor-visit.module';
-import { CategoryListComponent } from './category/category-list/category-list.component';
-import { InsurerModule } from './insurer/insurer.module';
-import { UserClaimsModule } from './user-claims/user-claims.module';
-import { UserPackagesModule } from './user-packages/user-packages.module';
-import { InsurerListComponent } from './insurer/insurer-list/insurer-list.component';
-import { AddOrEditInsurerComponent } from './insurer/add-or-edit-insurer/add-or-edit-insurer.component';
-import { AddOrEditPackageComponent } from './insurer/add-or-edit-package/add-or-edit-package.component';
-import { UserPackagesListComponent } from './user-packages/user-packages-list/user-packages-list.component';
-import { AddOrEditUserPackagesComponent } from './user-packages/add-or-edit-user-packages/add-or-edit-user-packages.component';
-import { ViewUserPackageComponent } from './user-packages/view-user-package/view-user-package.component';
-import { AssignUsersComponent } from './assign-users/assign-users/assign-users.component';
-import { EmployeeUsersComponent } from './employee-users/employee-users/employee-users.component';
-import { UserDetailsComponent } from './employee-users/user-details/user-details.component';
-import { PackagesComponent } from './insurer/packages/packages.component';
+import { CategoryModule } from './components/category/category.module';
+import { DoctorVisitModule } from './components/doctor-visit/doctor-visit.module';
+import { CategoryListComponent } from './components/category/category-list/category-list.component';
+import { InsurerModule } from './components/insurer/insurer.module';
+import { UserClaimsModule } from './components/user-claims/user-claims.module';
+import { UserPackagesModule } from './components/user-packages/user-packages.module';
+import { InsurerListComponent } from './components/insurer/insurer-list/insurer-list.component';
+import { AddOrEditInsurerComponent } from './components/insurer/add-or-edit-insurer/add-or-edit-insurer.component';
+import { AddOrEditPackageComponent } from './components/insurer/add-or-edit-package/add-or-edit-package.component';
+import { AssignUsersComponent } from './components/assign-users/assign-users/assign-users.component';
+import { EmployeeUsersComponent } from './components/employee-users/employee-users/employee-users.component';
+import { UserDetailsComponent } from './components/employee-users/user-details/user-details.component';
+import { PackagesComponent } from './components/insurer/packages/packages.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { UserClaimsListComponent } from './user-claims/user-claims-list/user-claims-list.component';
-import { AddOrEditUserClaimsComponent } from './user-claims/add-or-edit-user-claims/add-or-edit-user-claims.component';
-import { UserModule } from './user/user.module';
-import { UserEditComponent } from './user/user-edit/user-edit.component';
+import { UserClaimsListComponent } from './components/user-claims/user-claims-list/user-claims-list.component';
+import { AddOrEditUserClaimsComponent } from './components/user-claims/add-or-edit-user-claims/add-or-edit-user-claims.component';
+import { UserModule } from './components/user/user.module';
+import { UserEditComponent } from './components/user/user-edit/user-edit.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { HospitalsModule } from './hospitals/hospitals.module';
-import { HospitalPoCListComponent } from './hospitals/hospital-po-clist/hospital-po-clist.component';
-import { AddOrEditHospitalPoCComponent } from './hospitals/add-or-edit-hospital-po-c/add-or-edit-hospital-po-c.component';
-import { HospitalDetailsComponent } from './hospitals/hospital-details/hospital-details.component';
+import { HospitalsModule } from './components/hospitals/hospitals.module';
+import { HospitalPoCListComponent } from './components/hospitals/hospital-po-clist/hospital-po-clist.component';
+import { AddOrEditHospitalPoCComponent } from './components/hospitals/add-or-edit-hospital-po-c/add-or-edit-hospital-po-c.component';
+import { HospitalDetailsComponent } from './components/hospitals/hospital-details/hospital-details.component';
 import { StatusCodeDirective } from './status-code.directive';
-import { DoctorVisitComponent } from './doctor-visit/doctor-visit/doctor-visit.component';
-import { AddOrEditDoctorVisitComponent } from './doctor-visit/add-or-edit-doctor-visit/add-or-edit-doctor-visit.component';
-import { ContactModule } from './contact/contact.module';
-import { ContactComponent } from './contact/contact/contact.component';
-import { ClaimDetailsComponent } from './user-claims/claim-details/claim-details.component';
+import { DoctorVisitComponent } from './components/doctor-visit/doctor-visit/doctor-visit.component';
+import { AddOrEditDoctorVisitComponent } from './components/doctor-visit/add-or-edit-doctor-visit/add-or-edit-doctor-visit.component';
+import { ContactModule } from './components/contact/contact.module';
+import { ContactComponent } from './components/contact/contact/contact.component';
+import { ClaimDetailsComponent } from './components/user-claims/claim-details/claim-details.component';
 import { MatRadioModule } from '@angular/material/radio';
-import { ContactHistoryComponent } from './contact/contact-history/contact-history.component';
+import { ContactHistoryComponent } from './components/contact/contact-history/contact-history.component';
 import { NotificationDirective } from './notification.directive';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatCardModule} from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
+import { UserPackagesListComponent } from './components/user-packages/user-packages-list/user-packages-list.component';
+import { AddOrEditUserPackagesComponent } from './components/user-packages/add-or-edit-user-packages/add-or-edit-user-packages.component';
+import { ViewUserPackageComponent } from './components/user-packages/view-user-package/view-user-package.component';
 
 const appRoutes: Routes = [
   // {path:'',component:LoginComponent},
@@ -98,19 +98,15 @@ const appRoutes: Routes = [
       { path: 'addOrEditDoctorVisit', component: AddOrEditDoctorVisitComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'claimDetails', component: ClaimDetailsComponent }
-
-
     ]
   },
   { path: 'verify', component: VerifyUserComponent },
 
 ]
 
-
 @NgModule({
   declarations: [
     AppComponent,
-    //  LoginComponent,
     HomeComponent,
     RegisterComponent,
     ProfileComponent,
@@ -170,4 +166,5 @@ const appRoutes: Routes = [
   providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

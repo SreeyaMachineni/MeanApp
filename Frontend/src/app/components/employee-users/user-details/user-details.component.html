@@ -1,0 +1,279 @@
+<div class="container">
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-none breadcrumb-style">
+                <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="cancel()">My Users</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Details of {{user.firstName|titlecase}} {{user.lastName|titlecase}}</li>
+            </ol>
+        </nav>
+    </div>
+
+    <mat-tab-group>
+        <mat-tab label="Packages">
+            <div class="container p-1">
+                <ng-container *ngIf="dataSource.data.length > 0">
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                    </mat-form-field>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" matSort>
+                            <ng-container matColumnDef="categoryName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Category
+                                </th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    {{userPackage.categoryName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="insurerName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Insurer
+                                </th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    {{userPackage.insurerName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="packageName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Package
+                                </th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    {{userPackage.packageName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="activeFrom">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Active From
+                                </th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    {{userPackage.activeFrom | date}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="activeTo">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Active To</th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    {{userPackage.activeTo | date}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                                <td mat-cell *matCellDef="let userPackage">
+                                    <span *ngIf="currentDate <= userPackage.activeTo" class="status-good"> Active </span>
+                                    <span *ngIf="currentDate > userPackage.activeTo" class="status-bad"> Expired </span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                <td mat-cell *matCellDef="let package" (click)="$event.stopPropagation()">
+                                    <i class="fa fa-pencil pr-3"></i> /td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let package; columns: displayedColumns;" (click)="getRecord(package)"></tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="dataSource.data.length <= 0">
+                    <div class="mt-2">Sorry, no data found.</div>
+                </ng-container>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Claims">
+            <div class="container p-1">
+                <ng-container *ngIf="dataSourceForClaims.data.length > 0">
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                    </mat-form-field>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSourceForClaims">
+                            <ng-container matColumnDef="packageName">
+                                <th mat-header-cell *matHeaderCellDef> Package </th>
+                                <td mat-cell *matCellDef="let userClaims">
+                                    {{userClaims.packageName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="hospital">
+                                <th mat-header-cell *matHeaderCellDef>Hospital </th>
+                                <td mat-cell *matCellDef="let userClaims">
+                                    {{userClaims.hospital}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="location">
+                                <th mat-header-cell *matHeaderCellDef>Location </th>
+                                <td mat-cell *matCellDef="let userClaims">
+                                    {{userClaims.location}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="disease">
+                                <th mat-header-cell *matHeaderCellDef>Purpose</th>
+                                <td mat-cell *matCellDef="let userClaims">
+                                    {{userClaims.disease}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="dateOfSurgery">
+                                <th mat-header-cell *matHeaderCellDef>Surgery Date</th>
+                                <td mat-cell *matCellDef="let userClaims">
+                                    {{userClaims.dateOfSurgery | date}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="claimColumns"></tr>
+                            <tr mat-row *matRowDef="let userClaims; columns: claimColumns;" (click)="getRecord(userClaims)" data-toggle="modal" data-target="#claimDetails">
+                            </tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="dataSourceForClaims.data.length <= 0">
+                    <div class="mt-2">Sorry, no data found.</div>
+                </ng-container>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Personal Details">
+            <div class="container p-1">
+                <mat-card class="mt-3 mb-1">
+                    <div class="row mt-1">
+                        <div class="col-lg-2">Full Name: </div>
+                        <div class="col-lg-2 h6">{{user.firstName}} {{user.lastName}}</div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-lg-2">Phone: </div>
+                        <div class="col-lg-2 h6">{{user.phone}}</div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-lg-2">Address </div>
+                        <div class="col-lg-2 h6">{{user.address}}</div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-lg-2">Email: </div>
+                        <div class="col-lg-2 h6">{{user.email}}</div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-lg-2">Date of Birth: </div>
+                        <div class="col-lg-2 h6">{{user.dob|date}}</div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-lg-2">Gender: </div>
+                        <div class="col-lg-2 h6">{{user.gender|titlecase}}</div>
+                    </div>
+                </mat-card>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Documents">
+            <div class="container p-1">
+                <mat-card class="mt-3 mb-1">
+                    <div class="row m-0 p-3">
+                        <div class="col-md-4" *ngFor="let doc of docs">
+                            <div class="thumbnail">
+                                <a href="{{doc.path}}" class="text-dark" target="_blank">
+                                    <img src="{{doc.path}}" alt="Lights">
+                                    <div class="caption">
+                                        <p>{{doc.name}}</p>
+                                    </div>
+                                </a>
+                                <button type="button" class="btn btn-success btn-s" *ngIf="(doc.isAccepted== null)" data-toggle="modal" data-target="#approveModal" (click)="setDocId(doc._id)">
+                                                Approve
+                                              </button>
+                                <!-- <span class="pr-3 text-success" *ngIf="(doc.isAccepted== null)"
+                                                        data-toggle="modal" data-target="#approveModal"
+                                                        (click)="setDocId(doc._id)">Approve</span> -->
+                                <span class="pl-3 text-danger" *ngIf="(doc.isAccepted== null)" data-toggle="modal" data-target="#rejectModal" (click)="setDocId(doc._id)">Reject</span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </mat-tab>
+
+    </mat-tab-group>
+</div>
+
+<div class="modal" id="approveModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Approve Document</h4>
+            </div>
+            <div class="modal-body text-center">
+                Are you sure you want to approve the document? <br> If yes, please enter the name of document.
+                <form [formGroup]="userdocsApprove" class="row m-0 pt-3" autocomplete="off">
+                    <mat-form-field><input matInput placeholder="Document Name" formControlName="docName" required></mat-form-field>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light cancel-btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success float-left" data-dismiss="modal" [disabled]="!userdocsApprove.valid" (click)="approveIt()">Approve</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="rejectModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Reject Document</h4>
+            </div>
+            <div class="modal-body text-center">
+                Are you sure you want to Reject the Document? <br> If yes, please state the reason below.
+                <form [formGroup]="userdocsReject" class="row m-0 pt-3" autocomplete="off">
+                    <div class="d-flex flex-column offset-md-1 col-8">
+                        <mat-form-field><input matInput placeholder="Document Name" formControlName="docName" required></mat-form-field>
+                        <mat-form-field><input matInput placeholder="Reason" formControlName="reason" required></mat-form-field>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light cancel-btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger float-left" data-dismiss="modal" [disabled]="!userdocsReject.valid" data-dismiss="modal" (click)="rejectIt()">Reject</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="claimDetails" class="modal fade" id="claimDetails" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col h5">Claim Details</div>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="statusForm" class="col-lg-12 col-md-12 col-sm-12 d-flex flex-column" autocomplete="off">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12">Package :</div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">{{claimDetails.packageName}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12">Hospital :</div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">{{claimDetails.hospital}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12">Location :</div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">{{claimDetails.location}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12">Surgery Date : </div>
+                        <div class="col-5 text-left">{{claimDetails.dateOfSurgery | date}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12">Purpose :</div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">{{claimDetails.disease}}</div>
+                    </div>
+                    <div class="row p-3">
+                        <mat-form-field>
+                            <mat-label>Status</mat-label>
+                            <mat-select required formControlName="claimStatus">
+                                <mat-option value="Pending">Pending</mat-option>
+                                <mat-option value="Accepted">Accepted
+                                </mat-option>
+                                <mat-option value="Rejected">Rejected
+                                </mat-option>
+                                <mat-option value="Docs Required">Docs Required
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="row p-3">
+                        <mat-form-field><input matInput placeholder="Comments" formControlName="comments" required>
+                        </mat-form-field>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light cancel-btn" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn primary-color" [disabled]="!statusForm.valid" data-dismiss="modal" (click)="updateStatus()">Update Status</button>
+
+            </div>
+        </div>
+    </div>
+</div>

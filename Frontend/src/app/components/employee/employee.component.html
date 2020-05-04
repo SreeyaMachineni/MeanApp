@@ -5,8 +5,10 @@
                 <li class="breadcrumb-item active" aria-current="page">Employees </li>
             </ol>
         </nav>
-        <div class="col font-weight-bold text-right">
-            <i class="fa fa-plus fa-icon pr-1" (click)="addEmp()" routerLink="/home/addOrEditEmp" aria-hidden="true"></i>
+        <div class="col text-right">
+            <button type="submit" class="btn btn-light mt-1" (click)="addEmp()" routerLink="/home/addOrEditEmp">
+                <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add
+            </button>
         </div>
     </div>
 

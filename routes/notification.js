@@ -15,13 +15,26 @@ router.get('/getNotifications/:userId',(req,res)=>{
 router.get('/updateNotification/:notificationId',(req,res)=>{
     var notificationId=req.params.notificationId;
     const query={_id:notificationId};
-    Notification.updateOne(query,{ $set: {verified:true}},(err,updated)=>{
-        (err)=>{
-            throw err;
-        },(updated)=>{
-            res.json({ success: true, msg: 'success' });
+
+    // Notification.updateOne(query,{ $set: {verified:true}},(err,updated)=>{
+        Notification.updateOne(query, 
+        {$set: {verified:true}}, (err, notif) => {
+        if(err){ res.json({ success: false, msg: 'fail' });}
+        else{ res.json({ success: true, msg: 'success' });
         }
-    })
+      })
+
+
+
+
+
+    // Notification.updateOne(query,{ $set: {verified:true}},(err,updated)=>{
+    //     (err)=>{
+    //         throw err;
+    //     },(updated)=>{
+    //         res.json({ success: true, msg: 'success' });
+    //     }
+    // })
 })
 
 router.post('/addNotification',(req,res)=>{
@@ -35,12 +48,23 @@ router.post('/addNotification',(req,res)=>{
             notifyAbout:req.body.contact.userId,
             verified:false,
         });
-        notication.save().then((err,notication)=>{
-            (err)=>{res.json({success:false})},
-            (notication)=>{
-                res.json({success:true})
-            }
-        })
+        // notication.save().then((err,notication)=>{
+        //     (err)=>{res.json({success:false})},
+        //     (notication)=>{
+        //         res.json({success:true})
+        //     }
+        // })
+
+        notication.save().then((notification)=>{
+            return res.json({ success: true, msg: 'notified' });
+          },
+          (err)=>{
+            return res.json({ success: false, msg: 'not notified' });
+          }
+        )
+
+
+
         
         
     }else if(req.body.contact.userrole == 'employee'){
@@ -50,12 +74,13 @@ router.post('/addNotification',(req,res)=>{
             userId:req.body.contact.userEmpId,    
             verified:false,
         });
-        notication.save().then((err,notication)=>{
-            (err)=>{res.json({success:false})},
-            (notication)=>{
-                res.json({success:true})
-            }
-        })
+        notication.save().then((notification)=>{
+            return res.json({ success: true, msg: 'notified' });
+          },
+          (err)=>{
+            return res.json({ success: false, msg: 'not notified' });
+          }
+        )
       
     }
     else if(req.body.contact.userrole == 'poc'){
@@ -71,12 +96,13 @@ router.post('/addNotification',(req,res)=>{
                     notifyAbout:   req.body.contact.userEmpId, 
                     verified:false,
                 });
-                notication.save().then((err,notication)=>{
-                    (err)=>{res.json({success:false})},
-                    (notication)=>{
-                        res.json({success:true})
-                    }
-                })
+                notication.save().then((notification)=>{
+                    return res.json({ success: true, msg: 'notified' });
+                  },
+                  (err)=>{
+                    return res.json({ success: false, msg: 'not notified' });
+                  }
+                )
                 } else {
                   console.log('err');
                 }
@@ -96,19 +122,40 @@ router.post('/addNotification',(req,res)=>{
                     verified:false,
                 });
                
-                notication.save((err,notified)=>{
+                // notication.save((err,notified)=>{
+                //     notication = new Notification({  
+                //         category:req.body.contact.regarding,
+                //         comments:req.body.contact.description,
+                //         userId:req.body.contact.userEmpId,
+                //         verified:false,
+                //     });
+                //     notication.save().then((err,notified)=>{
+                //         if(notified){
+                //             res.json({success:true});
+                //         }
+                //     })
+                // })
+
+
+                notication.save().then((notification)=>{
                     notication = new Notification({  
                         category:req.body.contact.regarding,
                         comments:req.body.contact.description,
                         userId:req.body.contact.userEmpId,
                         verified:false,
                     });
-                    notication.save().then((err,notified)=>{
-                        if(notified){
-                            res.json({success:true});
-                        }
-                    })
-                })
+                    notication.save().then((notification)=>{
+                        return res.json({ success: true, msg: 'notified' });
+                      },
+                      (err)=>{
+                        return res.json({ success: false, msg: 'not notified' });
+                      }
+                    )
+                  },
+                  (err)=>{
+                    return res.json({ success: false, msg: 'not notified' });
+                  }
+                )
                 } else {
                   console.log('err');
                 }

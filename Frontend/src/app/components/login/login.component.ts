@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
         }
 
       },
-      (err) => this._snackBar.open('Error while Login', 'x', { duration: 3000 })
+      (err) => this._snackBar.open('Error while Login', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
     );
 
   }

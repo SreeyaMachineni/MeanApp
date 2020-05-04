@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../user';
-import { UserClaimsService } from '../../user-claims/user-claims.service';
-import { UserClaims } from '../../user-claims/user-claims';
-import { EmployeeUsersService } from '../../employee-users/employee-users.service';
 import { AuthService } from '../../auth.service';
-import { UserPackagesService } from '../../user-packages/user-packages.service';
+import { UserPackagesService } from '../user-packages/user-packages.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserClaims } from '../user-claims/user-claims';
+import { UserClaimsService } from '../user-claims/user-claims.service';
+import { EmployeeUsersService } from '../employee-users/employee-users.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -84,7 +84,7 @@ export class DashboardComponent implements OnInit {
           this.userHasClaims = true;
         }
       }, (err) => {
-        this._snackBar.open('Error while fetching Claims', 'x', { duration: 3000 });
+        this._snackBar.open('Error while fetching Claims', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
       }
     )
   }
@@ -108,7 +108,7 @@ export class DashboardComponent implements OnInit {
       (claims) => {
         this.userClaims = claims;
       }, (err) => {
-        this._snackBar.open('Error while fetching Claims', 'x', { duration: 3000 });
+        this._snackBar.open('Error while fetching Claims', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
       }
     )
   }
@@ -116,9 +116,9 @@ export class DashboardComponent implements OnInit {
   fetchClaimsByHospital(pocId) {
     this.userClaimService.getClaimsByHospital(pocId).subscribe(
       (claims) => {
-        this.userClaims = claims 
+        this.userClaims = claims;
       }, (err) => {
-        this._snackBar.open('Error while fetching Claims', 'x', { duration: 3000 });
+        this._snackBar.open('Error while fetching Claims', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
       }
     )
   }
@@ -147,14 +147,14 @@ export class DashboardComponent implements OnInit {
             this.router.navigate(['/home/userDetails']);
             this.authService.updateNotification(notification._id).subscribe(
               (updated) => {
-                this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000 });
+                // this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
               },
               (err) => {
-                this._snackBar.open('Error while updating Notification', 'x', { duration: 3000 });
+                this._snackBar.open('Error while updating Notification', 'x', { duration: 3000, panelClass: ['snackbar-error']});
               }
             )
           },
-          (err) => this._snackBar.open('Error while fetching Notifications', 'x', { duration: 3000 })
+          (err) => this._snackBar.open('Error while fetching Notifications', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
         )
       } else if (this.user.userrole == 'user') {
         if (notification.category == 'claim') {
@@ -169,10 +169,10 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/profile']);
       this.authService.updateNotification(notification._id).subscribe(
         (updated) => {
-          this._snackBar.open('Notification updated succeessfully', 'x', { duration: 3000 });
+          // this._snackBar.open('Notification updated succeessfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
         },
         (err) => {
-          this._snackBar.open('Error while fetching Notifications', 'x', { duration: 3000 });
+          this._snackBar.open('Error while updating Notification', 'x', { duration: 3000, panelClass: ['snackbar-error'] });
         }
       )
     }

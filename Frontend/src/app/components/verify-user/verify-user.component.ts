@@ -36,11 +36,11 @@ export class VerifyUserComponent implements OnInit {
           this.router.navigate(['/login']);
         }
         else {
-          this._snackBar.open('Error while creating User', 'x', { duration: 3000 })
+          this._snackBar.open('Error while creating User', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
         }
 
       },
-      (err) => this._snackBar.open('Error while creating User', 'x', { duration: 3000 })
+      (err) => this._snackBar.open('Error while creating User', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
     );
   }
 
