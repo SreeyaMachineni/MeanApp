@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            <nav aria-label="breadcrumb">
+                <ol class="row breadcrumb bg-none breadcrumb-style">
+                    <li class="breadcrumb-item active" aria-current="page">Notifications </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 text-right">
+            <mat-form-field *ngIf="dataSource.data.length > 0">
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <ng-container *ngIf="dataSource.data.length > 0">
+        <div class="mat-elevation-z4">
+            <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="createDate" matSortDirection="desc" matSortDisableClear>
+                <ng-container matColumnDef="comments">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Comments </th>
+                    <td mat-cell *matCellDef="let notification"> {{notification.comments}} </td>
+                </ng-container>
+                <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+                    <td mat-cell *matCellDef="let notification"> {{notification.category | titlecase}} </td>
+                </ng-container>
+                <ng-container matColumnDef="createDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                    <td mat-cell *matCellDef="let notification"> {{notification.createDate | date}} </td>
+                </ng-container>
+                <ng-container matColumnDef="verified">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                    <td mat-cell *matCellDef="let notification">
+                        <span *ngIf="notification.verified == true" class="status-good"> Seen </span>
+                        <span *ngIf="notification.verified == false" class="status-bad"> Unseen </span>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="dataSource.data.length <= 0">
+        Sorry, no data found.
+    </ng-container>
+</div>

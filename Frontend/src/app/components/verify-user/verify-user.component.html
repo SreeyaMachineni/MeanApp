@@ -1,22 +1,27 @@
 <!-- <input type="text" [(ngModel)]="otp" placeholder="otp">
 <button type="button" class="btn btn-primary" (click) = "verifyOtp()">verify otp</button> -->
 <div class="container">
-        
-    <div class="Left d-flex flex-column justify-content-center align-items-center">
-            <div class="text-black pb-2 font-weight-bold text-white" style="font-size: 35px;">Something</div>
-            <div class=" text-white">some tag goes here</div>
-            
+    <div class="Left d-flex flex-column align-items-center">
+        <div class="pb-2 mt-5" style="font-size: 30px; color: whitesmoke;">Something</div>
+        <div class="mb-5" style="color: whitesmoke;">Some tag goes here</div>
+        <div *ngIf="greeting == 'GOOD EVENING'">
+            <i class="fa fa-moon-o fa-3x mt-3" style="color: whitesmoke;" aria-hidden="true"></i>
+        </div>
+        <div *ngIf="greeting != 'GOOD EVENING'">
+            <i class="fa fa-sun-o fa-3x mt-3" style="color: whitesmoke;" aria-hidden="true"></i>
+        </div>
+        <div class="mt-2" style="color: whitesmoke;"> {{this.greeting }} </div>
     </div>
-    <form [formGroup]="otpForm" class="Right d-flex flex-column  justify-content-center align-items-center" autocomplete="off"  (ngSubmit)="verifyOtp()">
-            <div class="text-black pb-2 font-weight-bold for-mob" style="font-size: 35px;">Something</div>
-            <div class="text-black pb-5 font-weight-bold for-mob" style="font-size: 15px;">Some tag goes heer</div>
+    <form [formGroup]="otpForm" class="Right d-flex flex-column  justify-content-center align-items-center" autocomplete="off" (ngSubmit)="verifyOtp()">
+        <div class="text-black pb-2 font-weight-bold for-mob" style="font-size: 35px;">Something</div>
+        <div class="text-black pb-5 font-weight-bold for-mob" style="font-size: 15px;">Some tag goes heer</div>
         <div class="text-black pb-5 font-weight-bold" style="font-size: 25px;">Please verify your mobile number to proceed</div>
-            <mat-form-field><input matInput placeholder="OTP" formControlName="otp" required></mat-form-field>
-        
-                  <button type="submit" class="btn primary-color p-0 pt-1 pb-1 pl-4 pr-4" [disabled]="!otpForm.valid">Register</button>
-   
-                
-            
-</form>
-   
+        <mat-form-field><input matInput placeholder="OTP" formControlName="otp" required></mat-form-field>
+
+        <button type="submit" class="btn primary-color p-0 pt-1 pb-1 pl-4 pr-4" [disabled]="!otpForm.valid">Register</button>
+
+
+
+    </form>
+
 </div>

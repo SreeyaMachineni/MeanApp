@@ -31,7 +31,7 @@
                     <mat-form-field>
                         <mat-label>Package</mat-label>
                         <mat-select required formControlName="package">
-                            <mat-option *ngFor="let package of packages" [value]="package.name" (click)="selectedPackage(package)" (onchange)="selectedPackage(package)">
+                            <mat-option *ngFor="let package of packages" [value]="package.name" (click)="selectedPackage(package)">
                                 {{package.name}}
                             </mat-option>
                         </mat-select>
@@ -48,64 +48,64 @@
                     </mat-form-field>
                 </div>
             </form>
-            <div *ngIf="!verify" class="col-md-6 col-sm-7 pull-right">
+            <div *ngIf="!verify" class="col col-md-12 col-sm-12 text-right mb-4">
                 <button type="submit" class="row btn btn-light cancel-btn mr-3" (click)="cancel()">Cancel</button>
-                <button type="submit" class="btn primary-color " [disabled]="!userPackageForm.valid" (click)="save(userPackage._id)">Save</button>
+                <button type="submit" class="btn primary-color " [disabled]="!userPackageForm.valid" (click)="save(packageId)">Save</button>
             </div>
         </div>
 
         <!-- PACKAGE DETAILS -->
-        <div class="col-md-6 col-sm-7 d-flex flex-column" *ngIf="action == 'edit' && selectedPackageDetails.insProvider">
+        <div class="col-md-6 col-sm-7 d-flex flex-column" *ngIf="(action == 'edit' && selectedPackageDetails.insProvider) || (action == 'add' && selectedPackageDetails)">
             <mat-card>
                 <div class="row">
                     <div class="row col text-left">
-                        <div class="col-lg-8 col-sm-8 col-xs-4 mt-2">
-                            <span class="cardHeading" style="background-color: #0a94c2;"> {{selectedPackageDetails.insProvider}} - {{selectedPackageDetails.name}}</span>
+                        <div class="col-lg-8 col-sm-8 col-xs-4 mt-3">
+                            <span class="cardHeading" style="background-color: #3D5F82;"> {{selectedPackageDetails.insProvider}} - {{selectedPackageDetails.name}}</span>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-4 col-xs-4 mt-1">
+                    <div class="col-lg-4 col-sm-4 col-xs-4 mt-2">
                         <span class="cardStatus"> {{selectedPackageDetails.insCategory}} </span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="row col text-left">
-                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-3">
+                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
                             <div class="lbl-view-text"> Network Hospitals </div>
                             <div class="lbl-view-value"> {{selectedPackageDetails.networkHospitals}} </div>
                         </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-3">
+                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
                             <div class="lbl-view-text"> Required Documents </div>
                             <div class="lbl-view-value"> {{selectedPackageDetails.requiredDocs}} </div>
                         </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-3">
+                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
                             <div class="lbl-view-text"> Diseases UnCovered </div>
                             <div class="lbl-view-value"> {{selectedPackageDetails.diseasesCovered}} </div>
                         </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-3">
+                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
                             <div class="lbl-view-text"> Diseases Covered </div>
                             <div class="lbl-view-value"> {{selectedPackageDetails.diseasesUnCovered}} </div>
                         </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-3">
+                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
                             <div class="lbl-view-text"> Maximum Sum Assured </div>
-                            <div class="lbl-view-value"> <i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{selectedPackageDetails.maxSumAssured}}</div>
+                            <div class="lbl-view-value"> <i class="fa fa-icon fa-inr" aria-hidden="true"></i>&nbsp;{{selectedPackageDetails.maxSumAssured}}</div>
                         </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-3">
+                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
                             <div class="lbl-view-text"> Minimum Sum Assured </div>
-                            <div class="lbl-view-value"> <i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{selectedPackageDetails.minSumAssured}} </div>
+                            <div class="lbl-view-value"> <i class="fa fa-icon fa-inr" aria-hidden="true"></i>&nbsp;{{selectedPackageDetails.minSumAssured}} </div>
                         </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-3">
+                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
                             <div class="lbl-view-text"> Premium Amount </div>
-                            <div class="lbl-view-value"> <i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{selectedPackageDetails.premiumAmnt}} </div>
+                            <div class="lbl-view-value"> <i class="fa fa-icon fa-inr" aria-hidden="true"></i>&nbsp;{{selectedPackageDetails.premiumAmnt}} </div>
                         </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-3">
+                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
                             <div class="lbl-view-text"> Max People Covered </div>
                             <div class="lbl-view-value"> {{selectedPackageDetails.maxNoOfMembersCovered}} </div>
                         </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-3">
+                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
                             <div class="lbl-view-text"> Maximum Maturity </div>
                             <div class="lbl-view-value"> {{selectedPackageDetails.maxMaturity}} </div>
                         </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-3">
+                        <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
                             <div class="lbl-view-text"> Waiting Period </div>
                             <div class="lbl-view-value"> {{selectedPackageDetails.waitingPeriod}} </div>
                         </div>

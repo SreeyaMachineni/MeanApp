@@ -16,6 +16,7 @@ router.post('/addUserClaim', (req, res) => {
         disease: req.body.claim.disease,
         location: req.body.claim.location,
         dateOfSurgery: req.body.claim.dateOfSurgery,
+        claimedAmount: req.body.claim.claimedAmount,
         status: 'Pending'
     });
     UserClaim.adduserClaim(userClaim, (err, claim) => {
@@ -52,9 +53,6 @@ router.get('/deleteUserClaim/:claimId', (req, res) => {
     })
 })
 
-
-
-
 router.post('/editUserClaim', (req, res) => {
     var claimId = req.body.claim._id;
     UserClaim.findOne({ _id: claimId }).then(claim => {
@@ -68,6 +66,7 @@ router.post('/editUserClaim', (req, res) => {
                     disease: req.body.claim.disease,
                     location: req.body.claim.location,
                     dateOfSurgery: req.body.claim.dateOfSurgery,
+                    claimedAmount: req.body.claim.claimedAmount,
                 }
             }, (err, updated) => {
                 (err) => { res.json({ success: false, msg: 'fail' }); },
@@ -91,6 +90,7 @@ router.post('/editUserClaim', (req, res) => {
                 userClaim.disease = req.body.claim.disease,
                 userClaim.location = req.body.claim.location,
                 userClaim.dateOfSurgery = req.body.claim.dateOfSurgery,
+                userClaim.claimedAmount = req.body.claim.claimedAmount,
                 userClaim.save().then((userClaim) => {
                         Notify.editClaimNotification(req.body.claim.userId, req.body.notify, req.body.username, (err, notify) => {
                             if (err) throw err

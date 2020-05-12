@@ -36,6 +36,7 @@ router.get('/getPocs/:hospitalId', (req, res) => {
     HospitalPoc.find({
         hospitalId:  {              $eq:  mongoose.Types.ObjectId(req.params.hospitalId)             }
     }).then((hsptl) => {
+        console.log(hsptl);
         let result = hsptl.map(a => a.pocId);
         User.find({    
             _id:  { $in: result  }
@@ -87,17 +88,22 @@ router.post('/editPoc', (req, res) => {
 
     User.findOne({ _id: pocId }).then(poc => {
         if (poc) {
-          User.updateOne({ _id: pocId }, 
-            {$set: { firstName: req.body.poc.firstName,lastName: req.body.poc.lastName,
-                gender: req.body.poc.gender,phone: req.body.poc.phone,
-                email: req.body.poc.email,address: req.body.poc.address
-            }}, (err, poc) => {
-            if(err){ res.json({ success: false, msg: 'fail' });}
-            else{ res.json({ success: true, msg: 'success' });
-            }
-          })
+            User.updateOne({ _id: pocId }, {
+                $set: {
+                    firstName: req.body.poc.firstName,
+                    lastName: req.body.poc.lastName,
+                    gender: req.body.poc.gender,
+                    phone: req.body.poc.phone,
+                    email: req.body.poc.email,
+                    address: req.body.poc.address
+                }
+            }, (err, poc) => {
+                if (err) { res.json({ success: false, msg: 'fail' }); } else {
+                    res.json({ success: true, msg: 'success' });
+                }
+            })
         } else {
-          console.log('err');
+            console.log('err');
         }
     })
 })

@@ -20,6 +20,7 @@ export class ViewUserPackageComponent implements OnInit {
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    debugger
     this.userPackage = this.userPackageService.getUserPackage();
     this.fetchPackageDetails(this.userPackage.packageId);
   }

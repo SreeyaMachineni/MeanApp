@@ -10,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule, MatToolbarModule, MatSidenav, MatSidenavModule, MatGridListModule, MatTooltipModule, MatDividerModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule, MatSortModule, MatNativeDateModule, MatToolbarModule, MatSidenav, MatSidenavModule, MatGridListModule, MatTooltipModule, MatDividerModule, MatProgressSpinnerModule, MatProgressBarModule } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { AppComponent } from './app.component';
@@ -64,6 +64,9 @@ import { MatCardModule } from '@angular/material/card';
 import { UserPackagesListComponent } from './components/user-packages/user-packages-list/user-packages-list.component';
 import { AddOrEditUserPackagesComponent } from './components/user-packages/add-or-edit-user-packages/add-or-edit-user-packages.component';
 import { ViewUserPackageComponent } from './components/user-packages/view-user-package/view-user-package.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ChartsModule } from 'ng2-charts';
 
 const appRoutes: Routes = [
   // {path:'',component:LoginComponent},
@@ -97,7 +100,8 @@ const appRoutes: Routes = [
       { path: 'doctorVisit', component: DoctorVisitComponent },
       { path: 'addOrEditDoctorVisit', component: AddOrEditDoctorVisitComponent },
       { path: 'contact', component: ContactComponent },
-      { path: 'claimDetails', component: ClaimDetailsComponent }
+      { path: 'claimDetails', component: ClaimDetailsComponent },
+      { path: 'notifications', component: NotificationsComponent },
     ]
   },
   { path: 'verify', component: VerifyUserComponent },
@@ -122,7 +126,8 @@ const appRoutes: Routes = [
     UserDetailsComponent,
     DashboardComponent,
     StatusCodeDirective,
-    NotificationDirective
+    NotificationDirective,
+    NotificationsComponent,
   ],
   
   imports: [
@@ -158,11 +163,15 @@ const appRoutes: Routes = [
     MatGridListModule,
     MatSnackBarModule,
     MatCardModule,
+    MatCheckboxModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    ChartsModule
+    ],
 
-  ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
 })

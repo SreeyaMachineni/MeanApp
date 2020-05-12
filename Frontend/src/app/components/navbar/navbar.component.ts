@@ -197,7 +197,7 @@ export class NavbarComponent implements OnInit {
     }
     this.authService.updateNotification(notification._id).subscribe(
       (updated) => {
-        this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
+        // this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
         this.getNotification(this.user['id']); 
       },
       (err) => {
@@ -220,7 +220,7 @@ export class NavbarComponent implements OnInit {
             this.router.navigate(['/home/userDetails']);
             this.authService.updateNotification(notification._id).subscribe(
               (updated) => {
-                this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
+                // this._snackBar.open('Notifications updated successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] });
                 this.getNotification(this.user['id']);
               },
               (err) => {

@@ -6,4 +6,7 @@ export class UserClaims {
     disease:String
     location:String
     dateOfSurgery:Date
+    claimedAmount:Number
+    approvedAmount:Number
+    claimComments:String
 }

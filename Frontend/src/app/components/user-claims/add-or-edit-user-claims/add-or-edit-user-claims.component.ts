@@ -41,6 +41,7 @@ export class AddOrEditUserClaimsComponent implements OnInit {
         disease: new FormControl(''),
         location: new FormControl(''),
         dateOfSurgery: new FormControl(''),
+        claimedAmount: new FormControl(''),
       });
     }
     else {
@@ -52,6 +53,7 @@ export class AddOrEditUserClaimsComponent implements OnInit {
         disease: new FormControl(this.userClaim.disease),
         location: new FormControl(this.userClaim.location),
         dateOfSurgery: new FormControl(this.userClaim.dateOfSurgery),
+        claimedAmount: new FormControl(this.userClaim.claimedAmount),
       });
     }
   }
@@ -94,6 +96,7 @@ export class AddOrEditUserClaimsComponent implements OnInit {
     this.userClaim.location = this.userClaimsForm.value.location;
     this.userClaim.dateOfSurgery = this.userClaimsForm.value.dateOfSurgery;
     this.userClaim.packageName = this.userClaimsForm.value.packageName;
+    this.userClaim.claimedAmount = this.userClaimsForm.value.claimedAmount;
     if (this.action == 'Add') {
       this.userClaimsService.addUserClaim(this.userClaim).subscribe(
         (userClaim) => {

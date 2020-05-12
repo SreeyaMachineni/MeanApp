@@ -14,11 +14,26 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class VerifyUserComponent implements OnInit {
   otp: String;
   user: User;
+  currentHours: any;
+  greeting: any;
+  currentDate:any;
+
   constructor(private authService: AuthService, 
     private router: Router,
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.currentDate = new Date().toISOString();
+    this.currentHours = new Date().getHours();
+    if (this.currentHours < 12) {
+      this.greeting = 'GOOD MORNING';
+    }
+    else if (this.currentHours < 16) {
+      this.greeting = 'GOOD AFTERNOON';
+    }
+    else {
+      this.greeting = 'GOOD EVENING';
+    }
   }
 
   otpForm = new FormGroup(

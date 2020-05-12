@@ -9,6 +9,7 @@ import { UserClaims } from '../../user-claims/user-claims';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserPackage } from 'src/app/components/user-packages/user-packages';
+import { MatTabChangeEvent } from '@angular/material';
 
 @Component({
   selector: 'app-user-details',
@@ -22,13 +23,14 @@ export class UserDetailsComponent implements OnInit {
   userPackage: any;
   userClaims: any;
   docs: any;
+  showFilter: boolean = true;
   statusForm: FormGroup;
   userdocsApprove: FormGroup;
   userdocsReject: FormGroup;
   displayedColumns: string[] = ['categoryName', 'insurerName', 'packageName', 'activeFrom', 'activeTo', 'status'];
   claimColumns: string[] = ['packageName', 'hospital', 'location', 'dateOfSurgery', 'disease'];
   dataSourceForClaims: MatTableDataSource<UserClaims>;
-  dataSource: MatTableDataSource<UserPackage>;
+  dataSourceForPackages: MatTableDataSource<UserPackage>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -60,9 +62,9 @@ export class UserDetailsComponent implements OnInit {
     this.empUserService.getUserPackages(userId).subscribe(
       (packages) => {
         this.userPackage = packages;
-        this.dataSource = new MatTableDataSource(this.userPackage);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.dataSourceForPackages = new MatTableDataSource(this.userPackage);
+        this.dataSourceForPackages.paginator = this.paginator;
+        this.dataSourceForPackages.sort = this.sort;
       },
       (err) => {
         this._snackBar.open('Error while fetching Packages', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
@@ -92,6 +94,29 @@ export class UserDetailsComponent implements OnInit {
         this._snackBar.open('Error while fetching User documents', 'x', { duration: 3000, panelClass: ['snackbar-error'] })
       }
     );
+  }
+
+  applyFilterPackages(filterValue: string) {
+    this.dataSourceForPackages.filter = filterValue.trim().toLowerCase();
+    if (this.dataSourceForPackages.paginator) {
+      this.dataSourceForPackages.paginator.firstPage();
+    }
+  }
+
+  applyFilterClaims(filterValue: string) {
+    this.dataSourceForClaims.filter = filterValue.trim().toLowerCase();
+    if (this.dataSourceForClaims.paginator) {
+      this.dataSourceForClaims.paginator.firstPage();
+    }
+  }
+
+  tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
+    if (tabChangeEvent.index > 1) {
+      this.showFilter = false;
+    }
+    else {
+      this.showFilter = true;
+    }
   }
 
   approveIt() {

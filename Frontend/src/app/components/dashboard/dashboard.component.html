@@ -1,19 +1,19 @@
-<!-- <div class="h5 m-3"> {{greeting}} {{user.firstName|titlecase}}! Welcome to your dashboard..</div> -->
-
-<!-- USER PACKAGES -->
+<!-- IF LOGGED IN AS USER -->
 <div class="row m-0" *ngIf="user.userrole == 'user'">
+
+    <!-- USER PACKAGES -->
     <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
-        <div class="modal-header modal-dashboard" style="background-color: #9ee3fa;">
-            <div class="popup-heading"> Current Packages</div>
-            <a *ngIf="userHasClaims" class="pull-right mt-1" style="font-size: small; color: #C30953" routerLink="/home/mypackages" routerLinkActive="active">View All</a>
+        <div class="modal-header modal-dashboard" style="background-color: #d7675b;">
+            <div class="modal-heading"> Current Packages</div>
+            <a *ngIf="userHasClaims" class="pull-right mt-2" class="popup-link" routerLink="/home/mypackages">View All</a>
         </div>
-        <div class="modal-body Content" style="border: 1px solid #9ee3fa;">
+        <div class="modal-body Content" style="border: 1px solid #d7675b;">
             <div class="mb-2" style="cursor: pointer;" *ngFor="let package of userPackage">
-                <mat-card class="cardHoverPackages">
+                <mat-card class=" cardHoverPackages">
                     <div class="row" *ngIf="userHasPackages">
                         <div class="row col text-left">
                             <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
-                                <span class="cardHeading" style="background-color: #0a94c2;"> {{package.insurerName}} - {{package.packageName}}</span>
+                                <span class="cardHeading" style="background-color: #d7675b;"> {{package.insurerName}} - {{package.packageName}}</span>
                             </div>
                             <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
                                 <span class="cardStatus"> Status - 
@@ -23,7 +23,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" *ngIf="userHasClaims">
+                    <div class="row" *ngIf="userHasPackages">
                         <div class="row col text-left">
                             <div class="col-lg-3 col-sm-3 col-xs-3 mt-3">
                                 <div class="lbl-view-text"> Category </div>
@@ -49,17 +49,17 @@
 
     <!-- USER CLAIMS -->
     <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
-        <div class="modal-header modal-dashboard" style="background-color: #9efa9e;">
-            <div class="popup-heading"> Active Claims</div>
-            <a *ngIf="userHasClaims" class="pull-right mt-1" style="font-size: small; color: #C30953" routerLink="/home/myclaims">View All</a>
+        <div class="modal-header modal-dashboard" style="background-color: #479860;">
+            <div class="modal-heading"> Active Claims</div>
+            <a *ngIf="userHasClaims" class="pull-right" class="popup-link" routerLink="/home/myclaims">View All</a>
         </div>
-        <div class="modal-body Content" style="border: 1px solid #9efa9e;">
+        <div class="modal-body Content" style="border: 1px solid #479860;">
             <div class="mb-2" style="cursor: pointer;" *ngFor="let claim of userClaims">
-                <mat-card class="cardHoverClaims">
+                <mat-card class=" cardHoverClaims">
                     <div class="row" *ngIf="userHasClaims">
                         <div class="row col text-left">
                             <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
-                                <span class="cardHeading" style="background-color: #09aa09;"> {{claim.insurerName}} - {{claim.packageName}}</span>
+                                <span class="cardHeading" style="background-color: #479860;"> {{claim.insurerName}} - {{claim.packageName}}</span>
                             </div>
                             <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
                                 <div class='cardStatus' appStatusCode [status]="claim.status" data-toggle="dropdown">Status - {{claim.status}} &nbsp;
@@ -105,7 +105,7 @@
     <!-- USER NOTIFICATIONS -->
     <!-- <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
         <div class="modal-header modal-dashboard" style="background-color: #ffffb3;">
-            <div class="popup-heading">Notifications</div>
+            <div class="modal-heading">Notifications</div>
         </div>
         <div class="modal-body Content" style="border: 1px solid #ffffb3;">
             <div *ngFor="let notification of notifications">
@@ -123,11 +123,11 @@
 
     <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
         <div class="modal-header modal-dashboard " style="background-color: #fcc7b6;">
-            <div class="popup-heading">Notifications</div>
+            <div class="modal-heading">Notifications</div>
         </div>
         <div class="modal-body Content" style="border: 1px solid #fcc7b6;">
             <div class="mb-2" style="cursor: pointer;" *ngFor="let notification of notifications" (click)="notificationDetails(notification)" appNotification [verified]="notification.verified">
-                <mat-card class="cardHover">{{notification.comments}}
+                <mat-card class=" cardHover">{{notification.comments}}
                     <div class="pull-right" style="font-size: smaller; color: lightgray;"> - {{ notification.createDate|date }}</div>
                 </mat-card>
             </div>
@@ -138,15 +138,16 @@
     </div> -->
 </div>
 
-<!-- EMPLOYEE NOTIFICATIONS -->
+<!-- IF LOGGED IN AS EMPLOYEE -->
 <div class="row m-0" *ngIf="user.userrole == 'employee'">
+    <!-- EMPLOYEE NOTIFICATIONS -->
     <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
-        <div class="modal-header modal-dashboard " style="background-color: #fcc7b6;">
-            <div class="popup-heading">Notifications</div>
+        <div class="modal-header modal-dashboard " style="background-color: #A85F7C;">
+            <div class="modal-heading">Notifications</div>
         </div>
-        <div class="modal-body Content" style="border: 1px solid #fcc7b6;">
+        <div class="modal-body Content" style="border: 1px solid #A85F7C;">
             <div class="mb-2" style="cursor: pointer;" *ngFor="let notification of notifications" (click)="notificationDetails(notification)" appNotification [verified]="notification.verified">
-                <mat-card class="cardHover">{{notification.comments}}
+                <mat-card class=" cardHoverNotifcations">{{notification.comments}}
                     <div class="pull-right" style="font-size: smaller; color: lightgray;"> - {{ notification.createDate|date }}</div>
                 </mat-card>
             </div>
@@ -157,20 +158,21 @@
     </div>
 </div>
 
-<!-- POC NOTIFICATIONS -->
+<!-- IF LOGGED IN AS POC -->
 <div class="row m-0" *ngIf="user.userrole == 'poc'">
+    <!-- POC NOTIFICATIONS -->
     <div class="col-lg-6 col-md-6 col-sm-12 FixedHeightContainer modal-content modal-border mt-3 mb-3">
-        <div class="modal-header modal-dashboard" style="background-color: #fcc7b6;">
-            <div class="popup-heading"> Pending Claims</div>
-            <!-- <a *ngIf="userHasClaims" class="pull-right mt-1" style="font-size: small; color: #C30953" routerLink="/home/myclaims">View All</a> -->
+        <div class="modal-header modal-dashboard" style="background-color: #439F76;">
+            <div class="modal-heading"> Pending Claims</div>
+            <!-- <a *ngIf="userHasClaims" class="pull-right mt-1" style="font-size: small; color: #3D5F82" routerLink="/home/myclaims">View All</a> -->
         </div>
-        <div class="modal-body Content" style="border: 1px solid #fcc7b6;">
+        <div class="modal-body Content" style="border: 1px solid #439F76;">
             <div class="mb-2" style="cursor: pointer;" *ngFor="let claim of userClaims" (click)="claimDetails(claim)">
-                <mat-card class="cardHover">
+                <mat-card class=" cardHover">
                     <div class="row">
                         <div class="row col text-left">
                             <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
-                                <span class="cardHeading" style="background-color: #C30953;"> {{claim.packageName}}</span>
+                                <span class="cardHeading" style="background-color: #439F76;"> {{claim.packageName}}</span>
                             </div>
                             <div class="col-lg-6 col-sm-6 col-xs-4 mt-6">
                                 <div class='cardStatus' appStatusCode [status]="claim.status" data-toggle="dropdown">Status - {{claim.status}} &nbsp;
@@ -207,11 +209,51 @@
     </div>
 </div>
 
-<div *ngIf="claim" class="modal fade" id="statusDetails" #status role="dialog">
+<!-- IF LOGGED IN AS ADMIN -->
+<div class="row m-0" *ngIf="user.userrole == 'admin'">
+    <mat-card class="col-lg-2 col-md-3 col-sm-4 col-xs-6 mat-elevation-z4 m-2" style="border-left: 3px solid #439F76;">
+        <div class="card-label">Total Claims</div>
+        <div class="card-value mt-3" style="color: #439F76;">
+            <i class="fa fa-file-text fa-xl mr-3" aria-hidden="true"></i> {{ claimsCount | number }}
+        </div>
+    </mat-card>
+    <mat-card class="col-lg-2 col-md-3 col-sm-4 col-xs-6 mat-elevation-z4 m-2" style="border-left: 3px solid #A85F7C;">
+        <div class="card-label">Registered Users</div>
+        <div class="card-value mt-3" style="color: #A85F7C;">
+            <i class="fa fa-users fa-xl mr-3" aria-hidden="true"></i> {{ usersCount | number }}
+        </div>
+    </mat-card>
+    <mat-card class="col-lg-2 col-md-3 col-sm-4 col-xs-6 mat-elevation-z4 m-2" style="border-left: 3px solid #D7675B;">
+        <div class="card-label">Total Employees</div>
+        <div class="card-value mt-3" style="color: #D7675B;">
+            <i class="fa fa-id-badge fa-xl mr-3" aria-hidden="true"></i> {{ employeesCount | number }}
+        </div>
+    </mat-card>
+    <mat-card class="col-lg-2 col-md-3 col-sm-4 col-xs-6 mat-elevation-z4 m-2" style="border-left: 3px solid #3D5F82;">
+        <div class="card-label">Hospital Point of Contacts</div>
+        <div class="card-value mt-3" style="color: #3D5F82;">
+            <i class="fa fa-user-circle fa-xl mr-3" aria-hidden="true"></i> {{ hospitalPocsCount | number }}
+        </div>
+    </mat-card>
+    <mat-card class="col-lg-2 col-md-3 col-sm-4 col-xs-6 mat-elevation-z4 m-2" style="border-left: 3px solid #439F76;">
+        <div class="card-label">Network Hospitals</div>
+        <div class="card-value mt-3" style="color: #439F76;">
+            <i class="fa fa-hospital-o fa-xl mr-3" aria-hidden="true"></i> {{ hospitalsCount | number }}
+        </div>
+    </mat-card>
+    <mat-card class="col-lg-2 col-md-3 col-sm-4 col-xs-6 mat-elevation-z4 m-2" style="border-left: 3px solid #A85F7C;">
+        <div class="card-label">Total Packages Supported</div>
+        <div class="card-value mt-3" style="color: #A85F7C;">
+            <i class="fa fa-suitcase fa-xl mr-3" aria-hidden="true"></i> {{ packagesCount | number }}
+        </div>
+    </mat-card>
+</div>
+
+<!-- <div *ngIf="claim" class="modal fade" id="statusDetails" #status role="dialog">
     <div class="modal-dialog">
         <div class="modal-content" style="width: 600px;">
             <div class="modal-header">
-                <div class="col popup-heading">Status Details</div>
+                <div class="col modal-heading">Status Details</div>
             </div>
             <div class="modal-body">
                 <div class="col-lg-12 col-md-12 col-sm-12 d-flex flex-column">
@@ -230,4 +272,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

@@ -43,6 +43,7 @@ export class AddOrEditUserPackagesComponent implements OnInit {
     );
     this.userPackage = new UserPackage();
     if (this.action == 'add') {
+      this.selectedPackageDetails = null;
       this.userPackageForm = new FormGroup({
         insurer: new FormControl(' '),
         package: new FormControl(' '),
@@ -66,11 +67,12 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   }
 
   save(packageId?) {
+    debugger
     this.userPackage.userId = JSON.parse(localStorage.getItem('user')).id;
     this.userPackage.username = JSON.parse(localStorage.getItem('user')).firstName;
     this.userPackage.categoryId = this.categoryId;
     this.userPackage.insurerId = this.insuranceId;
-    this.userPackage.packageId = this.packageId;
+    this.userPackage.packageId = packageId;
     this.userPackage.categoryName = this.userPackageForm.value.category;
     this.userPackage.insurerName = this.userPackageForm.value.insurer;
     this.userPackage.packageName = this.userPackageForm.value.package;
@@ -120,8 +122,9 @@ export class AddOrEditUserPackagesComponent implements OnInit {
   }
 
   selectedPackage(selectedPackage) {
+    debugger
     this.selectedPackageDetails = selectedPackage;
-    this.packageId = selectedPackage.packageId;
+    this.packageId = selectedPackage._id;
   }
 
   selectedCategory(categoryId) {

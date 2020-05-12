@@ -1,7 +1,14 @@
 <div class="container">
-    <div class="Left d-flex flex-column justify-content-center align-items-center">
-        <div class="pb-2 text-white" style="font-size: 35px;">Something</div>
-        <div class="text-white">Some tag goes here</div>
+    <div class="Left d-flex flex-column align-items-center">
+        <div class="pb-2 mt-5" style="font-size: 30px; color: whitesmoke;">Something</div>
+        <div class="mb-5" style="color: whitesmoke;">Some tag goes here</div>
+        <div *ngIf="greeting == 'GOOD EVENING'">
+            <i class="fa fa-moon-o fa-3x mt-3" style="color: whitesmoke;" aria-hidden="true"></i>
+        </div>
+        <div *ngIf="greeting != 'GOOD EVENING'">
+            <i class="fa fa-sun-o fa-3x mt-3" style="color: whitesmoke;" aria-hidden="true"></i>
+        </div>
+        <div class="mt-2" style="color: whitesmoke;"> {{this.greeting }} </div>
     </div>
 
     <form [formGroup]="userProfileForm" class="Right d-flex flex-column justify-content-center align-items-center" autocomplete="off" (ngSubmit)="saveit()">
@@ -9,7 +16,7 @@
             <div class="text-white pb-2 pt-4" style="font-size: 35px;">Something</div>
             <div class="text-white pb-4">Some tag goes here</div>
         </div> -->
-        <div class="pb-2" style="font-size: 30px; color: #C30953;">Create an Account!</div>
+        <div class="pb-2" style="font-size: 30px; color: #3D5F82;">Create an Account!</div>
         <mat-form-field><input matInput placeholder="First Name" formControlName="firstName" required>
         </mat-form-field>
         <mat-form-field><input matInput placeholder="Last Name" formControlName="lastName" required>

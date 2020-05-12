@@ -4,8 +4,7 @@
     top: 0;
     bottom: 0;
     width: 30%;
-    background-color: #C30953;
-    font-size: 20px;
+    background-color: #3D5F82;
 }
 
 .Top {
@@ -13,7 +12,7 @@
     left: 0;
     top: 0;
     bottom: 77%;
-    background-color: #C30953;
+    background-color: #3D5F82;
     text-align: center;
 }
 
@@ -29,7 +28,7 @@
 
 \ .hdr {
     height: 30px;
-    background-color: #C30953;
+    background-color: #3D5F82;
 }
 
 .mat-form-field-ripple {

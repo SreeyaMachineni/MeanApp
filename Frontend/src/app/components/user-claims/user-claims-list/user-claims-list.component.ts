@@ -6,6 +6,7 @@ import {MatSort} from '@angular/material/sort';
 import {UserClaims} from '../user-claims';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { UserPackagesService } from '../../user-packages/user-packages.service';
 
 @Component({
   selector: 'app-user-claims-list',
@@ -17,7 +18,8 @@ export class UserClaimsListComponent implements OnInit {
   userClaims:any;
   claim: UserClaims;
   deleteClaimId: any;
-  displayedColumns: string[] = ['packageName', 'hospital', 'address', 'disease', 'dateOfSurgery', 'status', 'actions'];
+  userPackage: any;
+  displayedColumns: string[] = ['packageName', 'hospital', 'address', 'disease', 'dateOfSurgery', 'status', 'claimedAmount', 'actions'];
   dataSource: MatTableDataSource<UserClaims>;
   expandedElement: UserClaims | null;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -25,9 +27,11 @@ export class UserClaimsListComponent implements OnInit {
   
   constructor(private router:Router,
     private userClaimsService:UserClaimsService,
+    private userPackageService:UserPackagesService,
     private _snackBar: MatSnackBar) { }
   
   ngOnInit() {  
+    this.userPackage = this.userPackageService.getUserPackage();
     this.userClaims = new UserClaims();
     this.fetchUserClaims();
   }
@@ -41,6 +45,7 @@ export class UserClaimsListComponent implements OnInit {
     this.userClaimsService.getUserClaims(JSON.parse(localStorage.getItem('user')).id).subscribe(
       (claims)=>{
         this.userClaims = claims;
+        this.userClaims = this.userClaims.filter(f=> f.packageId === this.userPackage.packageId);
         this.dataSource = new MatTableDataSource(this.userClaims);
         this.dataSource.paginator = this.paginator;
        this.dataSource.sort = this.sort;
@@ -81,6 +86,10 @@ export class UserClaimsListComponent implements OnInit {
 
   setDeleteClaim(claimId, e) {
     this.deleteClaimId = claimId;
+  }
+
+  cancel() {
+    this.router.navigate(['/home/mypackages']);
   }
   
 }

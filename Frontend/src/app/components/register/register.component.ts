@@ -14,12 +14,27 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class RegisterComponent implements OnInit {
   signedUpUser: User;
+  currentHours: any;
+  greeting: any;
+  currentDate:any;
+
   constructor(private authService: AuthService, 
     private router: Router,
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.signedUpUser = new User();
+    this.currentDate = new Date().toISOString();
+    this.currentHours = new Date().getHours();
+    if (this.currentHours < 12) {
+      this.greeting = 'GOOD MORNING';
+    }
+    else if (this.currentHours < 16) {
+      this.greeting = 'GOOD AFTERNOON';
+    }
+    else {
+      this.greeting = 'GOOD EVENING';
+    }
   }
 
   userProfileForm = new FormGroup(
@@ -52,6 +67,7 @@ export class RegisterComponent implements OnInit {
     this.signedUpUser.isAssigned = false;
     this.signedUpUser.assignedTo = null;
     // change it when editing the user values
+    
     this.authService.sendOtp(this.signedUpUser).subscribe(
       (data) => {
         this._snackBar.open('OTP verified successfully', 'x', { duration: 3000, panelClass: ['snackbar-success'] })

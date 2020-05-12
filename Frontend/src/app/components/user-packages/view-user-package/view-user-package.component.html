@@ -3,56 +3,65 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-none breadcrumb-style">
                 <li class="breadcrumb-item"><a class="breadcrumb-back" (click)="cancel()">My Packages</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Package Details of {{package.name}} </li>
+                <li class="breadcrumb-item active" aria-current="page">Package Details </li>
             </ol>
         </nav>
     </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Insurer: </div>
-        <div class="col-lg-3 h6">{{package.insProvider}}</div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Category: </div>
-        <div class="col-lg-3 h6">{{package.insCategory}}</div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Network Hospitals: </div>
-        <div class="col-lg-3 h6">{{package.networkHospitals}}</div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Diseases Covered: </div>
-        <div class="col-lg-3 h6">{{package.diseasesCovered}}</div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Diseases Uncovered: </div>
-        <div class="col-lg-3 h6">{{package.diseasesUnCovered}}</div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Required Docs: </div>
-        <div class="col-lg-3 h6">{{package.requiredDocs}}</div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Maximum Sum Assured: </div>
-        <div class="col-lg-3 h6"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{package.maxSumAssured}}</div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Minimum Sum Assured: </div>
-        <div class="col-lg-3 h6"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{package.minSumAssured}}</div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Premium: </div>
-        <div class="col-lg-3 h6"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;{{package.premiumAmnt}}</div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Max People Covered: </div>
-        <div class="col-lg-3 h6">{{package.maxNoOfMembersCovered}}</div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Maximum Maturity: </div>
-        <div class="col-lg-3 h6">{{package.maxMaturity}}</div>
-    </div>
-    <div class="row mt-1">
-        <div class="col-lg-3">Waiting Period </div>
-        <div class="col-lg-3 h6">{{package.waitingPeriod}}</div>
-    </div>
+
+    <mat-card class="mat-elevation-z4">
+        <div class="row">
+            <div class="row col text-left">
+                <div class="col-lg-8 col-sm-8 col-xs-4 mt-3">
+                    <span class="cardHeading" style="background-color: #3D5F82;"> {{package.insProvider}} - {{package.name}}</span>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-4 col-xs-4 mt-2">
+                <span class="cardStatus"> {{package.insCategory}} </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row col text-left">
+                <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
+                    <div class="lbl-view-text"> Network Hospitals </div>
+                    <div class="lbl-view-value"> {{package.networkHospitals}} </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
+                    <div class="lbl-view-text"> Required Documents </div>
+                    <div class="lbl-view-value"> {{package.requiredDocs}} </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
+                    <div class="lbl-view-text"> Diseases UnCovered </div>
+                    <div class="lbl-view-value"> {{package.diseasesCovered}} </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
+                    <div class="lbl-view-text"> Diseases Covered </div>
+                    <div class="lbl-view-value"> {{package.diseasesUnCovered}} </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
+                    <div class="lbl-view-text"> Maximum Sum Assured </div>
+                    <div class="lbl-view-value"> <i class="fa fa-icon fa-inr" aria-hidden="true"></i>&nbsp;{{package.maxSumAssured}}</div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
+                    <div class="lbl-view-text"> Minimum Sum Assured </div>
+                    <div class="lbl-view-value"> <i class="fa fa-icon fa-inr" aria-hidden="true"></i>&nbsp;{{package.minSumAssured}} </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
+                    <div class="lbl-view-text"> Premium Amount </div>
+                    <div class="lbl-view-value"> <i class="fa fa-icon fa-inr" aria-hidden="true"></i>&nbsp;{{package.premiumAmnt}} </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
+                    <div class="lbl-view-text"> Max People Covered </div>
+                    <div class="lbl-view-value"> {{package.maxNoOfMembersCovered}} </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
+                    <div class="lbl-view-text"> Maximum Maturity </div>
+                    <div class="lbl-view-value"> {{package.maxMaturity}} </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6 mt-4">
+                    <div class="lbl-view-text"> Waiting Period </div>
+                    <div class="lbl-view-value"> {{package.waitingPeriod}} </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>
 </div>

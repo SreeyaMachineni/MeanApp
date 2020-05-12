@@ -47,6 +47,7 @@ ngOnInit() {
       this.dataSource.paginator.firstPage();
     }
   }
+  
   getRecord(user){
     this.empUserService.setUser(user);
     this.router.navigate(['/home/userDetails']);

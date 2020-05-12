@@ -91,13 +91,17 @@ export class UserPackagesListComponent implements OnInit {
   }
 
   getRecord(pkg){
-    
     this.userPackageService.setUserPackage(pkg);
     this.router.navigate(['/home/viewUserPackage'])
   }
 
   setDeletePackage(packageId, e) {
     this.deletePackageId = packageId;
+  }
+
+  gotoUserClaims(pkg) {
+    this.userPackageService.setUserPackage(pkg);
+    this.router.navigate(['/home/myclaims']);
   }
 
 }

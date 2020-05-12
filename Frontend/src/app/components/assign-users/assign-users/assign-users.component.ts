@@ -19,7 +19,7 @@ export class AssignUsersComponent implements OnInit {
   UnAssignedUsers:any;
   emps:any;
   insurer:any;
-  displayedColumns: string[] = ['name', 'assignedTo'];
+  displayedColumns: string[] = ['assignedTo', 'name', 'phone', 'email'];
   assignUsersForm:FormGroup;
   dataSource: MatTableDataSource<User>;
   expandedElement: User | null;

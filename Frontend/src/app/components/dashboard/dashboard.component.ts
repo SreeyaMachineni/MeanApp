@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserClaims } from '../user-claims/user-claims';
 import { UserClaimsService } from '../user-claims/user-claims.service';
 import { EmployeeUsersService } from '../employee-users/employee-users.service';
+import * as Chart from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +29,13 @@ export class DashboardComponent implements OnInit {
   currentHours: any;
   greeting: any;
   currentDate:any;
-
+  usersCount: number;
+  hospitalsCount: number;
+  employeesCount: number;
+  hospitalPocsCount: number;
+  packagesCount: number;
+  claimsCount: number;
+  
   constructor(private router: Router, private userClaimService: UserClaimsService,
     private empUserService: EmployeeUsersService, 
     private authService: AuthService, 
@@ -38,17 +45,12 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
     this.currentDate = new Date().toISOString();
-    // this.currentHours = new Date().getHours();
-    // if (this.currentHours < 12) {
-    //   this.greeting = 'Good Morning ';
-    // }
-    // else if (this.currentHours < 4) {
-    //   this.greeting = 'Good Afternoon ';
-    // }
-    // else {
-    //   this.greeting = 'Good Evening ';
-    // }
-
+    this.usersCount = 107638;
+    this.hospitalsCount = 326;
+    this.employeesCount = 267;
+    this.hospitalPocsCount = 874;
+    this.packagesCount = 465;
+    this.claimsCount = 148437;
     this.getNotification(this.user['id']);
     this.fetchUserPackages();
 

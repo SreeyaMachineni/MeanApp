@@ -11,6 +11,7 @@
     "bcryptjs": "*",
     "bluebird": "^3.5.5",
     "body-parser": "^1.19.0",
+    "chart.js": "^2.9.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "gridfs-stream": "^1.1.1",
@@ -21,6 +22,7 @@
     "multer": "^1.4.2",
     "multer-gridfs-storage": "^3.3.0",
     "nexmo": "^2.4.1",
+    "ng2-charts": "^2.3.0",
     "nodemon": "^1.19.1",
     "passport": "*",
     "passport-jwt": "^4.0.0"

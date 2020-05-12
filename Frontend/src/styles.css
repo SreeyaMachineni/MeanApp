@@ -2,23 +2,24 @@
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: #C30953 !important;
+    background-color: #3D5F82 !important;
+    /* background-color: #C30953 !important; */
 }
 
 .mat-focused .mat-form-field-label {
-    color: #C30953 !important;
+    color: #3D5F82 !important;
 }
 
 .mat-radio-button.mat-accent .mat-radio-inner-circle {
-    background-color: #C30953 !important;
+    background-color: #3D5F82 !important;
 }
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: #C30953 !important;
+    border-color: #3D5F82 !important;
 }
 
 .mat-tab-group.mat-primary .mat-ink-bar {
-    background-color: #C30953 !important;
+    background-color: #3D5F82 !important;
 }
 
 .cdk-overlay-container {
@@ -26,7 +27,7 @@
 }
 
 .primary-color {
-    background-color: #C30953 !important;
+    background-color: #3D5F82 !important;
     color: white !important;
     border: none !important;
     padding: 5px 15px 5px 15px !important;
@@ -43,9 +44,22 @@ table {
     width: 100%;
 }
 
+.mat-row:hover {
+    background-color: #eef2f7;
+}
+
 .mat-form-field {
     font-size: 14px;
     width: 100%;
+}
+
+.card-label {
+    font-size: small;
+    color: grey;
+}
+
+.card-value {
+    font-size: xx-large;
 }
 
 
@@ -59,7 +73,7 @@ th {
 
 .breadcrumb-back {
     cursor: pointer !important;
-    color: #C30953 !important;
+    color: #3D5F82 !important;
 }
 
 .bg-none {
@@ -72,16 +86,27 @@ th {
 }
 
 .fa-icon {
-    font-size: 15px !important;
-    color: #C30953 !important;
+    opacity: 80%;
     cursor: pointer !important;
-    margin-top: 15px !important;
+}
+
+.modal-heading {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: white;
 }
 
 .popup-heading {
-    color: #6c757d !important;
     font-size: 18px !important;
     font-weight: 600 !important;
+    opacity: 80% !important;
+}
+
+.popup-link,
+.popup-link:hover {
+    font-size: small;
+    margin-top: 3px;
+    color: white;
 }
 
 
@@ -118,7 +143,7 @@ th {
 }
 
 .icon-enabled :hover {
-    color: #C30953;
+    color: #3D5F82;
 }
 
 body {
@@ -163,7 +188,7 @@ body {
 }
 
 .clickHere {
-    color: #C30953 !important;
+    color: #3D5F82 !important;
     cursor: pointer;
 }
 
@@ -195,22 +220,24 @@ body {
     float: right;
 }
 
-.cardHover:hover {
-    /* background-color: #f2f2f2; */
+.cardHoverNotifcations:hover {
     box-shadow: 2px 2px 3px 3px lightgray;
-    border-left: 3px solid #C30953;
+    border-left: 3px solid #A85F7C;
+}
+
+.cardHover:hover {
+    box-shadow: 2px 2px 3px 3px lightgray;
+    border-left: 3px solid #439F76;
 }
 
 .cardHoverPackages:hover {
-    /* background-color: #f2f2f2; */
     box-shadow: 2px 2px 3px 3px lightgray;
-    border-left: 3px solid #0a94c2;
+    border-left: 3px solid #d7675b;
 }
 
 .cardHoverClaims:hover {
-    /* background-color: #f2f2f2; */
     box-shadow: 2px 2px 3px 3px lightgray;
-    border-left: 3px solid #09aa09;
+    border-left: 3px solid #479860;
 }
 
 .lbl-view-text {
@@ -238,10 +265,10 @@ body {
 }
 
 .add-btn {
-    color: #C30953;
+    color: #3D5F82;
     margin-top: 10px;
 }
 
 .add-btn:hover {
-    color: #C30953;
+    color: #3D5F82;
 }

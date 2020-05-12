@@ -16,6 +16,10 @@ import { MatSnackBar } from '@angular/material';
 export class LoginComponent implements OnInit {
   loginUser: User;
   invalid = false;
+  currentHours: any;
+  greeting: any;
+  currentDate:any;
+
   constructor(private authService: AuthService, 
     private router: Router, 
     private toastrService: ToastrService,
@@ -24,6 +28,17 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginUser = new User();
     this.authService.setLoggedIn(false);
+    this.currentDate = new Date().toISOString();
+    this.currentHours = new Date().getHours();
+    if (this.currentHours < 12) {
+      this.greeting = 'GOOD MORNING';
+    }
+    else if (this.currentHours < 16) {
+      this.greeting = 'GOOD AFTERNOON';
+    }
+    else {
+      this.greeting = 'GOOD EVENING';
+    }
   }
 
   @HostListener('window:popstate', ['$event'])
